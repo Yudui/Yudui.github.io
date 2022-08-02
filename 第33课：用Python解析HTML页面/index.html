@@ -1,0 +1,655 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第33课：用Python解析HTML页面 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#33pythonhtml" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第33课：用Python解析HTML页面
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#33pythonhtml" class="md-nav__link">
+    第33课：用Python解析HTML页面
+  </a>
+  
+    <nav class="md-nav" aria-label="第33课：用Python解析HTML页面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#html" class="md-nav__link">
+    HTML 页面的结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xpath" class="md-nav__link">
+    XPath 解析
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css" class="md-nav__link">
+    CSS 选择器解析
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第33课：用Python解析HTML页面</h1>
+
+<h2 id="33pythonhtml">第33课：用Python解析HTML页面</h2>
+<p>在前面的课程中，我们讲到了使用<code>request</code>三方库获取网络资源，还介绍了一些前端的基础知识。接下来，我们继续探索如何解析 HTML 代码，从页面中提取出有用的信息。之前，我们尝试过用正则表达式的捕获组操作提取页面内容，但是写出一个正确的正则表达式也是一件让人头疼的事情。为了解决这个问题，我们得先深入的了解一下 HTML 页面的结构，并在此基础上研究另外的解析页面的方法。</p>
+<h3 id="html">HTML 页面的结构</h3>
+<p>我们在浏览器中打开任意一个网站，然后通过鼠标右键菜单，选择“显示网页源代码”菜单项，就可以看到网页对应的 HTML 代码。</p>
+<p><img alt="" src="https://github.com/jackfrued/mypic/raw/master/20210822094218.png" /></p>
+<p>代码的第<code>1</code>行是文档类型声明，第<code>2</code>行的<code>&lt;html&gt;</code>标签是整个页面根标签的开始标签，最后一行是根标签的结束标签<code>&lt;/html&gt;</code>。<code>&lt;html&gt;</code>标签下面有两个子标签<code>&lt;head&gt;</code>和<code>&lt;body&gt;</code>，放在<code>&lt;body&gt;</code>标签下的内容会显示在浏览器窗口中，这部分内容是网页的主体；放在<code>&lt;head&gt;</code>标签下的内容不会显示在浏览器窗口中，但是却包含了页面重要的元信息，通常称之为网页的头部。HTML 页面大致的代码结构如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">&lt;!doctype html&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="cm">&lt;!-- 页面的元信息，如字符编码、标题、关键字、媒体查询等 --&gt;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="cm">&lt;!-- 页面的主体，显示在浏览器窗口中的内容 --&gt;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>标签、层叠样式表（CSS）、JavaScript 是构成 HTML 页面的三要素，其中标签用来承载页面要显示的内容，CSS 负责对页面的渲染，而 JavaScript 用来控制页面的交互式行为。要实现 HTML 页面的解析，可以使用 XPath 的语法，它原本是 XML 的一种查询语法，可以根据 HTML 标签的层次结构提取标签中的内容或标签属性；此外，也可以使用 CSS 选择器来定位页面元素，就跟用 CSS 渲染页面元素是同样的道理。</p>
+<h3 id="xpath">XPath 解析</h3>
+<p>XPath 是在 XML（eXtensible Markup Language）文档中查找信息的一种语法，XML 跟 HTML 类似也是一种用标签承载数据的标签语言，不同之处在于 XML 的标签是可扩展的，可以自定义的，而且 XML 对语法有更严格的要求。XPath 使用路径表达式来选取 XML 文档中的节点或者节点集，这里所说的节点包括元素、属性、文本、命名空间、处理指令、注释、根节点等。下面我们通过一个例子来说明如何使用 XPath 对页面进行解析。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">&lt;bookstore&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="nt">&lt;book&gt;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      <span class="nt">&lt;title</span> <span class="na">lang=</span><span class="s">&quot;eng&quot;</span><span class="nt">&gt;</span>Harry Potter<span class="nt">&lt;/title&gt;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>      <span class="nt">&lt;price&gt;</span>29.99<span class="nt">&lt;/price&gt;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="nt">&lt;/book&gt;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="nt">&lt;book&gt;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>      <span class="nt">&lt;title</span> <span class="na">lang=</span><span class="s">&quot;zh&quot;</span><span class="nt">&gt;</span>Learning XML<span class="nt">&lt;/title&gt;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>      <span class="nt">&lt;price&gt;</span>39.95<span class="nt">&lt;/price&gt;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="nt">&lt;/book&gt;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nt">&lt;/bookstore&gt;</span>
+</code></pre></div>
+<p>对于上面的 XML 文件，我们可以用如下所示的 XPath 语法获取文档中的节点。</p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/bookstore</code></td>
+<td>选取根元素 bookstore。<strong>注意</strong>：假如路径起始于正斜杠( / )，则此路径始终代表到某元素的绝对路径！</td>
+</tr>
+<tr>
+<td><code>//book</code></td>
+<td>选取所有 book 子元素，而不管它们在文档中的位置。</td>
+</tr>
+<tr>
+<td><code>//@lang</code></td>
+<td>选取名为 lang 的所有属性。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book[1]</code></td>
+<td>选取属于 bookstore 子元素的第一个 book 元素。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book[last()]</code></td>
+<td>选取属于 bookstore 子元素的最后一个 book 元素。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book[last()-1]</code></td>
+<td>选取属于 bookstore 子元素的倒数第二个 book 元素。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book[position()&lt;3]</code></td>
+<td>选取最前面的两个属于 bookstore 元素的子元素的 book 元素。</td>
+</tr>
+<tr>
+<td><code>//title[@lang]</code></td>
+<td>选取所有拥有名为 lang 的属性的 title 元素。</td>
+</tr>
+<tr>
+<td><code>//title[@lang='eng']</code></td>
+<td>选取所有 title 元素，且这些元素拥有值为 eng 的 lang 属性。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book[price&gt;35.00]</code></td>
+<td>选取 bookstore 元素的所有 book 元素，且其中的 price 元素的值须大于 35.00。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book[price&gt;35.00]/title</code></td>
+<td>选取 bookstore 元素中的 book 元素的所有 title 元素，且其中的 price 元素的值须大于 35.00。</td>
+</tr>
+</tbody>
+</table>
+<p>XPath还支持通配符用法，如下所示。</p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/bookstore/*</code></td>
+<td>选取 bookstore 元素的所有子元素。</td>
+</tr>
+<tr>
+<td><code>//*</code></td>
+<td>选取文档中的所有元素。</td>
+</tr>
+<tr>
+<td><code>//title[@*]</code></td>
+<td>选取所有带有属性的 title 元素。</td>
+</tr>
+</tbody>
+</table>
+<p>如果要选取多个节点，可以使用如下所示的方法。</p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>//book/title \| //book/price</code></td>
+<td>选取 book 元素的所有 title 和 price 元素。</td>
+</tr>
+<tr>
+<td><code>//title \| //price</code></td>
+<td>选取文档中的所有 title 和 price 元素。</td>
+</tr>
+<tr>
+<td><code>/bookstore/book/title \| //price</code></td>
+<td>选取属于 bookstore 元素的 book 元素的所有 title 元素，以及文档中所有的 price 元素。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>说明</strong>：上面的例子来自于“菜鸟教程”网站上的 <a href="https://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程</a>，有兴趣的读者可以自行阅读原文。</p>
+</blockquote>
+<p>当然，如果不理解或不熟悉 XPath 语法，可以在浏览器的开发者工具中按照如下所示的方法查看元素的 XPath 语法，下图是在 Chrome 浏览器的开发者工具中查看豆瓣网电影详情信息中影片标题的 XPath 语法。</p>
+<p><img alt="" src="https://github.com/jackfrued/mypic/raw/master/20210822093707.png" /></p>
+<p>实现 XPath 解析需要三方库<code>lxml</code> 的支持，可以使用下面的命令安装<code>lxml</code>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip install lxml
+</code></pre></div>
+<p>下面我们用 XPath 解析方式改写之前获取豆瓣电影 Top250的代码，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span> <span class="nn">requests</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://movie.douban.com/top250?start=</span><span class="si">{</span><span class="p">(</span><span class="n">page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">25</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;BaiduSpider&#39;</span><span class="p">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="c1"># 通过XPath语法从页面中提取电影标题</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">title_spans</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@id=&quot;content&quot;]/div/div[1]/ol/li/div/div[2]/div[1]/a/span[1]&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="c1"># 通过XPath语法从页面中提取电影评分</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="n">rank_spans</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@id=&quot;content&quot;]/div/div[1]/ol/li[1]/div/div[2]/div[2]/div/span[2]&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="k">for</span> <span class="n">title_span</span><span class="p">,</span> <span class="n">rank_span</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">title_spans</span><span class="p">,</span> <span class="n">rank_spans</span><span class="p">):</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">title_span</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">rank_span</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="css">CSS 选择器解析</h3>
+<p>对于熟悉 CSS 选择器和 JavaScript 的开发者来说，通过 CSS 选择器获取页面元素可能是更为简单的选择，因为浏览器中运行的 JavaScript 本身就可以<code>document</code>对象的<code>querySelector()</code>和<code>querySelectorAll()</code>方法基于 CSS 选择器获取页面元素。在 Python 中，我们可以利用三方库<code>beautifulsoup4</code>或<code>pyquery</code>来做同样的事情。Beautiful Soup 可以用来解析 HTML 和 XML 文档，修复含有未闭合标签等错误的文档，通过为待解析的页面在内存中创建一棵树结构，实现对从页面中提取数据操作的封装。可以用下面的命令来安装 Beautiful Soup。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">pip</span> <span class="n">install</span> <span class="n">beautifulsoup4</span>
+</code></pre></div>
+<p>下面是使用<code>bs4</code>改写的获取豆瓣电影Top250电影名称的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">bs4</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span> <span class="nn">requests</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://movie.douban.com/top250?start=</span><span class="si">{</span><span class="p">(</span><span class="n">page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">25</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;BaiduSpider&#39;</span><span class="p">}</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="c1"># 创建BeautifulSoup对象</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="o">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="c1"># 通过CSS选择器从页面中提取包含电影标题的span标签</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">title_spans</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;div.info &gt; div.hd &gt; a &gt; span:nth-child(1)&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="c1"># 通过CSS选择器从页面中提取包含电影评分的span标签</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">rank_spans</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;div.info &gt; div.bd &gt; div &gt; span.rating_num&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="k">for</span> <span class="n">title_span</span><span class="p">,</span> <span class="n">rank_span</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">title_spans</span><span class="p">,</span> <span class="n">rank_spans</span><span class="p">):</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">title_span</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">rank_span</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+<p>关于 BeautifulSoup 更多的知识，可以参考它的<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/">官方文档</a>。</p>
+<h3 id="_1">简单的总结</h3>
+<p>下面我们对三种解析方式做一个简单比较。</p>
+<table>
+<thead>
+<tr>
+<th>解析方式</th>
+<th>对应的模块</th>
+<th>速度</th>
+<th>使用难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正则表达式解析</td>
+<td><code>re</code></td>
+<td>快</td>
+<td>困难</td>
+</tr>
+<tr>
+<td>XPath 解析</td>
+<td><code>lxml</code></td>
+<td>快</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>CSS 选择器解析</td>
+<td><code>bs4</code>或<code>pyquery</code></td>
+<td>不确定</td>
+<td>简单</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

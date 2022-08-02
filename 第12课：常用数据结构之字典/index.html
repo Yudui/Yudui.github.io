@@ -1,0 +1,602 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第12课：常用数据结构之字典 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#12" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第12课：常用数据结构之字典
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    第12课：常用数据结构之字典
+  </a>
+  
+    <nav class="md-nav" aria-label="第12课：常用数据结构之字典">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    创建和使用字典
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    字典的运算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    字典的方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    字典的应用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第12课：常用数据结构之字典</h1>
+
+<h2 id="12">第12课：常用数据结构之字典</h2>
+<p>迄今为止，我们已经为大家介绍了Python中的三种容器型数据类型，但是这些数据类型仍然不足以帮助我们解决所有的问题。例如，我们要保存一个人的信息，包括姓名、年龄、体重、单位地址、家庭住址、本人手机号、紧急联系人手机号等信息，你会发现我们之前学过的列表、元组和集合都不是最理想的选择。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">person1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;科华北路62号&#39;</span><span class="p">,</span> <span class="s1">&#39;中同仁路8号&#39;</span><span class="p">,</span> <span class="s1">&#39;13122334455&#39;</span><span class="p">,</span> <span class="s1">&#39;13800998877&#39;</span><span class="p">]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">person2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;科华北路62号&#39;</span><span class="p">,</span> <span class="s1">&#39;中同仁路8号&#39;</span><span class="p">,</span> <span class="s1">&#39;13122334455&#39;</span><span class="p">,</span> <span class="s1">&#39;13800998877&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">person3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;科华北路62号&#39;</span><span class="p">,</span> <span class="s1">&#39;中同仁路8号&#39;</span><span class="p">,</span> <span class="s1">&#39;13122334455&#39;</span><span class="p">,</span> <span class="s1">&#39;13800998877&#39;</span><span class="p">}</span>
+</code></pre></div>
+<p>集合肯定是最不合适的，因为集合有去重特性，如果一个人的年龄和体重相同，那么集合中就会少一项信息；同理，如果这个人的家庭住址和单位地址是相同的，那么集合中又会少一项信息。另一方面，虽然列表和元组可以把一个人的所有信息都保存下来，但是当你想要获取这个人的手机号时，你得先知道他的手机号是列表或元组中的第6个还是第7个元素；当你想获取一个人的家庭住址时，你还得知道家庭住址是列表或元组中的第几项。总之，在遇到上述的场景时，列表、元组、字典都不是最合适的选择，我们还需字典（dictionary）类型，这种数据类型最适合把相关联的信息组装到一起，并且可以帮助我们解决程序中为真实事物建模的问题。</p>
+<p>说到字典这个词，大家一定不陌生，读小学的时候每个人基本上都有一本《新华字典》，如下图所示。</p>
+<p><img alt="dictionary" src="https://github.com/jackfrued/mypic/raw/master/20210820204829.jpg" /></p>
+<p>Python程序中的字典跟现实生活中的字典很像，它以键值对（键和值的组合）的方式把数据组织到一起，我们可以通过键找到与之对应的值并进行操作。就像《新华字典》中，每个字（键）都有与它对应的解释（值）一样，每个字和它的解释合在一起就是字典中的一个条目，而字典中通常包含了很多个这样的条目。</p>
+<h3 id="_1">创建和使用字典</h3>
+<p>在Python中创建字典可以使用<code>{}</code>字面量语法，这一点跟上一节课讲的集合是一样的。但是字典的<code>{}</code>中的元素是以键值对的形式存在的，每个元素由<code>:</code>分隔的两个值构成，<code>:</code>前面是键，<code>:</code>后面是值，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">xinhua</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="s1">&#39;麓&#39;</span><span class="p">:</span> <span class="s1">&#39;山脚下&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="s1">&#39;路&#39;</span><span class="p">:</span> <span class="s1">&#39;道，往来通行的地方；方面，地区：南～货，外～货；种类：他俩是一～人&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="s1">&#39;蕗&#39;</span><span class="p">:</span> <span class="s1">&#39;甘草的别名&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="s1">&#39;潞&#39;</span><span class="p">:</span> <span class="s1">&#39;潞水，水名，即今山西省的浊漳河；潞江，水名，即云南省的怒江&#39;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">xinhua</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">person</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;office&#39;</span><span class="p">:</span> <span class="s1">&#39;科华北路62号&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="s1">&#39;中同仁路8号&#39;</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span><span class="p">:</span> <span class="s1">&#39;13122334455&#39;</span><span class="p">,</span> <span class="s1">&#39;econtact&#39;</span><span class="p">:</span> <span class="s1">&#39;13800998877&#39;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">}</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+</code></pre></div>
+<p>通过上面的代码，相信大家已经看出来了，用字典来保存一个人的信息远远优于使用列表或元组，因为我们可以用<code>:</code>前面的键来表示条目的含义，而<code>:</code>后面就是这个条目所对应的值。</p>
+<p>当然，如果愿意，我们也可以使用内置函数<code>dict</code>或者是字典的生成式语法来创建字典，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># dict函数(构造器)中的每一组参数就是字典中的一组键值对</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">person</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s1">&#39;中同仁路8号&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>    <span class="c1"># {&#39;name&#39;: &#39;王大锤&#39;, &#39;age&#39;: 55, &#39;weight&#39;: 60, &#39;home&#39;: &#39;中同仁路8号&#39;}</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># 可以通过Python内置函数zip压缩两个序列并创建字典</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">items1</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="s1">&#39;ABCDE&#39;</span><span class="p">,</span> <span class="s1">&#39;12345&#39;</span><span class="p">))</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">items1</span><span class="p">)</span>    <span class="c1"># {&#39;A&#39;: &#39;1&#39;, &#39;B&#39;: &#39;2&#39;, &#39;C&#39;: &#39;3&#39;, &#39;D&#39;: &#39;4&#39;, &#39;E&#39;: &#39;5&#39;}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">items2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="s1">&#39;ABCDE&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">items2</span><span class="p">)</span>    <span class="c1"># {&#39;A&#39;: 1, &#39;B&#39;: 2, &#39;C&#39;: 3, &#39;D&#39;: 4, &#39;E&#39;: 5}</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># 用字典生成式语法创建字典</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">items3</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">)</span>     <span class="c1"># {1: 1, 2: 8, 3: 27, 4: 64, 5: 125}</span>
+</code></pre></div>
+<p>想知道字典中一共有多少组键值对，仍然是使用<code>len</code>函数；如果想对字典进行遍历，可以用<code>for</code>循环，但是需要注意，<code>for</code>循环只是对字典的键进行了遍历，不过没关系，在讲完字典的运算后，我们可以通过字典的键获取到和这个键对应的值。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">person</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;office&#39;</span><span class="p">:</span> <span class="s1">&#39;科华北路62号&#39;</span><span class="p">}</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">person</span><span class="p">))</span>    <span class="c1"># 4</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">person</span><span class="p">:</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_2">字典的运算</h3>
+<p>对于字典类型来说，成员运算和索引运算肯定是最为重要的，前者可以判定指定的键在不在字典中，后者可以通过键获取对应的值或者向字典中加入新的键值对。值得注意的是，字典的索引不同于列表的索引，列表中的元素因为有属于自己有序号，所以列表的索引是一个整数；字典中因为保存的是键值对，所以字典的索引是键值对中的键，通过索引操作可以修改原来的值或者向字典中存入新的键值对。需要<strong>特别提醒</strong>大家注意的是，<strong>字典中的键必须是不可变类型</strong>，例如整数（<code>int</code>）、浮点数（<code>float</code>）、字符串（<code>str</code>）、元组（<code>tuple</code>）等类型的值；显然，列表（<code>list</code>）和集合（<code>set</code>）是不能作为字典中的键的，当然字典类型本身也不能再作为字典中的键，因为字典也是可变类型，但是字典可以作为字典中的值。关于可变类型不能作为字典中的键的原因，我们在后面的课程中再为大家详细说明。这里，我们先看看下面的代码，了解一下字典的成员运算和索引运算。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">person</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;office&#39;</span><span class="p">:</span> <span class="s1">&#39;科华北路62号&#39;</span><span class="p">}</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># 检查name和tel两个键在不在person字典中</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">person</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span> <span class="ow">in</span> <span class="n">person</span><span class="p">)</span>    <span class="c1"># True False</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 通过age修将person字典中对应的值修改为25</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">if</span> <span class="s1">&#39;age&#39;</span> <span class="ow">in</span> <span class="n">person</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">person</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">25</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># 通过索引操作向person字典中存入新的键值对</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">person</span><span class="p">[</span><span class="s1">&#39;tel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;13122334455&#39;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">person</span><span class="p">[</span><span class="s1">&#39;signature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;你的男朋友是一个盖世垃圾，他会踏着五彩祥云去迎娶你的闺蜜&#39;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">person</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span> <span class="ow">in</span> <span class="n">person</span><span class="p">)</span>    <span class="c1"># True True</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># 检查person字典中键值对的数量</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">person</span><span class="p">))</span>    <span class="c1"># 6</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1"># 对字典的键进行循环并通索引运算获取键对应的值</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">person</span><span class="p">:</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">person</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>需要注意，在通过索引运算获取字典中的值时，如指定的键没有在字典中，将会引发<code>KeyError</code>异常。</p>
+<h3 id="_3">字典的方法</h3>
+<p>字典类型的方法基本上都跟字典的键值对操作相关，可以通过下面的例子来了解这些方法的使用。例如，我们要用一个字典来保存学生的信息，我们可以使用学生的学号作为字典中的键，通过学号做索引运算就可以得到对应的学生；我们可以把字典的值也做成一个字典，这样就可以用多组键值对分别存储学生的姓名、性别、年龄、籍贯等信息，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 字典中的值又是一个字典(嵌套的字典)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">students</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="mi">1001</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;狄仁杰&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span> <span class="s1">&#39;place&#39;</span><span class="p">:</span> <span class="s1">&#39;山西大同&#39;</span><span class="p">},</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="mi">1002</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;白元芳&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s1">&#39;place&#39;</span><span class="p">:</span> <span class="s1">&#39;河北保定&#39;</span><span class="p">},</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="mi">1003</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;武则天&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;place&#39;</span><span class="p">:</span> <span class="s1">&#39;四川广元&#39;</span><span class="p">}</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># 使用get方法通过键获取对应的值，如果取不到不会引发KeyError异常而是返回None或设定的默认值</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1002</span><span class="p">))</span>    <span class="c1"># {&#39;name&#39;: &#39;白元芳&#39;, &#39;sex&#39;: True, &#39;age&#39;: 23, &#39;place&#39;: &#39;河北保定&#39;}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1005</span><span class="p">))</span>    <span class="c1"># None</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1005</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;无名氏&#39;</span><span class="p">}))</span>    <span class="c1"># {&#39;name&#39;: &#39;无名氏&#39;}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># 获取字典中所有的键</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>      <span class="c1"># dict_keys([1001, 1002, 1003])</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1"># 获取字典中所有的值</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>    <span class="c1"># dict_values([{...}, {...}, {...}])</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="c1"># 获取字典中所有的键值对</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>     <span class="c1"># dict_items([(1001, {...}), (1002, {....}), (1003, {...})])</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="c1"># 对字典中所有的键值对进行循环遍历</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">students</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;---&gt;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="c1"># 使用pop方法通过键删除对应的键值对并返回该值</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="n">stu1</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1002</span><span class="p">)</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">stu1</span><span class="p">)</span>             <span class="c1"># {&#39;name&#39;: &#39;白元芳&#39;, &#39;sex&#39;: True, &#39;age&#39;: 23, &#39;place&#39;: &#39;河北保定&#39;}</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">students</span><span class="p">))</span>    <span class="c1"># 2</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="c1"># stu2 = students.pop(1005)    # KeyError: 1005</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="n">stu2</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1005</span><span class="p">,</span> <span class="p">{})</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="nb">print</span><span class="p">(</span><span class="n">stu2</span><span class="p">)</span>             <span class="c1"># {}</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="c1"># 使用popitem方法删除字典中最后一组键值对并返回对应的二元组</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="c1"># 如果字典中没有元素，调用该方法将引发KeyError异常</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="n">popitem</span><span class="p">()</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>    <span class="c1"># 1003 {&#39;name&#39;: &#39;武则天&#39;, &#39;sex&#39;: False, &#39;age&#39;: 20, &#39;place&#39;: &#39;四川广元&#39;}</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="c1"># 如果这个键在字典中存在，setdefault返回原来与这个键对应的值</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="c1"># 如果这个键在字典中不存在，向字典中添加键值对，返回第二个参数的值，默认为None</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="n">result</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="mi">1005</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;方启鹤&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>        <span class="c1"># {&#39;name&#39;: &#39;方启鹤&#39;, &#39;sex&#39;: True}</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">)</span>      <span class="c1"># {1001: {...}, 1005: {...}}</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="c1"># 使用update更新字典元素，相同的键会用新值覆盖掉旧值，不同的键会添加到字典中</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="n">others</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>    <span class="mi">1005</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;乔峰&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span> <span class="s1">&#39;place&#39;</span><span class="p">:</span> <span class="s1">&#39;北京大兴&#39;</span><span class="p">},</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>    <span class="mi">1010</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;王语嫣&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">19</span><span class="p">},</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>    <span class="mi">1008</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;钟灵&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a><span class="p">}</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="n">students</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">others</span><span class="p">)</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">)</span>      <span class="c1"># {1001: {...}, 1005: {...}, 1010: {...}, 1008: {...}}</span>
+</code></pre></div>
+<p>跟列表一样，从字典中删除元素也可以使用<code>del</code>关键字，在删除元素的时候如果指定的键索引不到对应的值，一样会引发<code>KeyError</code>异常，具体的做法如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">person</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">del</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>    <span class="c1"># {&#39;name&#39;: &#39;王大锤&#39;, &#39;sex&#39;: True}</span>
+</code></pre></div>
+<h3 id="_4">字典的应用</h3>
+<p>我们通过几个简单的例子来讲解字典的应用。</p>
+<p><strong>例子1</strong>：输入一段话，统计每个英文字母出现的次数。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">sentence</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;请输入一段话: &#39;</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">counter</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="k">if</span> <span class="s1">&#39;A&#39;</span> <span class="o">&lt;=</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="s1">&#39;Z&#39;</span> <span class="ow">or</span> <span class="s1">&#39;a&#39;</span> <span class="o">&lt;=</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="n">counter</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;字母</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">出现了</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">次.&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>例子2</strong>：在一个字典中保存了股票的代码和价格，找出股价大于100元的股票并创建一个新的字典。</p>
+<blockquote>
+<p><strong>说明</strong>：可以用字典的生成式语法来创建这个新字典。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">stocks</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="s1">&#39;AAPL&#39;</span><span class="p">:</span> <span class="mf">191.88</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="s1">&#39;GOOG&#39;</span><span class="p">:</span> <span class="mf">1186.96</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="s1">&#39;IBM&#39;</span><span class="p">:</span> <span class="mf">149.24</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="s1">&#39;ORCL&#39;</span><span class="p">:</span> <span class="mf">48.44</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="s1">&#39;ACN&#39;</span><span class="p">:</span> <span class="mf">166.89</span><span class="p">,</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="s1">&#39;FB&#39;</span><span class="p">:</span> <span class="mf">208.09</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="s1">&#39;SYMC&#39;</span><span class="p">:</span> <span class="mf">21.29</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">}</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">stocks2</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">stocks</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">}</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">stocks2</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_5">简单的总结</h3>
+<p>Python程序中的字典跟现实生活中字典非常像，允许我们<strong>以键值对的形式保存数据</strong>，再<strong>通过键索引对应的值</strong>。这是一种非常<strong>有利于数据检索</strong>的数据类型，底层原理我们在后续的课程中为大家讲解。再次提醒大家注意，<strong>字典中的键必须是不可变类型</strong>，字典中的值可以是任意类型。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

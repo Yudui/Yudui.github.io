@@ -1,0 +1,609 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第02课：第一个Python程序 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#02python" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第02课：第一个Python程序
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#02python" class="md-nav__link">
+    第02课：第一个Python程序
+  </a>
+  
+    <nav class="md-nav" aria-label="第02课：第一个Python程序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    编写代码的工具
+  </a>
+  
+    <nav class="md-nav" aria-label="编写代码的工具">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    交互式环境
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-ipython" class="md-nav__link">
+    更好的交互式环境 - IPython
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-visual-studio-code" class="md-nav__link">
+    文本编辑器 - Visual Studio Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-pycharm" class="md-nav__link">
+    集成开发环境 - PyCharm
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hello-world" class="md-nav__link">
+    hello, world
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    运行程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    注释你的代码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第02课：第一个Python程序</h1>
+
+<h2 id="02python">第02课：第一个Python程序</h2>
+<p>在上一课中，我们已经了解了Python语言并安装了运行Python程序所需的环境，相信大家已经迫不及待的想开始自己的Python编程之旅了。首先我们来看看应该在哪里编写我们的Python程序。</p>
+<h3 id="_1">编写代码的工具</h3>
+<h4 id="_2">交互式环境</h4>
+<p>我们打开Windows的“命令提示符”工具，输入命令<code>python</code>然后回车就可以进入到Python的交互式环境中。所谓交互式环境，就是我们输入一行代码回车，代码马上会被执行，如果代码有产出结果，那么结果会被显示在窗口中。例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Python <span class="m">3</span>.7.6
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for</span> more information.
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>&gt;&gt;&gt; <span class="m">2</span> * <span class="m">3</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="m">6</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>&gt;&gt;&gt; <span class="m">2</span> + <span class="m">3</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="m">5</span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：使用macOS系统的用户需要打开“终端”工具，输入<code>python3</code>进入交互式环境。</p>
+</blockquote>
+<p>如果希望退出交互式环境，可以在交互式环境中输入<code>quit()</code>，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&gt;&gt;&gt; quit<span class="o">()</span>
+</code></pre></div>
+<h4 id="-ipython">更好的交互式环境 - IPython</h4>
+<p>Python默认的交互式环境用户体验并不怎么好，我们可以用IPython来替换掉它，因为IPython提供了更为强大的编辑和交互功能。我们可以使用Python的包管理工具<code>pip</code>来安装IPython，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip install ipython
+</code></pre></div>
+<blockquote>
+<p><strong>温馨提示</strong>：在使用上面的命令安装IPython之前，可以先通过<code>pip config set global.index-url https://pypi.doubanio.com/simple</code>命令将<code>pip</code>的下载源修改为国内的豆瓣网，否则下载安装的过程可能会非常的缓慢。</p>
+</blockquote>
+<p>可以使用下面的命令启动IPython，进入交互式环境。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ipython
+</code></pre></div>
+<h4 id="-visual-studio-code">文本编辑器 - Visual Studio Code</h4>
+<p>Visual Studio Code（通常简称为VSCode）是一个由微软开发能够在Windows、 Linux和macOS等操作系统上运行的代码编辑神器。它支持语法高亮、自动补全、多点编辑、运行调试等一系列便捷功能，而且能够支持多种编程语言。如果大家要选择一款高级文本编辑工具，强烈建议使用VSCode。关于VSCode的<a href="https://code.visualstudio.com/">下载</a>、安装和使用，推荐大家阅读一篇名为<a href="https://zhuanlan.zhihu.com/p/106357123">《VScode安装使用》</a>的文章。</p>
+<h4 id="-pycharm">集成开发环境 - PyCharm</h4>
+<p>如果用Python开发商业项目，我们推荐大家使用更为专业的工具PyCharm。PyCharm是由捷克一家名为<a href="https://www.jetbrains.com/">JetBrains</a>的公司开发的用于Python项目开发的集成开发环境（IDE)。所谓集成开发环境，通常是指工具中提供了编写代码、运行代码、调试代码、分析代码、版本控制等一系列功能，因此特别适合商业项目的开发。在JetBrains的官方网站上提供了PyCharm的<a href="https://www.jetbrains.com/pycharm/download">下载链接</a>，其中社区版（Community）是免费的但功能相对弱小（其实已经足够强大了），专业版（Professional）功能非常强大，但需要按年或月付费使用，新用户可以试用30天时间。</p>
+<p>运行PyCharm，可以看到如下图所示的欢迎界面，可以选择“New Project”来创建一个新的项目。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210720102203.png" width="80%"></p>
+<p>创建项目的时候需要指定项目的路径并创建运行项目的”虚拟环境“，如下图所示。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210720102822.png" width="80%"></p>
+<p>项目创建好以后会出现如下图所示的画面，我们可以通过在项目文件夹上点击鼠标右键，选择“New”菜单下的“Python File”来创建一个Python文件，创建好的Python文件会自动打开进入可编辑的状态。</p>
+<p><img alt="image-20210720133621079" src="https://github.com/jackfrued/mypic/raw/master/20210720133621.png" /></p>
+<p>写好代码后，可以在编辑代码的窗口点击鼠标右键，选择“Run”菜单项来运行代码，下面的“Run”窗口会显示代码的执行结果，如下图所示。</p>
+<p><img alt="image-20210720134039848" src="https://github.com/jackfrued/mypic/raw/master/20210720134039.png" /></p>
+<p>PyCharm常用的快捷键如下表所示，我们也可以在“File”菜单的“Settings”中定制PyCharm的快捷键（macOS系统是在“PyCharm”菜单的“Preferences”中对快捷键进行设置）。</p>
+<p>表1. PyCharm常用快捷键。</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctrl + j</code></td>
+<td>显示可用的代码模板</td>
+</tr>
+<tr>
+<td><code>ctrl + b</code></td>
+<td>查看函数、类、方法的定义</td>
+</tr>
+<tr>
+<td><code>ctrl + alt + l</code></td>
+<td>格式化代码</td>
+</tr>
+<tr>
+<td><code>alt + enter</code></td>
+<td>万能代码修复快捷键</td>
+</tr>
+<tr>
+<td><code>ctrl + /</code></td>
+<td>注释/反注释代码</td>
+</tr>
+<tr>
+<td><code>shift + shift</code></td>
+<td>万能搜索快捷键</td>
+</tr>
+<tr>
+<td><code>ctrl + d</code> / <code>ctrl + y</code></td>
+<td>复制/删除一行代码</td>
+</tr>
+<tr>
+<td><code>ctrl + shift + -</code> / <code>ctrl + shift + +</code></td>
+<td>折叠/展开所有代码</td>
+</tr>
+<tr>
+<td><code>F2</code></td>
+<td>快速定位到错误代码</td>
+</tr>
+<tr>
+<td><code>ctrl + alt + F7</code></td>
+<td>查看哪些地方用到了指定的函数、类、方法</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>说明</strong>：使用macOS系统，可以将上面的<code>ctrl</code>键换成<code>command</code>键，在macOS系统上，可以使用<code>ctrl + space</code>组合键来获得万能提示，在Windows系统上不能使用该快捷键，因为它跟Windows默认的切换输入法的快捷键是冲突的，需要重新设置。</p>
+</blockquote>
+<h3 id="hello-world">hello, world</h3>
+<p>按照行业惯例，我们学习任何一门编程语言写的第一个程序都是输出<code>hello, world</code>，因为这段代码是伟大的丹尼斯·里奇（C语言之父，和肯·汤普森一起开发了Unix操作系统）和布莱恩·柯尼汉（awk语言的发明者）在他们的不朽著作<em>The C Programming Language</em>中写的第一段代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello, world&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_3">运行程序</h3>
+<p>如果不使用PyCharm这样的集成开发环境，我们可以将上面的代码命名为<code>hello.py</code>，对于Windows操作系统，可以在你保存代码的目录下先按住键盘上的<code>shift</code>键再点击鼠标右键，这时候鼠标右键菜单中会出现“命令提示符”选项，点击该选项就可以打开“命令提示符”工具，我们输入下面的命令。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python hello.py
+</code></pre></div>
+<blockquote>
+<p><strong>提醒</strong>：我们也可以在任意位置打开“命令提示符”，然后将需要执行的Python代码通过拖拽的方式拖入到“命令提示符”中，这样相当于指定了文件的绝对路径来运行该文件中的Python代码。再次提醒，macOS系统要通过<code>python3</code>命令来运行该程序。</p>
+</blockquote>
+<p>你可以尝试将上面程序单引号中的<code>hello, world</code>换成其他内容；你也可以尝试着多写几个这样的语句，看看会运行出怎样的结果。需要提醒大家，上面代码中的<code>print('hello, world')</code>就是一条完整的语句，我们用Python写程序，最好每一行代码中只有一条语句。虽然使用<code>;</code>分隔符可以将多个语句写在一行代码中，但是最好不要这样做，因为代码会变得非常难看。</p>
+<h3 id="_4">注释你的代码</h3>
+<p>注释是编程语言的一个重要组成部分，用于在源代码中解释代码的作用从而增强程序的可读性。当然，我们也可以将源代码中暂时不需要运行的代码段通过注释来去掉，这样当你需要重新使用这些代码的时候，去掉注释符号就可以了。简单的说，<strong>注释会让代码更容易看懂但不会影响程序的执行结果</strong>。</p>
+<p>Python中有两种形式的注释：</p>
+<ol>
+<li>单行注释：以<code>#</code>和空格开头，可以注释掉从<code>#</code>开始后面一整行的内容。</li>
+<li>多行注释：三个引号开头，三个引号结尾，通常用于添加多行说明性内容。</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="sd">第一个Python程序 - hello, world</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># print(&#39;hello, world&#39;)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;你好，世界！&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_5">总结</h3>
+<p>到这里，我们已经把第一个Python程序运行起来了，是不是很有成就感？只要你坚持学习下去，再过一段时间，我们就可以用Python制作小游戏、编写爬虫程序、完成办公自动化操作等。<strong>写程序本身就是一件很酷的事情</strong>，在未来编程就像英语一样，<strong>对很多人来说或都是必须要掌握的技能</strong>。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

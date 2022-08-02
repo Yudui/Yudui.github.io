@@ -1,0 +1,778 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第46课.视图+函数+过程 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第46课.视图+函数+过程
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    视图、函数和过程
+  </a>
+  
+    <nav class="md-nav" aria-label="视图、函数和过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    视图
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    其他内容
+  </a>
+  
+    <nav class="md-nav" aria-label="其他内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    范式理论
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    数据完整性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    数据一致性
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第46课.视图+函数+过程</h1>
+
+<h2 id="_1">视图、函数和过程</h2>
+<p>为了讲解视图、函数和过程，我们首先用下面的 DDL 和 DML 创建名为 hrs 的数据库并为其二维表添加如下所示的数据。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- 创建名为hrs的数据库并指定默认的字符集</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">create</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="o">`</span><span class="n">hrs</span><span class="o">`</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">charset</span><span class="w"> </span><span class="n">utf8mb4</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- 切换到hrs数据库</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">use</span><span class="w"> </span><span class="o">`</span><span class="n">hrs</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- 创建部门表</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_dept</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="o">`</span><span class="n">dname</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;名称&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="o">`</span><span class="n">dloc</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;所在地&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">-- 插入4个部门</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_dept</span><span class="o">`</span><span class="w"> </span><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;会计部&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;北京&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;研发部&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;成都&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;销售部&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;重庆&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;运维部&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;深圳&#39;</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1">-- 创建员工表</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_emp</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="o">`</span><span class="n">eno</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;员工编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;员工姓名&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="o">`</span><span class="n">job</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;员工职位&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="o">`</span><span class="n">mgr</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;主管编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;员工月薪&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="o">`</span><span class="n">comm</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;每月补贴&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;所在部门编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">eno</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_emp_mgr</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">mgr</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="n">tb_emp</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">eno</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_emp_dno</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="n">tb_dept</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="c1">-- 插入14个员工</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_emp</span><span class="o">`</span><span class="w"> </span><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">    </span><span class="p">(</span><span class="mi">7800</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;张三丰&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;总裁&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">9000</span><span class="p">,</span><span class="w"> </span><span class="mi">1200</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">    </span><span class="p">(</span><span class="mi">2056</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;乔峰&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;分析师&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7800</span><span class="p">,</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w"> </span><span class="mi">1500</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">    </span><span class="p">(</span><span class="mi">3088</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;李莫愁&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;设计师&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2056</span><span class="p">,</span><span class="w"> </span><span class="mi">3500</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">    </span><span class="p">(</span><span class="mi">3211</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;张无忌&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;程序员&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2056</span><span class="p">,</span><span class="w"> </span><span class="mi">3200</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">    </span><span class="p">(</span><span class="mi">3233</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;丘处机&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;程序员&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2056</span><span class="p">,</span><span class="w"> </span><span class="mi">3400</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">    </span><span class="p">(</span><span class="mi">3251</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;张翠山&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;程序员&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2056</span><span class="p">,</span><span class="w"> </span><span class="mi">4000</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">    </span><span class="p">(</span><span class="mi">5566</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;宋远桥&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;会计师&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7800</span><span class="p">,</span><span class="w"> </span><span class="mi">4000</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">    </span><span class="p">(</span><span class="mi">5234</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;郭靖&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;出纳&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5566</span><span class="p">,</span><span class="w"> </span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">    </span><span class="p">(</span><span class="mi">3344</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;黄蓉&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;销售主管&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7800</span><span class="p">,</span><span class="w"> </span><span class="mi">3000</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">    </span><span class="p">(</span><span class="mi">1359</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;胡一刀&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;销售员&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3344</span><span class="p">,</span><span class="w"> </span><span class="mi">1800</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">    </span><span class="p">(</span><span class="mi">4466</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;苗人凤&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;销售员&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3344</span><span class="p">,</span><span class="w"> </span><span class="mi">2500</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">    </span><span class="p">(</span><span class="mi">3244</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;欧阳锋&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;程序员&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3088</span><span class="p">,</span><span class="w"> </span><span class="mi">3200</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">    </span><span class="p">(</span><span class="mi">3577</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;杨过&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;会计&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5566</span><span class="p">,</span><span class="w"> </span><span class="mi">2200</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">    </span><span class="p">(</span><span class="mi">3588</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;朱九真&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;会计&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5566</span><span class="p">,</span><span class="w"> </span><span class="mi">2500</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<h3 id="_2">视图</h3>
+<p>视图是关系型数据库中将一组查询指令构成的结果集组合成可查询的数据表的对象。简单的说，视图就是虚拟的表，但与数据表不同的是，数据表是一种实体结构，而视图是一种虚拟结构，你也可以将视图理解为保存在数据库中被赋予名字的 SQL 语句。</p>
+<p>使用视图可以获得以下好处：</p>
+<ol>
+<li>可以将实体数据表隐藏起来，让外部程序无法得知实际的数据结构，让访问者可以使用表的组成部分而不是整个表，降低数据库被攻击的风险。</li>
+<li>在大多数的情况下视图是只读的（更新视图的操作通常都有诸多的限制），外部程序无法直接透过视图修改数据。</li>
+<li>重用 SQL 语句，将高度复杂的查询包装在视图表中，直接访问该视图即可取出需要的数据；也可以将视图视为数据表进行连接查询。</li>
+<li>视图可以返回与实体数据表不同格式的数据，在创建视图的时候可以对数据进行格式化处理。</li>
+</ol>
+<p>创建视图。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">create</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="o">`</span><span class="n">vw_emp_simple</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">as</span><span class="w"></span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">select</span><span class="w">  </span><span class="o">`</span><span class="n">eno</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="o">`</span><span class="n">job</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="k">from</span><span class="w">  </span><span class="o">`</span><span class="n">tb_emp</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：因为视图不包含数据，所以每次使用视图时，都必须执行查询以获得数据，如果你使用了连接查询、嵌套查询创建了较为复杂的视图，你可能会发现查询性能下降得很厉害。因此，在使用复杂的视图前，应该进行测试以确保其性能能够满足应用的需求。</p>
+</blockquote>
+<p>有了上面的视图，我们就可以使用之前讲过的 DCL， 限制某些用户只能从视图中获取员工信息，这样员工表中的工资（<code>sal</code>）、补贴（<code>comm</code>）等敏感字段便不会暴露给用户。下面的代码演示了如何从视图中获取数据。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">vw_emp_simple</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>查询结果：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>+------+-----------+--------------+-----+
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>| eno  | ename     | job          | dno |
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>+------+-----------+--------------+-----+
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>| 1359 | 胡二刀    | 销售员       |  30 |
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>| 2056 | 乔峰      | 分析师       |  20 |
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>| 3088 | 李莫愁    | 设计师       |  20 |
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>| 3211 | 张无忌    | 程序员       |  20 |
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>| 3233 | 丘处机    | 程序员       |  20 |
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>| 3244 | 欧阳锋    | 程序员       |  20 |
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>| 3251 | 张翠山    | 程序员       |  20 |
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>| 3344 | 黄蓉      | 销售主管     |  30 |
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>| 3577 | 杨过      | 会计         |  10 |
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>| 3588 | 朱九真    | 会计         |  10 |
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>| 4466 | 苗人凤    | 销售员       |  30 |
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>| 5234 | 郭靖      | 出纳         |  10 |
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>| 5566 | 宋远桥    | 会计师       |  10 |
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>| 7800 | 张三丰    | 总裁         |  20 |
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>+------+-----------+--------------+-----+
+</code></pre></div>
+<p>既然视图是一张虚拟的表，那么视图的中的数据可以更新吗？视图的可更新性要视具体情况而定，以下类型的视图是不能更新的：</p>
+<ol>
+<li>使用了聚合函数（<code>SUM</code>、<code>MIN</code>、<code>MAX</code>、<code>AVG</code>、<code>COUNT</code>等）、<code>DISTINCT</code>、<code>GROUP BY</code>、<code>HAVING</code>、<code>UNION</code>或者<code>UNION ALL</code>的视图。</li>
+<li><code>SELECT</code>中包含了子查询的视图。</li>
+<li><code>FROM</code>子句中包含了一个不能更新的视图的视图。</li>
+<li><code>WHERE</code>子句的子查询引用了<code>FROM</code>子句中的表的视图。</li>
+</ol>
+<p>删除视图。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">drop</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="o">`</span><span class="n">vw_emp_simple</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：如果希望更新视图，可以先用上面的命令删除视图，也可以通过<code>create or replace view</code>来更新视图。</p>
+</blockquote>
+<p>视图的规则和限制。</p>
+<ol>
+<li>视图可以嵌套，可以利用从其他视图中检索的数据来构造一个新的视图。视图也可以和表一起使用。</li>
+<li>创建视图时可以使用<code>order by</code>子句，但如果从视图中检索数据时也使用了<code>order by</code>，那么该视图中原先的<code>order by</code>会被覆盖。</li>
+<li>视图无法使用索引，也不会激发触发器（实际开发中因为性能等各方面的考虑，通常不建议使用触发器，所以我们也不对这个概念进行介绍）的执行。</li>
+</ol>
+<h3 id="_3">函数</h3>
+<p>MySQL 中的函数跟 Python 中的函数大同小异，因为函数都是用来封装功能上相对独立且会被重复使用的代码的。如果非要找出一些差别来，那么 MySQL 中的函数是可以执行 SQL 语句的。下面的例子，我们通过自定义函数实现了截断超长字符串的功能。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">delimiter</span><span class="w"> </span><span class="err">$$</span><span class="w"></span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">create</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">fn_truncate_string</span><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">content</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10000</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">max_length</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"></span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="k">sql</span><span class="w"></span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">begin</span><span class="w"></span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="k">declare</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">content</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="k">char_length</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">max_length</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="k">set</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">left</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">max_length</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="k">set</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="k">result</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;……&#39;</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">result</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="k">end</span><span class="w"> </span><span class="err">$$</span><span class="w"></span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="k">delimiter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明1</strong>：函数声明后面的<code>no sql</code>是声明函数体并没有使用 SQL 语句；如果函数体中需要通过 SQL 读取数据，需要声明为<code>reads sql data</code>。</p>
+<p><strong>说明2</strong>：定义函数前后的<code>delimiter</code>命令是为了修改终止符（定界符），因为函数体中的语句都是用<code>;</code>表示结束，如果不重新定义定界符，那么遇到的<code>;</code>的时候代码就会被截断执行，显然这不是我们想要的效果。</p>
+</blockquote>
+<p>在查询中调用自定义函数。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">select</span><span class="w"> </span><span class="n">fn_truncate_string</span><span class="p">(</span><span class="s1">&#39;和我在成都的街头走一走，直到所有的灯都熄灭了也不停留&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">short_string</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>+--------------------------------------+
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>| short_string                         |
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>+--------------------------------------+
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>| 和我在成都的街头走一……                 |
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>+--------------------------------------+
+</code></pre></div>
+<h3 id="_4">过程</h3>
+<p>过程（又称存储过程）是事先编译好存储在数据库中的一组 SQL 的集合，调用过程可以简化应用程序开发人员的工作，减少与数据库服务器之间的通信，对于提升数据操作的性能也是有帮助的。其实迄今为止，我们使用的 SQL 语句都是针对一个或多个表的单条语句，但在实际开发中经常会遇到某个操作需要多条 SQL 语句才能完成的情况。例如，电商网站在受理用户订单时，需要做以下一系列的处理。 </p>
+<ol>
+<li>通过查询来核对库存中是否有对应的物品以及库存是否充足。</li>
+<li>如果库存有物品，需要锁定库存以确保这些物品不再卖给别人， 并且要减少可用的物品数量以反映正确的库存量。</li>
+<li>如果库存不足，可能需要进一步与供应商进行交互或者至少产生一条系统提示消息。 </li>
+<li>不管受理订单是否成功，都需要产生流水记录，而且需要给对应的用户产生一条通知信息。 </li>
+</ol>
+<p>我们可以通过过程将复杂的操作封装起来，这样不仅有助于保证数据的一致性，而且将来如果业务发生了变动，只需要调整和修改过程即可。对于调用过程的用户来说，过程并没有暴露数据表的细节，而且执行过程比一条条的执行一组 SQL 要快得多。</p>
+<p>下面的过程实现 hrs 数据库中员工工资的普调，具体的规则是：<code>10</code>部门的员工薪资上浮<code>300</code>， <code>20</code>部门的员工薪资上浮<code>800</code>，<code>30</code>部门的员工薪资上浮<code>500</code>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">delimiter</span><span class="w"> </span><span class="err">$$</span><span class="w"></span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">create</span><span class="w"> </span><span class="k">procedure</span><span class="w"> </span><span class="n">sp_upgrade_salary</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">begin</span><span class="w"></span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="k">declare</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="nb">boolean</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="c1">-- 定义一个异常处理器</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="k">declare</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="k">handler</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">sqlexception</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">flag</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="c1">-- 开启事务环境</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="k">start</span><span class="w"> </span><span class="k">transaction</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="k">update</span><span class="w"> </span><span class="n">tb_emp</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">sal</span><span class="o">=</span><span class="n">sal</span><span class="o">+</span><span class="mi">300</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">dno</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="k">update</span><span class="w"> </span><span class="n">tb_emp</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">sal</span><span class="o">=</span><span class="n">sal</span><span class="o">+</span><span class="mi">800</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">dno</span><span class="o">=</span><span class="mi">20</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="k">update</span><span class="w"> </span><span class="n">tb_emp</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">sal</span><span class="o">=</span><span class="n">sal</span><span class="o">+</span><span class="mi">500</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">dno</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="c1">-- 提交或回滚事务</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">        </span><span class="k">commit</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="k">else</span><span class="w"></span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">        </span><span class="k">rollback</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="k">end</span><span class="w"> </span><span class="err">$$</span><span class="w"></span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="k">delimiter</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：上面的过程代码中使用了<code>start transaction</code>来开启事务环境，关于事务，在本课的最后有一个简单的介绍。为了确定代码中是否发生异常，从而提交或回滚事务，上面的过程中定义了一个名为<code>flag</code>的变量和一个异常处理器，如果发生了异常，<code>flag</code>将会被赋值为<code>0</code>，后面的分支结构会根据<code>flag</code>的值来决定是执行<code>commit</code>，还是执行<code>rollback</code>。</p>
+</blockquote>
+<p>调用过程。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">call</span><span class="w"> </span><span class="n">sp_upgrade_salary</span><span class="p">();</span><span class="w"></span>
+</code></pre></div>
+<p>删除过程。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">drop</span><span class="w"> </span><span class="k">procedure</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="n">sp_upgrade_salary</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>在过程中，我们可以定义变量、条件，可以使用分支和循环语句，可以通过游标操作查询结果，还可以使用事件调度器，这些内容我们暂时不在此处进行介绍。虽然我们说了很多过程的好处，但是在实际开发中，如果频繁的使用过程并将大量复杂的运算放到过程中，会给据库服务器造成巨大的压力，而数据库往往都是性能瓶颈所在，使用过程无疑是雪上加霜的操作。所以，对于互联网产品开发，我们一般建议让数据库只做好存储，复杂的运算和处理交给应用服务器上的程序去完成，如果应用服务器变得不堪重负了，我们可以比较容易的部署多台应用服务器来分摊这些压力。</p>
+<p>如果大家对上面讲到的视图、函数、过程包括我们没有讲到的触发器这些知识有兴趣，建议大家阅读 MySQL 的入门读物<a href="https://item.jd.com/12818982.html">《MySQL必知必会》</a>进行一般性了解即可，因为这些知识点在大家将来的工作中未必用得上，学了也可能仅仅是为了应付面试而已。</p>
+<h3 id="_5">其他内容</h3>
+<h4 id="_6">范式理论</h4>
+<p>范式理论是设计关系型数据库中二维表的指导思想。</p>
+<ol>
+<li>第一范式：数据表的每个列的值域都是由原子值组成的，不能够再分割。</li>
+<li>第二范式：数据表里的所有数据都要和该数据表的键（主键与候选键）有完全依赖关系。</li>
+<li>第三范式：所有非键属性都只和候选键有相关性，也就是说非键属性之间应该是独立无关的。</li>
+</ol>
+<blockquote>
+<p><strong>说明</strong>：实际工作中，出于效率的考虑，我们在设计表时很有可能做出反范式设计，即故意降低方式级别，增加冗余数据来获得更好的操作性能。</p>
+</blockquote>
+<h4 id="_7">数据完整性</h4>
+<ol>
+<li>
+<p>实体完整性 - 每个实体都是独一无二的</p>
+</li>
+<li>
+<p>主键（<code>primary key</code>） / 唯一约束（<code>unique</code>）</p>
+</li>
+<li>
+<p>引用完整性（参照完整性）- 关系中不允许引用不存在的实体</p>
+</li>
+<li>
+<p>外键（<code>foreign key</code>）</p>
+</li>
+<li>域（domain）完整性 - 数据是有效的</li>
+<li>
+<p>数据类型及长度</p>
+</li>
+<li>
+<p>非空约束（<code>not null</code>）</p>
+</li>
+<li>
+<p>默认值约束（<code>default</code>）</p>
+</li>
+<li>
+<p>检查约束（<code>check</code>）</p>
+<blockquote>
+<p><strong>说明</strong>：在 MySQL 8.x 以前，检查约束并不起作用。</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="_8">数据一致性</h4>
+<ol>
+<li>
+<p>事务：一系列对数据库进行读/写的操作，这些操作要么全都成功，要么全都失败。</p>
+</li>
+<li>
+<p>事务的 ACID 特性</p>
+</li>
+<li>原子性：事务作为一个整体被执行，包含在其中的对数据库的操作要么全部被执行，要么都不执行</li>
+<li>一致性：事务应确保数据库的状态从一个一致状态转变为另一个一致状态</li>
+<li>隔离性：多个事务并发执行时，一个事务的执行不应影响其他事务的执行</li>
+<li>
+<p>持久性：已被提交的事务对数据库的修改应该永久保存在数据库中</p>
+</li>
+<li>
+<p>MySQL 中的事务操作</p>
+</li>
+<li>
+<p>开启事务环境</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">start</span><span class="w"> </span><span class="k">transaction</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>提交事务</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">commit</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>回滚事务</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">rollback</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>查看事务隔离级别</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">show</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;transaction_isolation&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>+-----------------------+-----------------+
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>| Variable_name         | Value           |
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>+-----------------------+-----------------+
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>| transaction_isolation | REPEATABLE-READ |
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>+-----------------------+-----------------+
+</code></pre></div>
+<p>可以看出，MySQL 默认的事务隔离级别是<code>REPEATABLE-READ</code>。</p>
+</li>
+<li>
+<p>修改（当前会话）事务隔离级别</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">set</span><span class="w"> </span><span class="k">session</span><span class="w"> </span><span class="k">transaction</span><span class="w"> </span><span class="k">isolation</span><span class="w"> </span><span class="k">level</span><span class="w"> </span><span class="k">read</span><span class="w"> </span><span class="k">committed</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>重新查看事务隔离级别，结果如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>+-----------------------+----------------+
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>| Variable_name         | Value          |
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>+-----------------------+----------------+
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>| transaction_isolation | READ-COMMITTED |
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>+-----------------------+----------------+
+</code></pre></div>
+</li>
+</ol>
+<p>关系型数据库的事务是一个很大的话题，因为当存在多个并发事务访问数据时，就有可能出现三类读数据的问题（脏读、不可重复读、幻读）和两类更新数据的问题（第一类丢失更新、第二类丢失更新）。想了解这五类问题的，可以阅读我发布在 CSDN 网站上的<a href="https://blog.csdn.net/jackfrued/article/details/44921941">《Java面试题全集（上）》</a>一文的第80题。为了避免这些问题，关系型数据库底层是有对应的锁机制的，按锁定对象不同可以分为表级锁和行级锁，按并发事务锁定关系可以分为共享锁和独占锁。然而直接使用锁是非常麻烦的，为此数据库为用户提供了自动锁机制，只要用户指定适当的事务隔离级别，数据库就会通过分析 SQL 语句，然后为事务访问的资源加上合适的锁。此外，数据库还会维护这些锁通过各种手段提高系统的性能，这些对用户来说都是透明的。想了解 MySQL 事务和锁的细节知识，推荐大家阅读进阶读物<a href="https://item.jd.com/11220393.html">《高性能MySQL》</a>，这也是数据库方面的经典书籍。</p>
+<p>ANSI/ISO SQL 92标准定义了4个等级的事务隔离级别，如下表所示。需要说明的是，事务隔离级别和数据访问的并发性是对立的，事务隔离级别越高并发性就越差。所以要根据具体的应用来确定到底使用哪种事务隔离级别，这个地方没有万能的原则。</p>
+<p><img src="http://localhost/mypic/20211121225327.png" style="zoom:50%;"></p>
+<h3 id="_9">总结</h3>
+<p>关于 MySQL 的知识肯定远远不止上面列出的这些，比如 MySQL 性能调优、MySQL 运维相关工具、MySQL 数据的备份和恢复、监控 MySQL 服务、部署高可用架构等，这一系列的问题在这里都没有办法逐一展开来讨论，那就留到有需要的时候再进行讲解吧，各位读者也可以自行探索。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

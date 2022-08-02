@@ -1,0 +1,586 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第37课：并发编程在爬虫中的应用 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#37" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第37课：并发编程在爬虫中的应用
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#37" class="md-nav__link">
+    第37课：并发编程在爬虫中的应用
+  </a>
+  
+    <nav class="md-nav" aria-label="第37课：并发编程在爬虫中的应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    单线程版本
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    多线程版本
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    异步I/O版本
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第37课：并发编程在爬虫中的应用</h1>
+
+<h2 id="37">第37课：并发编程在爬虫中的应用</h2>
+<p>之前的课程，我们已经为大家介绍了 Python 中的多线程、多进程和异步编程，通过这三种手段，我们可以实现并发或并行编程，这一方面可以加速代码的执行，另一方面也可以带来更好的用户体验。爬虫程序是典型的 I/O 密集型任务，对于 I/O 密集型任务来说，多线程和异步 I/O 都是很好的选择，因为当程序的某个部分因 I/O 操作阻塞时，程序的其他部分仍然可以运转，这样我们不用在等待和阻塞中浪费大量的时间。下面我们以爬取“<a href="https://image.so.com/">360图片</a>”网站的图片并保存到本地为例，为大家分别展示使用单线程、多线程和异步 I/O 编程的爬虫程序有什么区别，同时也对它们的执行效率进行简单的对比。</p>
+<p>“360图片”网站的页面使用了 <a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/AJAX">Ajax</a> 技术，这是很多网站都会使用的一种异步加载数据和局部刷新页面的技术。简单的说，页面上的图片都是通过 JavaScript 代码异步获取 JSON 数据并动态渲染生成的，而且整个页面还使用了瀑布式加载（一边向下滚动，一边加载更多的图片）。我们在浏览器的“开发者工具”中可以找到提供动态内容的数据接口，如下图所示，我们需要的图片信息就在服务器返回的 JSON 数据中。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20211205221352.png" style="zoom:50%;"></p>
+<p>例如，要获取“美女”频道的图片，我们可以请求如下所示的URL，其中参数<code>ch</code>表示请求的频道，<code>=</code>后面的参数值<code>beauty</code>就代表了“美女”频道，参数<code>sn</code>相当于是页码，<code>0</code>表示第一页（共<code>30</code>张图片），<code>30</code>表示第二页，<code>60</code>表示第三页，以此类推。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://image.so.com/zjl?ch=beauty&amp;sn=0
+</code></pre></div>
+<h3 id="_1">单线程版本</h3>
+<p>通过上面的 URL 下载“美女”频道共<code>90</code>张图片。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="sd">example04.py - 单线程版本爬虫</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">import</span> <span class="nn">requests</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">def</span> <span class="nf">download_picture</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="p">[</span><span class="n">url</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;images/beauty/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;images/beauty&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;images/beauty&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://image.so.com/zjl?ch=beauty&amp;sn=</span><span class="si">{</span><span class="n">page</span> <span class="o">*</span> <span class="mi">30</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>            <span class="n">pic_dict_list</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;list&#39;</span><span class="p">]</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>            <span class="k">for</span> <span class="n">pic_dict</span> <span class="ow">in</span> <span class="n">pic_dict_list</span><span class="p">:</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>                <span class="n">download_picture</span><span class="p">(</span><span class="n">pic_dict</span><span class="p">[</span><span class="s1">&#39;qhimg_url&#39;</span><span class="p">])</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>在 macOS 或 Linux 系统上，我们可以使用<code>time</code>命令来了解上面代码的执行时间以及 CPU 的利用率，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">time</span> python3 example04.py 
+</code></pre></div>
+<p>下面是单线程爬虫代码在我的电脑上执行的结果。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3 example04.py  2.36s user 0.39s system 12% cpu 21.578 total
+</code></pre></div>
+<p>这里我们只需要关注代码的总耗时为<code>21.578</code>秒，CPU 利用率为<code>12%</code>。</p>
+<h3 id="_2">多线程版本</h3>
+<p>我们使用之前讲到过的线程池技术，将上面的代码修改为多线程版本。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="sd">example05.py - 多线程版本爬虫</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kn">import</span> <span class="nn">requests</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">def</span> <span class="nf">download_picture</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="p">[</span><span class="n">url</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;images/beauty/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;images/beauty&#39;</span><span class="p">):</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;images/beauty&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>            <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://image.so.com/zjl?ch=beauty&amp;sn=</span><span class="si">{</span><span class="n">page</span> <span class="o">*</span> <span class="mi">30</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>                <span class="n">pic_dict_list</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;list&#39;</span><span class="p">]</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>                <span class="k">for</span> <span class="n">pic_dict</span> <span class="ow">in</span> <span class="n">pic_dict_list</span><span class="p">:</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>                    <span class="n">pool</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">download_picture</span><span class="p">,</span> <span class="n">pic_dict</span><span class="p">[</span><span class="s1">&#39;qhimg_url&#39;</span><span class="p">])</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>执行如下所示的命令。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">time</span> python3 example05.py
+</code></pre></div>
+<p>代码的执行结果如下所示：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python3 example05.py  2.65s user 0.40s system 95% cpu 3.193 total
+</code></pre></div>
+<h3 id="io">异步I/O版本</h3>
+<p>我们使用<code>aiohttp</code>将上面的代码修改为异步 I/O 的版本。为了以异步 I/O 的方式实现网络资源的获取和写文件操作，我们首先得安装三方库<code>aiohttp</code>和<code>aiofile</code>，命令如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip install aiohttp aiofile
+</code></pre></div>
+<p><code>aiohttp</code> 的用法在之前的课程中已经做过简要介绍，<code>aiofile</code>模块中的<code>async_open</code>函数跟 Python 内置函数<code>open</code>的用法大致相同，只不过它支持异步操作。下面是异步 I/O 版本的爬虫代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="sd">example06.py - 异步I/O版本爬虫</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="kn">import</span> <span class="nn">asyncio</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kn">import</span> <span class="nn">json</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="kn">import</span> <span class="nn">aiofile</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="kn">import</span> <span class="nn">aiohttp</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">download_picture</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="p">[</span><span class="n">url</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>            <span class="k">async</span> <span class="k">with</span> <span class="n">aiofile</span><span class="o">.</span><span class="n">async_open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;images/beauty/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>                <span class="k">await</span> <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch_json</span><span class="p">():</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>                <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://image.so.com/zjl?ch=beauty&amp;sn=</span><span class="si">{</span><span class="n">page</span> <span class="o">*</span> <span class="mi">30</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>                <span class="n">ssl</span><span class="o">=</span><span class="kc">False</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>            <span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>                <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>                    <span class="n">json_str</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>                    <span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>                    <span class="k">for</span> <span class="n">pic_dict</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;list&#39;</span><span class="p">]:</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>                        <span class="k">await</span> <span class="n">download_picture</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">pic_dict</span><span class="p">[</span><span class="s1">&#39;qhimg_url&#39;</span><span class="p">])</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;images/beauty&#39;</span><span class="p">):</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a>        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;images/beauty&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a>    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">fetch_json</span><span class="p">())</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>    <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a>
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>执行如下所示的命令。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">time</span> python3 example06.py
+</code></pre></div>
+<p>代码的执行结果如下所示：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>python3 example06.py  0.82s user 0.21s system 27% cpu 3.782 total
+</code></pre></div>
+<h3 id="_3">总结</h3>
+<p>通过上面三段代码执行结果的比较，我们可以得出一个结论，使用多线程和异步 I/O 都可以改善爬虫程序的性能，因为我们不用将时间浪费在因 I/O 操作造成的等待和阻塞上，而<code>time</code>命令的执行结果也告诉我们，单线程的代码 CPU 利用率仅仅只有<code>12%</code>，而多线程版本的 CPU 利用率则高达<code>95%</code>；单线程版本的爬虫执行时间约<code>21</code>秒，而多线程和异步 I/O 的版本仅执行了<code>3</code>秒钟。另外，在运行时间差别不大的情况下，多线程的代码比异步 I/O 的代码耗费了更多的 CPU 资源，这是因为多线程的调度和切换也需要花费 CPU 时间。至此，三种方式在 I/O 密集型任务上的优劣已经一目了然，当然这只是在我的电脑上跑出来的结果。如果网络状况不是很理想或者目标网站响应很慢，那么使用多线程和异步 I/O 的优势将更为明显，有兴趣的读者可以自行试验。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

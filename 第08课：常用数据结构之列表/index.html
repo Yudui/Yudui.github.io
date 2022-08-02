@@ -1,0 +1,724 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第08课：常用数据结构之列表 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#08" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第08课：常用数据结构之列表
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#08" class="md-nav__link">
+    第08课：常用数据结构之列表
+  </a>
+  
+    <nav class="md-nav" aria-label="第08课：常用数据结构之列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    定义和使用列表
+  </a>
+  
+    <nav class="md-nav" aria-label="定义和使用列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    列表的运算符
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    列表元素的遍历
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    列表的方法
+  </a>
+  
+    <nav class="md-nav" aria-label="列表的方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    添加和删除元素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    元素位置和次数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    元素排序和反转
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    列表的生成式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    嵌套的列表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第08课：常用数据结构之列表</h1>
+
+<h2 id="08">第08课：常用数据结构之列表</h2>
+<p>在开始本节课的内容之前，我们先给大家一个编程任务，将一颗色子掷<code>6000</code>次，统计每个点数出现的次数。这个任务对大家来说应该是非常简单的，我们可以用<code>1</code>到<code>6</code>均匀分布的随机数来模拟掷色子，然后用<code>6</code>个变量分别记录每个点数出现的次数，相信大家都能写出下面的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">random</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">f1</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">f2</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">f3</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">f4</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">f5</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">f6</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6000</span><span class="p">):</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">face</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">if</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="n">f1</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="n">f2</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">f3</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">f4</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">f5</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">f6</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;1点出现了</span><span class="si">{</span><span class="n">f1</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;2点出现了</span><span class="si">{</span><span class="n">f2</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;3点出现了</span><span class="si">{</span><span class="n">f3</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;4点出现了</span><span class="si">{</span><span class="n">f4</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;5点出现了</span><span class="si">{</span><span class="n">f5</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;6点出现了</span><span class="si">{</span><span class="n">f6</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>看看上面的代码，相信大家一定觉得它非常的“笨重”和“丑陋”，更可怕的是，如果要统计掷两颗或者更多的色子统计每个点数出现的次数，那就需要定义更多的变量，写更多的分支结构。讲到这里，相信大家一定想问：有没有办法用一个变量来保存多个数据，有没有办法用统一的代码对多个数据进行操作？答案是肯定的，在Python中我们可以通过容器类型的变量来保存和操作多个数据，我们首先为大家介绍列表（list）这种新的数据类型。</p>
+<h3 id="_1">定义和使用列表</h3>
+<p>在Python中，<strong>列表是由一系元素按特定顺序构成的数据序列</strong>，这样就意味着定义一个列表类型的变量，<strong>可以保存多个数据</strong>，而且<strong>允许有重复的数据</strong>。跟上一课我们讲到的字符串类型一样，列表也是一种结构化的、非标量类型，操作一个列表类型的变量，除了可以使用运算符还可以使用它的方法。</p>
+<p>在Python中，可以使用<code>[]</code>字面量语法来定义列表，列表中的多个元素用逗号进行分隔，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">items1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">87</span><span class="p">]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">items2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">]</span>
+</code></pre></div>
+<p>除此以外，还可以通过Python内置的<code>list</code>函数将其他序列变成列表。准确的说，<code>list</code>并不是一个普通的函数，它是创建列表对象的构造器（后面会讲到对象和构造器这两个概念）。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">items1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">items1</span><span class="p">)</span>    <span class="c1"># [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">items2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">items2</span><span class="p">)</span>    <span class="c1"># [&#39;h&#39;, &#39;e&#39;, &#39;l&#39;, &#39;l&#39;, &#39;o&#39;]</span>
+</code></pre></div>
+<p>需要说明的是，列表是一种可变数据类型，也就是说列表可以添加元素、删除元素、更新元素，这一点跟我们上一课讲到的字符串有着鲜明的差别。字符串是一种不可变数据类型，也就是说对字符串做拼接、重复、转换大小写、修剪空格等操作的时候会产生新的字符串，原来的字符串并没有发生任何改变。</p>
+<h4 id="_2">列表的运算符</h4>
+<p>和字符串类型一样，列表也支持拼接、重复、成员运算、索引和切片以及比较运算，对此我们不再进行赘述，请大家参考下面的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">items1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">87</span><span class="p">]</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">items2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># 列表的拼接</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">items3</span> <span class="o">=</span> <span class="n">items1</span> <span class="o">+</span> <span class="n">items2</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">)</span>    <span class="c1"># [35, 12, 99, 68, 55, 87, 45, 8, 29]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># 列表的重复</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">items4</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">items4</span><span class="p">)</span>    <span class="c1"># [&#39;hello&#39;, &#39;hello&#39;, &#39;hello&#39;]</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># 列表的成员运算</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="ow">in</span> <span class="n">items3</span><span class="p">)</span>        <span class="c1"># False</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span> <span class="ow">in</span> <span class="n">items4</span><span class="p">)</span>    <span class="c1"># True</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="c1"># 获取列表的长度(元素个数)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items3</span><span class="p">)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>                 <span class="c1"># 9</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># 列表的索引</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">items3</span><span class="p">[</span><span class="o">-</span><span class="n">size</span><span class="p">])</span>        <span class="c1"># 35 35</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="n">items3</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">items3</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>    <span class="c1"># 100 100</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="c1"># 列表的切片</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>          <span class="c1"># [35, 12, 99, 68, 55]</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">[</span><span class="mi">4</span><span class="p">:])</span>          <span class="c1"># [55, 87, 45, 8, 100]</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">7</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>    <span class="c1"># [55, 68]</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">[::</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>        <span class="c1"># [100, 45, 55, 99, 35]</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="c1"># 列表的比较运算</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="n">items5</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="n">items6</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="c1"># 两个列表比较相等性比的是对应索引位置上的元素是否相等</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="nb">print</span><span class="p">(</span><span class="n">items5</span> <span class="o">==</span> <span class="n">items6</span><span class="p">)</span>    <span class="c1"># True</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="n">items7</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="c1"># 两个列表比较大小比的是对应索引位置上的元素的大小</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="nb">print</span><span class="p">(</span><span class="n">items5</span> <span class="o">&lt;=</span> <span class="n">items7</span><span class="p">)</span>    <span class="c1"># True</span>
+</code></pre></div>
+<p>值得一提的是，由于列表是可变类型，所以通过索引操作既可以获取列表中的元素，也可以更新列表中的元素。对列表做索引操作一样要注意索引越界的问题，对于有<code>N</code>个元素的列表，正向索引的范围是<code>0</code>到<code>N-1</code>，负向索引的范围是<code>-1</code>到<code>-N</code>，如果超出这个范围，将引发<code>IndexError</code>异常，错误信息为：<code>list index out of range</code>。</p>
+<h4 id="_3">列表元素的遍历</h4>
+<p>如果想逐个取出列表中的元素，可以使用<code>for</code>循环的，有以下两种做法。</p>
+<p>方法一：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">]</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)):</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+</code></pre></div>
+<p>方法二：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">]</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</code></pre></div>
+<p>讲到这里，我们可以用列表的知识来重构上面“掷色子统计每个点数出现次数”的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">random</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">counters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6000</span><span class="p">):</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">face</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">counters</span><span class="p">[</span><span class="n">face</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">face</span><span class="si">}</span><span class="s1">点出现了</span><span class="si">{</span><span class="n">counters</span><span class="p">[</span><span class="n">face</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">次&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>上面的代码中，我们用<code>counters</code>列表中的六个元素分别表示1到6的点数出现的次数，最开始的时候六个元素的值都是<code>0</code>。接下来用随机数模拟掷色子，如果摇出1点<code>counters[0]</code>的值加<code>1</code>，如果摇出2点<code>counters[1]</code>的值加<code>1</code>，以此类推。大家感受一下，这段代码是不是比之前的代码要简单优雅很多。</p>
+<h3 id="_4">列表的方法</h3>
+<p>和字符串一样，列表类型的方法也很多，下面为大家讲解比较重要的方法。</p>
+<h4 id="_5">添加和删除元素</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># 使用append方法在列表尾部添加元素</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Swift&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;Python&#39;, &#39;Java&#39;, &#39;Go&#39;, &#39;Kotlin&#39;, &#39;Swift&#39;]</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># 使用insert方法在列表指定索引位置插入元素</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;SQL&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;Python&#39;, &#39;Java&#39;, &#39;SQL&#39;, &#39;Go&#39;, &#39;Kotlin&#39;, &#39;Swift&#39;]</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># 删除指定的元素</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">items</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Java&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;Python&#39;, &#39;SQL&#39;, &#39;Go&#39;, &#39;Kotlin&#39;, &#39;Swift&#39;]</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># 删除指定索引位置的元素</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;SQL&#39;, &#39;Go&#39;, &#39;Kotlin&#39;]</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="c1"># 清空列表中的元素</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">items</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># []</span>
+</code></pre></div>
+<p>需要提醒大家，在使用<code>remove</code>方法删除元素时，如果要删除的元素并不在列表中，会引发<code>ValueError</code>异常，错误消息是：<code>list.remove(x): x not in list</code>。在使用<code>pop</code>方法删除元素时，如果索引的值超出了范围，会引发<code>IndexError</code>异常，错误消息是：<code>pop index out of range</code>。</p>
+<p>从列表中删除元素其实还有一种方式，就是使用Python中的<code>del</code>关键字后面跟要删除的元素，这种做法跟使用<code>pop</code>方法指定索引删除元素没有实质性的区别，但后者会返回删除的元素，前者在性能上略优（<code>del</code>对应字节码指令是<code>DELETE_SUBSCR</code>，而<code>pop</code>对应的字节码指令是<code>CALL_METHOD</code>和<code>POP_TOP</code>，不理解就跳过，不用管它！！！）。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">]</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">del</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;Python&#39;, &#39;Go&#39;, &#39;Kotlin&#39;]</span>
+</code></pre></div>
+<h4 id="_6">元素位置和次数</h4>
+<p>列表类型的<code>index</code>方法可以查找某个元素在列表中的索引位置；因为列表中允许有重复的元素，所以列表类型提供了<code>count</code>方法来统计一个元素在列表中出现的次数。请看下面的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># 查找元素的索引位置</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Python&#39;</span><span class="p">))</span>       <span class="c1"># 0</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>    <span class="c1"># 5</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># 注意：虽然列表中有&#39;Java&#39;，但是从索引为3这个位置开始后面是没有&#39;Java&#39;的</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>      <span class="c1"># ValueError: &#39;Java&#39; is not in list</span>
+</code></pre></div>
+<p>再来看看下面这段代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># 查找元素出现的次数</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;Python&#39;</span><span class="p">))</span>    <span class="c1"># 2</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;Go&#39;</span><span class="p">))</span>        <span class="c1"># 1</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;Swfit&#39;</span><span class="p">))</span>     <span class="c1"># 0</span>
+</code></pre></div>
+<h4 id="_7">元素排序和反转</h4>
+<p>列表的<code>sort</code>操作可以实现列表元素的排序，而<code>reverse</code>操作可以实现元素的反转，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Kotlin&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># 排序</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">items</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;Go&#39;, &#39;Java&#39;, &#39;Kotlin&#39;, &#39;Python&#39;, &#39;Python&#39;]</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># 反转</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">items</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>    <span class="c1"># [&#39;Python&#39;, &#39;Python&#39;, &#39;Kotlin&#39;, &#39;Java&#39;, &#39;Go&#39;]</span>
+</code></pre></div>
+<h3 id="_8">列表的生成式</h3>
+<p>在Python中，列表还可以通过一种特殊的字面量语法来创建，这种语法叫做生成式。我们给出两段代码，大家可以做一个对比，看看哪一种方式更加简单优雅。</p>
+<p>通过<code>for</code>循环为空列表添加元素。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 创建一个由1到9的数字构成的列表</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">items1</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="n">items1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">items1</span><span class="p">)</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># 创建一个由&#39;hello world&#39;中除空格和元音字母外的字符构成的列表</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="n">items2</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">&#39;hello world&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39; aeiou&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="n">items2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">items2</span><span class="p">)</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="c1"># 创建一个由个两个字符串中字符的笛卡尔积构成的列表</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">items3</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">&#39;ABC&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="s1">&#39;12&#39;</span><span class="p">:</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>        <span class="n">items3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">)</span>
+</code></pre></div>
+<p>通过生成式创建列表。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># 创建一个由1到9的数字构成的列表</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">items1</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">items1</span><span class="p">)</span>    <span class="c1"># [1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># 创建一个由&#39;hello world&#39;中除空格和元音字母外的字符构成的列表</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">items2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">&#39;hello world&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39; aeiou&#39;</span><span class="p">]</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">items2</span><span class="p">)</span>    <span class="c1"># [&#39;h&#39;, &#39;l&#39;, &#39;l&#39;, &#39;w&#39;, &#39;r&#39;, &#39;l&#39;, &#39;d&#39;]</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1"># 创建一个由个两个字符串中字符的笛卡尔积构成的列表</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">items3</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">&#39;ABC&#39;</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="s1">&#39;12&#39;</span><span class="p">]</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">items3</span><span class="p">)</span>    <span class="c1"># [&#39;A1&#39;, &#39;A2&#39;, &#39;B1&#39;, &#39;B2&#39;, &#39;C1&#39;, &#39;C2&#39;]</span>
+</code></pre></div>
+<p>下面这种方式不仅代码简单优雅，而且性能也优于上面使用<code>for</code>循环和<code>append</code>方法向空列表中追加元素的方式。可以简单跟大家交待下为什么生成式拥有更好的性能，那是因为Python解释器的字节码指令中有专门针对生成式的指令（<code>LIST_APPEND</code>指令）；而<code>for</code>循环是通过方法调用（<code>LOAD_METHOD</code>和<code>CALL_METHOD</code>指令）的方式为列表添加元素，方法调用本身就是一个相对耗时的操作。对这一点不理解也没有关系，记住“<strong>强烈建议用生成式语法来创建列表</strong>”这个结论就可以了。</p>
+<h3 id="_9">嵌套的列表</h3>
+<p>Python语言没有限定列表中的元素必须是相同的数据类型，也就是说一个列表中的元素可以任意的数据类型，当然也包括列表。如果列表中的元素又是列表，那么我们可以称之为嵌套的列表。嵌套的列表可以用来表示表格或数学上的矩阵，例如：我们想保存5个学生3门课程的成绩，可以定义一个保存5个元素的列表保存5个学生的信息，而每个列表元素又是3个元素构成的列表，分别代表3门课程的成绩。但是，一定要注意下面的代码是有问题的。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">scores</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>    <span class="c1"># [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]</span>
+</code></pre></div>
+<p>看上去我们好像创建了一个<code>5 * 3</code>的嵌套列表，但实际上当我们录入第一个学生的第一门成绩后，你就会发现问题来了，我们看看下面代码的输出。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># 嵌套的列表需要多次索引操作才能获取元素</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">scores</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">95</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># [[95, 0, 0], [95, 0, 0], [95, 0, 0], [95, 0, 0], [95, 0, 0]]</span>
+</code></pre></div>
+<p>我们不去过多的解释为什么会出现这样的问题，如果想深入研究这个问题，可以通过<a href="http://www.pythontutor.com/visualize.html">Python Tutor</a>网站的可视化代码执行功能，看看创建列表时计算机内存中发生了怎样的变化，下面的图就是在这个网站上生成的。建议大家不去纠结这个问题，现阶段只需要记住不能用<code>[[0] * 3] * 5]</code>这种方式来创建嵌套列表就行了。那么创建嵌套列表的正确做法是什么呢，下面的代码会给你答案。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">scores</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">scores</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">95</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># [[95, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]</span>
+</code></pre></div>
+<h3 id="_10">简单的总结</h3>
+<p>Python中的列表底层是一个可以动态扩容的数组，列表元素在内存中也是连续存储的，所以可以实现随机访问（通过一个有效的索引获取到对应的元素且操作时间与列表元素个数无关）。我们暂时不去触碰这些底层存储细节以及列表每个方法的渐近时间复杂度（执行这个方法耗费的时间跟列表元素个数的关系），等需要的时候再告诉大家。现阶段，大家只需要知道<strong>列表是容器</strong>，可以<strong>保存各种类型的数据</strong>，<strong>可以通过索引操作列表元素</strong>，知道这些就足够了。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

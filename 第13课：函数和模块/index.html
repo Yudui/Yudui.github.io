@@ -1,0 +1,761 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第13课：函数和模块 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#13" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第13课：函数和模块
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    第13课：函数和模块
+  </a>
+  
+    <nav class="md-nav" aria-label="第13课：函数和模块">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    函数的作用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    定义函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    函数的参数
+  </a>
+  
+    <nav class="md-nav" aria-label="函数的参数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    参数的默认值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    可变参数
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    用模块管理函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    标准库中的模块和函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第13课：函数和模块</h1>
+
+<h2 id="13">第13课：函数和模块</h2>
+<p>在讲解本节课的内容之前，我们先来研究一道数学题，请说出下面的方程有多少组正整数解。
+$$
+x_1 + x_2 + x_3 + x_4 = 8
+$$
+你可能已经想到了，这个问题其实等同于将<code>8</code>个苹果分成四组且每组至少一个苹果有多少种方案，因此该问题还可以进一步等价于在分隔<code>8</code>个苹果的<code>7</code>个空隙之间插入三个隔板将苹果分成四组有多少种方案，也就是从<code>7</code>个空隙选出<code>3</code>个空隙放入隔板的组合数，所以答案是$ C_7^3=35 $。组合数的计算公式如下所示。
+$$
+C_M^N = \frac {M!} {N!(M-N)!}
+$$
+根据我们前面学习的知识，可以用循环做累乘的方式来计算阶乘，那么通过下面的Python代码我们就可以计算出组合数$ C_M^N $的值，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="sd">输入M和N计算C(M,N)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;m = &#39;</span><span class="p">))</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;n = &#39;</span><span class="p">))</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># 计算m的阶乘</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">fm</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">fm</span> <span class="o">*=</span> <span class="n">num</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># 计算n的阶乘</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">fn</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">fn</span> <span class="o">*=</span> <span class="n">num</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># 计算m-n的阶乘</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">fk</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="n">fk</span> <span class="o">*=</span> <span class="n">num</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># 计算C(M,N)的值</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">fm</span> <span class="o">//</span> <span class="n">fn</span> <span class="o">//</span> <span class="n">fk</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_1">函数的作用</h3>
+<p>不知大家是否注意到，上面的代码中我们做了三次求阶乘，虽然<code>m</code>、<code>n</code>、<code>m - n</code>的值各不相同，但是三段代码并没有实质性的区别，属于重复代码。世界级的编程大师<em>Martin Fowler</em>先生曾经说过：“<strong>代码有很多种坏味道，重复是最坏的一种！</strong>”。要写出高质量的代码首先要解决的就是重复代码的问题。对于上面的代码来说，我们可以将计算阶乘的功能封装到一个称为“函数”的代码块中，在需要计算阶乘的地方，我们只需要“调用函数”就可以了。</p>
+<h3 id="_2">定义函数</h3>
+<p>数学上的函数通常形如<code>y = f(x)</code>或者<code>z = g(x, y)</code>这样的形式，在<code>y = f(x)</code>中，<code>f</code>是函数的名字，<code>x</code>是函数的自变量，<code>y</code>是函数的因变量；而在<code>z = g(x, y)</code>中，<code>g</code>是函数名，<code>x</code>和<code>y</code>是函数的自变量，<code>z</code>是函数的因变量。Python中的函数跟这个结构是一致的，每个函数都有自己的名字、自变量和因变量。我们通常把Python中函数的自变量称为函数的参数，而因变量称为函数的返回值。</p>
+<p>在Python中可以使用<code>def</code>关键字来定义函数，和变量一样每个函数也应该有一个漂亮的名字，命名规则跟变量的命名规则是一致的（赶紧想一想我们之前讲过的变量的命名规则）。在函数名后面的圆括号中可以放置传递给函数的参数，就是我们刚才说到的函数的自变量，而函数执行完成后我们会通过<code>return</code>关键字来返回函数的执行结果，就是我们刚才说的函数的因变量。一个函数要执行的代码块（要做的事情）也是通过缩进的方式来表示的，跟之前分支和循环结构的代码块是一样的。大家不要忘了<code>def</code>那一行的最后面还有一个<code>:</code>，之前提醒过大家，那是在英文输入法状态下输入的冒号。</p>
+<p>我们可以通过函数对上面的代码进行重构。<strong>所谓重构，是在不影响代码执行结果的前提下对代码的结构进行调整。</strong>重构之后的代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="sd">输入M和N计算C(M,N)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># 定义函数：def是定义函数的关键字、fac是函数名，num是参数（自变量）</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">def</span> <span class="nf">fac</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="sd">&quot;&quot;&quot;求阶乘&quot;&quot;&quot;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="n">result</span> <span class="o">*=</span> <span class="n">n</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="c1"># 返回num的阶乘（因变量）</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">return</span> <span class="n">result</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;m = &#39;</span><span class="p">))</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;n = &#39;</span><span class="p">))</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1"># 当需要计算阶乘的时候不用再写重复的代码而是直接调用函数fac</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># 调用函数的语法是在函数名后面跟上圆括号并传入参数</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">fac</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">//</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">//</span> <span class="n">fac</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">n</span><span class="p">))</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：事实上，Python标准库的<code>math</code>模块中有一个名为<code>factorial</code>的函数已经实现了求阶乘的功能，我们可以直接使用该函数来计算阶乘。<strong>将来我们使用的函数，要么是自定义的函数，要么是Python标准库或者三方库中提供的函数</strong>。</p>
+</blockquote>
+<h3 id="_3">函数的参数</h3>
+<h4 id="_4">参数的默认值</h4>
+<p>如果函数中没有<code>return</code>语句，那么函数默认返回代表空值的<code>None</code>。另外，在定义函数时，函数也可以没有自变量，但是函数名后面的圆括号是必须有的。Python中还允许函数的参数拥有默认值，我们可以把之前讲过的一个例子“CRAPS赌博游戏”中摇色子获得点数的功能封装成函数，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="sd">参数的默认值</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># 定义摇色子的函数，n表示色子的个数，默认值为2</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">def</span> <span class="nf">roll_dice</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="sd">&quot;&quot;&quot;摇色子返回总的点数&quot;&quot;&quot;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        <span class="n">total</span> <span class="o">+=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="k">return</span> <span class="n">total</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c1"># 如果没有指定参数，那么n使用默认值2，表示摇两颗色子</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">roll_dice</span><span class="p">())</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># 传入参数3，变量n被赋值为3，表示摇三颗色子获得点数</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">roll_dice</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<p>我们再来看一个更为简单的例子。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="sd">&quot;&quot;&quot;三个数相加求和&quot;&quot;&quot;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># 调用add函数，没有传入参数，那么a、b、c都使用默认值0</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">())</span>         <span class="c1"># 0</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># 调用add函数，传入一个参数，那么该参数赋值给变量a, 变量b和c使用默认值0</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>        <span class="c1"># 1</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># 调用add函数，传入两个参数，1和2分别赋值给变量a和b，变量c使用默认值0</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>     <span class="c1"># 3</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># 调用add函数，传入三个参数，分别赋值给a、b、c三个变量</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># 6</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1"># 传递参数时可以不按照设定的顺序进行传递，但是要用“参数名=参数值”的形式</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">200</span><span class="p">))</span>    <span class="c1"># 350</span>
+</code></pre></div>
+<blockquote>
+<p><strong>注意</strong>：带默认值的参数必须放在不带默认值的参数之后，否则将产生<code>SyntaxError</code>错误，错误消息是：<code>non-default argument follows default argument</code>，翻译成中文的意思是“没有默认值的参数放在了带默认值的参数后面”。</p>
+</blockquote>
+<h4 id="_5">可变参数</h4>
+<p>接下来，我们还可以实现一个对任意多个数求和的<code>add</code>函数，因为Python语言中的函数可以通过星号表达式语法来支持可变参数。所谓可变参数指的是在调用函数时，可以向函数传入<code>0</code>个或任意多个参数。将来我们以团队协作的方式开发商业项目时，很有可能要设计函数给其他人使用，但有的时候我们并不知道函数的调用者会向该函数传入多少个参数，这个时候可变参数就可以派上用场。下面的代码演示了用可变参数实现对任意多个数求和的<code>add</code>函数。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="sd">可变参数</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># 用星号表达式来表示args可以接收0个或任意多个参数</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="c1"># 可变参数可以放在for循环中取出每个参数的值</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>            <span class="n">total</span> <span class="o">+=</span> <span class="n">val</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">return</span> <span class="n">total</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1"># 在调用add函数时可以传入0个或任意多个参数</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">())</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="_6">用模块管理函数</h3>
+<p>不管用什么样的编程语言来写代码，给变量、函数起名字都是一个让人头疼的问题，因为我们会遇到<strong>命名冲突</strong>这种尴尬的情况。最简单的场景就是在同一个<code>.py</code>文件中定义了两个同名的函数，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello, world!&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;goodbye, world!&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">foo</span><span class="p">()</span>    <span class="c1"># 大家猜猜调用foo函数会输出什么</span>
+</code></pre></div>
+<p>当然上面的这种情况我们很容易就能避免，但是如果项目是团队协作多人开发的时候，团队中可能有多个程序员都定义了名为<code>foo</code>的函数，这种情况下怎么解决命名冲突呢？答案其实很简单，Python中每个文件就代表了一个模块（module），我们在不同的模块中可以有同名的函数，在使用函数的时候我们通过<code>import</code>关键字导入指定的模块再使用<strong>完全限定名</strong>的调用方式就可以区分到底要使用的是哪个模块中的<code>foo</code>函数，代码如下所示。</p>
+<p><code>module1.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello, world!&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><code>module2.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;goodbye, world!&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><code>test.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span> <span class="nn">module1</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span> <span class="nn">module2</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># 用“模块名.函数名”的方式（完全限定名）调用函数，</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">module1</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>    <span class="c1"># hello, world!</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">module2</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>    <span class="c1"># goodbye, world!</span>
+</code></pre></div>
+<p>在导入模块时，还可以使用<code>as</code>关键字对模块进行别名，这样我们可以使用更为简短的完全限定名。</p>
+<p><code>test.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span> <span class="nn">module1</span> <span class="k">as</span> <span class="nn">m1</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span> <span class="nn">module2</span> <span class="k">as</span> <span class="nn">m2</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">m1</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>    <span class="c1"># hello, world!</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">m2</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>    <span class="c1"># goodbye, world!</span>
+</code></pre></div>
+<p>上面的代码我们导入了定义函数的模块，我们也可以使用<code>from...import...</code>语法从模块中直接导入需要使用的函数，代码如下所示。</p>
+<p><code>test.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">module1</span> <span class="kn">import</span> <span class="n">foo</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">foo</span><span class="p">()</span>    <span class="c1"># hello, world!</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="kn">from</span> <span class="nn">module2</span> <span class="kn">import</span> <span class="n">foo</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">foo</span><span class="p">()</span>    <span class="c1"># goodbye, world!</span>
+</code></pre></div>
+<p>但是，如果我们如果从两个不同的模块中导入了同名的函数，后导入的函数会覆盖掉先前的导入，就像下面的代码中，调用<code>foo</code>会输出<code>hello, world!</code>，因为我们先导入了<code>module2</code>的<code>foo</code>，后导入了<code>module1</code>的<code>foo</code> 。如果两个<code>from...import...</code>反过来写，就是另外一番光景了。</p>
+<p><code>test.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">module2</span> <span class="kn">import</span> <span class="n">foo</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">from</span> <span class="nn">module1</span> <span class="kn">import</span> <span class="n">foo</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">foo</span><span class="p">()</span>    <span class="c1"># hello, world!</span>
+</code></pre></div>
+<p>如果想在上面的代码中同时使用来自两个模块中的<code>foo</code>函数也是有办法的，大家可能已经猜到了，还是用<code>as</code>关键字对导入的函数进行别名，代码如下所示。</p>
+<p><code>test.py</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span> <span class="nn">module1</span> <span class="kn">import</span> <span class="n">foo</span> <span class="k">as</span> <span class="n">f1</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kn">from</span> <span class="nn">module2</span> <span class="kn">import</span> <span class="n">foo</span> <span class="k">as</span> <span class="n">f2</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">f1</span><span class="p">()</span>    <span class="c1"># hello, world!</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">f2</span><span class="p">()</span>    <span class="c1"># goodbye, world!</span>
+</code></pre></div>
+<h3 id="_7">标准库中的模块和函数</h3>
+<p>Python标准库中提供了大量的模块和函数来简化我们的开发工作，我们之前用过的<code>random</code>模块就为我们提供了生成随机数和进行随机抽样的函数；而<code>time</code>模块则提供了和时间操作相关的函数；上面求阶乘的函数在Python标准库中的<code>math</code>模块中已经有了，实际开发中并不需要我们自己编写，而<code>math</code>模块中还包括了计算正弦、余弦、指数、对数等一系列的数学函数。随着我们进一步的学习Python编程知识，我们还会用到更多的模块和函数。</p>
+<p>Python标准库中还有一类函数是不需要<code>import</code>就能够直接使用的，我们将其称之为内置函数，这些内置函数都是很有用也是最常用的，下面的表格列出了一部分的内置函数。</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>abs</code></td>
+<td>返回一个数的绝对值，例如：<code>abs(-1.3)</code>会返回<code>1.3</code>。</td>
+</tr>
+<tr>
+<td><code>bin</code></td>
+<td>把一个整数转换成以<code>'0b'</code>开头的二进制字符串，例如：<code>bin(123)</code>会返回<code>'0b1111011'</code>。</td>
+</tr>
+<tr>
+<td><code>chr</code></td>
+<td>将Unicode编码转换成对应的字符，例如：<code>chr(8364)</code>会返回<code>'€'</code>。</td>
+</tr>
+<tr>
+<td><code>hex</code></td>
+<td>将一个整数转换成以<code>'0x'</code>开头的十六进制字符串，例如：<code>hex(123)</code>会返回<code>'0x7b'</code>。</td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>从输入中读取一行，返回读到的字符串。</td>
+</tr>
+<tr>
+<td><code>len</code></td>
+<td>获取字符串、列表等的长度。</td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td>返回多个参数或一个可迭代对象中的最大值，例如：<code>max(12, 95, 37)</code>会返回<code>95</code>。</td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td>返回多个参数或一个可迭代对象中的最小值，例如：<code>min(12, 95, 37)</code>会返回<code>12</code>。</td>
+</tr>
+<tr>
+<td><code>oct</code></td>
+<td>把一个整数转换成以<code>'0o'</code>开头的八进制字符串，例如：<code>oct(123)</code>会返回<code>'0o173'</code>。</td>
+</tr>
+<tr>
+<td><code>open</code></td>
+<td>打开一个文件并返回文件对象。</td>
+</tr>
+<tr>
+<td><code>ord</code></td>
+<td>将字符转换成对应的Unicode编码，例如：<code>ord('€')</code>会返回<code>8364</code>。</td>
+</tr>
+<tr>
+<td><code>pow</code></td>
+<td>求幂运算，例如：<code>pow(2, 3)</code>会返回<code>8</code>；<code>pow(2, 0.5)</code>会返回<code>1.4142135623730951</code>。</td>
+</tr>
+<tr>
+<td><code>print</code></td>
+<td>打印输出。</td>
+</tr>
+<tr>
+<td><code>range</code></td>
+<td>构造一个范围序列，例如：<code>range(100)</code>会产生<code>0</code>到<code>99</code>的整数序列。</td>
+</tr>
+<tr>
+<td><code>round</code></td>
+<td>按照指定的精度对数值进行四舍五入，例如：<code>round(1.23456, 4)</code>会返回<code>1.2346</code>。</td>
+</tr>
+<tr>
+<td><code>sum</code></td>
+<td>对一个序列中的项从左到右进行求和运算，例如：<code>sum(range(1, 101))</code>会返回<code>5050</code>。</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>返回对象的类型，例如：<code>type(10)</code>会返回<code>int</code>；而<code>type('hello')</code>会返回<code>str</code>。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">简单的总结</h3>
+<p><strong>函数是对功能相对独立且会重复使用的代码的封装</strong>。学会使用定义和使用函数，就能够写出更为优质的代码。当然，Python语言的标准库中已经为我们提供了大量的模块和常用的函数，用好这些模块和函数就能够用更少的代码做更多的事情；如果这些模块和函数不能满足我们的要求，我们就需要自定义函数，然后用模块的概念来管理这些自定义函数。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

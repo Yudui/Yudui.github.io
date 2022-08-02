@@ -1,0 +1,582 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第27课：用Python操作PDF文件 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#27pythonpdf" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第27课：用Python操作PDF文件
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#27pythonpdf" class="md-nav__link">
+    第27课：用Python操作PDF文件
+  </a>
+  
+    <nav class="md-nav" aria-label="第27课：用Python操作PDF文件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pdf" class="md-nav__link">
+    从PDF中提取文本
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    旋转和叠加页面
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdf_1" class="md-nav__link">
+    加密PDF文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    批量添加水印
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdf_2" class="md-nav__link">
+    创建PDF文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第27课：用Python操作PDF文件</h1>
+
+<h2 id="27pythonpdf">第27课：用Python操作PDF文件</h2>
+<p>PDF是Portable Document Format的缩写，这类文件通常使用<code>.pdf</code>作为其扩展名。在日常开发工作中，最容易遇到的就是从PDF中读取文本内容以及用已有的内容生成PDF文档这两个任务。</p>
+<h3 id="pdf">从PDF中提取文本</h3>
+<p>在Python中，可以使用名为<code>PyPDF2</code>的三方库来读取PDF文件，可以使用下面的命令来安装它。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip install PyPDF2
+</code></pre></div>
+<p><code>PyPDF2</code>没有办法从PDF文档中提取图像、图表或其他媒体，但它可以提取文本，并将其返回为Python字符串。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="s1">&#39;test.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">extractText</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：上面代码中使用的PDF文件“test.pdf”以及下面的代码中需要用到的PDF文件，也可以通过下面的百度云盘地址进行获取。链接:https://pan.baidu.com/s/1rQujl5RQn9R7PadB2Z5g_g 提取码:e7b4。</p>
+</blockquote>
+<p>当然，<code>PyPDF2</code>并不是什么样的PDF文档都能提取出文字来，这个问题就我所知并没有什么特别好的解决方法，尤其是在提取中文的时候。网上也有很多讲解从PDF中提取文字的文章，推荐大家自行阅读<a href="https://cloud.tencent.com/developer/article/1395339">《三大神器助力Python提取pdf文档信息》</a>一文进行了解。</p>
+<p>要从PDF文件中提取文本也可以直接使用三方的命令行工具，具体的做法如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip install pdfminer.six
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>pdf2text.py test.pdf
+</code></pre></div>
+<h3 id="_1">旋转和叠加页面</h3>
+<p>上面的代码中通过创建<code>PdfFileReader</code>对象的方式来读取PDF文档，该对象的<code>getPage</code>方法可以获得PDF文档的指定页并得到一个<code>PageObject</code>对象，通过<code>PageObject</code>对象的<code>rotateClockwise</code>和<code>rotateCounterClockwise</code>方法可以实现页面的顺时针和逆时针方向旋转，通过<code>PageObject</code>对象的<code>addBlankPage</code>方法可以添加一个新的空白页，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">from</span> <span class="nn">PyPDF2.pdf</span> <span class="kn">import</span> <span class="n">PageObject</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># 创建一个读PDF文件的Reader对象</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="s1">&#39;resources/XGBoost.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># 创建一个写PDF文件的Writer对象</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">writer</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileWriter</span><span class="p">()</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># 对PDF文件所有页进行循环遍历</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">for</span> <span class="n">page_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">numPages</span><span class="p">):</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="c1"># 获取指定页码的Page对象</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="n">current_page</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">page_num</span><span class="p">)</span>  <span class="c1"># type: PageObject</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="k">if</span> <span class="n">page_num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        <span class="c1"># 奇数页顺时针旋转90度</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        <span class="n">current_page</span><span class="o">.</span><span class="n">rotateClockwise</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>        <span class="c1"># 偶数页反时针旋转90度</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        <span class="n">current_page</span><span class="o">.</span><span class="n">rotateCounterClockwise</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="n">writer</span><span class="o">.</span><span class="n">addPage</span><span class="p">(</span><span class="n">current_page</span><span class="p">)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># 最后添加一个空白页并旋转90度</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="n">page</span> <span class="o">=</span> <span class="n">writer</span><span class="o">.</span><span class="n">addBlankPage</span><span class="p">()</span>  <span class="c1"># type: PageObject</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="n">page</span><span class="o">.</span><span class="n">rotateClockwise</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c1"># 通过Writer对象的write方法将PDF写入文件</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;resources/XGBoost-modified.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="pdf_1">加密PDF文件</h3>
+<p>使用<code>PyPDF2</code>中的<code>PdfFileWrite</code>对象可以为PDF文档加密，如果需要给一系列的PDF文档设置统一的访问口令，使用Python程序来处理就会非常的方便。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">reader</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="s1">&#39;resources/XGBoost.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">writer</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileWriter</span><span class="p">()</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">for</span> <span class="n">page_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">numPages</span><span class="p">):</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">writer</span><span class="o">.</span><span class="n">addPage</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">page_num</span><span class="p">))</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># 通过encrypt方法加密PDF文件，方法的参数就是设置的密码</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">writer</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="s1">&#39;foobared&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;resources/XGBoost-encrypted.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_2">批量添加水印</h3>
+<p>上面提到的<code>PageObject</code>对象还有一个名为<code>mergePage</code>的方法，可以两个PDF页面进行叠加，通过这个操作，我们很容易实现给PDF文件添加水印的功能。例如要给上面的“XGBoost.pdf”文件添加一个水印，我们可以先准备好一个提供水印页面的PDF文件，然后将包含水印的<code>PageObject</code>读取出来，然后再循环遍历“XGBoost.pdf”文件的每个页，获取到<code>PageObject</code>对象，然后通过<code>mergePage</code>方法实现水印页和原始页的合并，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">PyPDF2</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span> <span class="nn">PyPDF2.pdf</span> <span class="kn">import</span> <span class="n">PageObject</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">reader1</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="s1">&#39;resources/XGBoost.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">reader2</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileReader</span><span class="p">(</span><span class="s1">&#39;resources/watermark.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">writer</span> <span class="o">=</span> <span class="n">PyPDF2</span><span class="o">.</span><span class="n">PdfFileWriter</span><span class="p">()</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># 获取水印页</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">watermark_page</span> <span class="o">=</span> <span class="n">reader2</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">for</span> <span class="n">page_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">reader1</span><span class="o">.</span><span class="n">numPages</span><span class="p">):</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">current_page</span> <span class="o">=</span> <span class="n">reader1</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">page_num</span><span class="p">)</span>  <span class="c1"># type: PageObject</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">current_page</span><span class="o">.</span><span class="n">mergePage</span><span class="p">(</span><span class="n">watermark_page</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="c1"># 将原始页和水印页进行合并</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">writer</span><span class="o">.</span><span class="n">addPage</span><span class="p">(</span><span class="n">current_page</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1"># 将PDF写入文件</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;resources/XGBoost-watermarked.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</code></pre></div>
+<p>如果愿意，还可以让奇数页和偶数页使用不同的水印，大家可以自己思考下应该怎么做。</p>
+<h3 id="pdf_2">创建PDF文件</h3>
+<p>创建PDF文档需要三方库<code>reportlab</code>的支持，安装的方法如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip install reportlab
+</code></pre></div>
+<p>下面通过一个例子为大家展示<code>reportlab</code>的用法。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">reportlab.lib.pagesizes</span> <span class="kn">import</span> <span class="n">A4</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">reportlab.pdfbase</span> <span class="kn">import</span> <span class="n">pdfmetrics</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">from</span> <span class="nn">reportlab.pdfbase.ttfonts</span> <span class="kn">import</span> <span class="n">TTFont</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">pdf_canvas</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="s1">&#39;resources/demo.pdf&#39;</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="n">A4</span><span class="p">)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">A4</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># 绘图</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">image</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">ImageReader</span><span class="p">(</span><span class="s1">&#39;resources/guido.jpg&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">395</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">375</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># 显示当前页</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="c1"># 注册字体文件</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">pdfmetrics</span><span class="o">.</span><span class="n">registerFont</span><span class="p">(</span><span class="n">TTFont</span><span class="p">(</span><span class="s1">&#39;Font1&#39;</span><span class="p">,</span> <span class="s1">&#39;resources/fonts/Vera.ttf&#39;</span><span class="p">))</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">pdfmetrics</span><span class="o">.</span><span class="n">registerFont</span><span class="p">(</span><span class="n">TTFont</span><span class="p">(</span><span class="s1">&#39;Font2&#39;</span><span class="p">,</span> <span class="s1">&#39;resources/fonts/青呱石头体.ttf&#39;</span><span class="p">))</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="c1"># 写字</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s1">&#39;Font2&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">setFillColorRGB</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">width</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">120</span><span class="p">,</span> <span class="n">height</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;你好，世界！&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s1">&#39;Font1&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">setFillColorRGB</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="s1">&#39;hello, world!&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="c1"># 保存</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="n">pdf_canvas</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>上面的代码如果不太理解也没有关系，等真正需要用Python创建PDF文档的时候，再好好研读一下<code>reportlab</code>的<a href="https://www.reportlab.com/docs/reportlab-userguide.pdf">官方文档</a>就可以了。</p>
+<blockquote>
+<p><strong>提示</strong>：上面代码中用到的图片和字体，也可以通过下面的百度云盘链接获取。链接:https://pan.baidu.com/s/1rQujl5RQn9R7PadB2Z5g_g 提取码:e7b4。</p>
+</blockquote>
+<h3 id="_3">简单的总结</h3>
+<p>在学习完上面的内容之后，相信大家已经知道像合并多个PDF文件这样的工作应该如何用Python代码来处理了，赶紧自己动手试一试吧。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

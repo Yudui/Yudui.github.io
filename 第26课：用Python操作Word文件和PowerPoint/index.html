@@ -1,0 +1,648 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第26课：用Python操作Word文件和PowerPoint - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#26pythonwordpowerpoint" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第26课：用Python操作Word文件和PowerPoint
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#26pythonwordpowerpoint" class="md-nav__link">
+    第26课：用Python操作Word和PowerPoint
+  </a>
+  
+    <nav class="md-nav" aria-label="第26课：用Python操作Word和PowerPoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#word" class="md-nav__link">
+    操作Word文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powerpoint" class="md-nav__link">
+    生成PowerPoint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第26课：用Python操作Word文件和PowerPoint</h1>
+
+<h2 id="26pythonwordpowerpoint">第26课：用Python操作Word和PowerPoint</h2>
+<p>在日常工作中，有很多简单重复的劳动其实完全可以交给Python程序，比如根据样板文件（模板文件）批量的生成很多个Word文件或PowerPoint文件。Word是微软公司开发的文字处理程序，相信大家都不陌生，日常办公中很多正式的文档都是用Word进行撰写和编辑的，目前使用的Word文件后缀名一般为<code>.docx</code>。PowerPoint是微软公司开发的演示文稿程序，是微软的Office系列软件中的一员，被商业人士、教师、学生等群体广泛使用，通常也将其称之为“幻灯片”。在Python中，可以使用名为<code>python-docx</code> 的三方库来操作Word，可以使用名为<code>python-pptx</code>的三方库来生成PowerPoint。</p>
+<h3 id="word">操作Word文档</h3>
+<p>我们可以先通过下面的命令来安装<code>python-docx</code>三方库。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip install python-docx
+</code></pre></div>
+<p>按照<a href="https://python-docx.readthedocs.io/en/latest/">官方文档</a>的介绍，我们可以使用如下所示的代码来生成一个简单的Word文档。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Cm</span><span class="p">,</span> <span class="n">Pt</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span> <span class="nn">docx.document</span> <span class="kn">import</span> <span class="n">Document</span> <span class="k">as</span> <span class="n">Doc</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># 创建代表Word文档的Doc对象</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>  <span class="c1"># type: Doc</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># 添加大标题</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;快快乐乐学Python&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># 添加段落</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">p</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;Python是一门非常流行的编程语言，它&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">run</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39;简单&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">run</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">run</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39;而且&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">run</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39;优雅&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">run</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">run</span><span class="o">.</span><span class="n">underline</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s1">&#39;。&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1"># 添加一级标题</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s1">&#39;Heading, level 1&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="c1"># 添加带样式的段落</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s1">&#39;Intense quote&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Intense Quote&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># 添加无序列表</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>    <span class="s1">&#39;first item in unordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;List Bullet&#39;</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="p">)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>    <span class="s1">&#39;second item in ordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;List Bullet&#39;</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="p">)</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="c1"># 添加有序列表</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>    <span class="s1">&#39;first item in ordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;List Number&#39;</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="p">)</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>    <span class="s1">&#39;second item in ordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;List Number&#39;</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="p">)</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="c1"># 添加图片（注意路径和图片必须要存在）</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="n">document</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="s1">&#39;resources/guido.jpg&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">Cm</span><span class="p">(</span><span class="mf">5.2</span><span class="p">))</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="c1"># 添加分节符</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="n">document</span><span class="o">.</span><span class="n">add_section</span><span class="p">()</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="n">records</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>    <span class="p">(</span><span class="s1">&#39;骆昊&#39;</span><span class="p">,</span> <span class="s1">&#39;男&#39;</span><span class="p">,</span> <span class="s1">&#39;1995-5-5&#39;</span><span class="p">),</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>    <span class="p">(</span><span class="s1">&#39;孙美丽&#39;</span><span class="p">,</span> <span class="s1">&#39;女&#39;</span><span class="p">,</span> <span class="s1">&#39;1992-2-2&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="p">)</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="c1"># 添加表格</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="n">table</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="n">table</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;Dark List&#39;</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="n">hdr_cells</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cells</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="n">hdr_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;姓名&#39;</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="n">hdr_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;性别&#39;</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="n">hdr_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;出生日期&#39;</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a><span class="c1"># 为表格添加行</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">sex</span><span class="p">,</span> <span class="n">birthday</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>    <span class="n">row_cells</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">()</span><span class="o">.</span><span class="n">cells</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>    <span class="n">row_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>    <span class="n">row_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">sex</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>    <span class="n">row_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">birthday</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a>
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a><span class="c1"># 添加分页符</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="n">document</span><span class="o">.</span><span class="n">add_page_break</span><span class="p">()</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a>
+<a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a><span class="c1"># 保存文档</span>
+<a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a><span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;demo.docx&#39;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：上面代码第7行中的注释<code># type: Doc</code>是为了在PyCharm中获得代码补全提示，因为如果不清楚对象具体的数据类型，PyCharm无法在后续代码中给出<code>Doc</code>对象的代码补全提示。</p>
+</blockquote>
+<p>执行上面的代码，打开生成的Word文档，效果如下图所示。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210820002742.png" alt="image-20210820002742341" width="40%">&nbsp;&nbsp;<img src="https://github.com/jackfrued/mypic/raw/master/20210820002843.png" alt="image-20210820002843696" width="40%"></p>
+<p>对于一个已经存在的Word文件，我们可以通过下面的代码去遍历它所有的段落并获取对应的内容。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">docx.document</span> <span class="kn">import</span> <span class="n">Document</span> <span class="k">as</span> <span class="n">Doc</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">&#39;resources/离职证明.docx&#39;</span><span class="p">)</span>  <span class="c1"># type: Doc</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">for</span> <span class="n">no</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：如果需要上面代码中的Word文件，可以通过下面的百度云盘地址进行获取。链接:https://pan.baidu.com/s/1rQujl5RQn9R7PadB2Z5g_g 提取码:e7b4。</p>
+</blockquote>
+<p>读取到的内容如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>0 
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>1 离 职 证 明
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>2 
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>3 兹证明 王大锤 ，身份证号码： 100200199512120001 ，于 2018 年 8 月 7 日至 2020 年 6 月 28 日在我单位  开发部 部门担任 Java开发工程师 职务，在职期间无不良表现。因 个人 原因，于 2020 年 6 月 28 日起终止解除劳动合同。现已结清财务相关费用，办理完解除劳动关系相关手续，双方不存在任何劳动争议。
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>4 
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>5 特此证明！
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>6 
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>7 
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>8 公司名称（盖章）:成都风车车科技有限公司
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>9               2020 年 6 月 28 日
+</code></pre></div>
+<p>讲到这里，相信很多读者已经想到了，我们可以把上面的离职证明制作成一个模板文件，把姓名、身份证号、入职和离职日期等信息用占位符代替，这样通过对占位符的替换，就可以根据实际需要写入对应的信息，这样就可以批量的生成Word文档。</p>
+<p>按照上面的思路，我们首先编辑一个离职证明的模板文件，如下图所示。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210820004223.png" alt="image-20210820004223731" width="75%" style="border:1px solid black"/></p>
+<p>接下来我们读取该文件，将占位符替换为真实信息，就可以生成一个新的Word文档，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">docx.document</span> <span class="kn">import</span> <span class="n">Document</span> <span class="k">as</span> <span class="n">Doc</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 将真实信息用字典的方式保存在列表中</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">employees</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="p">{</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;骆昊&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;100200198011280001&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="s1">&#39;sdate&#39;</span><span class="p">:</span> <span class="s1">&#39;2008年3月1日&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="s1">&#39;edate&#39;</span><span class="p">:</span> <span class="s1">&#39;2012年2月29日&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="s1">&#39;产品研发&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="s1">&#39;架构师&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="s1">&#39;company&#39;</span><span class="p">:</span> <span class="s1">&#39;成都华为技术有限公司&#39;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="p">},</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="p">{</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;王大锤&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;510210199012125566&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="s1">&#39;sdate&#39;</span><span class="p">:</span> <span class="s1">&#39;2019年1月1日&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="s1">&#39;edate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021年4月30日&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="s1">&#39;产品研发&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="s1">&#39;Python开发工程师&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        <span class="s1">&#39;company&#39;</span><span class="p">:</span> <span class="s1">&#39;成都谷道科技有限公司&#39;</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="p">},</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="p">{</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;李元芳&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2102101995103221599&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>        <span class="s1">&#39;sdate&#39;</span><span class="p">:</span> <span class="s1">&#39;2020年5月10日&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>        <span class="s1">&#39;edate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021年3月5日&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>        <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="s1">&#39;产品研发&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>        <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="s1">&#39;Java开发工程师&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>        <span class="s1">&#39;company&#39;</span><span class="p">:</span> <span class="s1">&#39;同城企业管理集团有限公司&#39;</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>    <span class="p">},</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="p">]</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="c1"># 对列表进行循环遍历，批量生成Word文档 </span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="k">for</span> <span class="n">emp_dict</span> <span class="ow">in</span> <span class="n">employees</span><span class="p">:</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>    <span class="c1"># 读取离职证明模板文件</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>    <span class="n">doc</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">&#39;resources/离职证明模板.docx&#39;</span><span class="p">)</span>  <span class="c1"># type: Doc</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>    <span class="c1"># 循环遍历所有段落寻找占位符</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">:</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>        <span class="k">if</span> <span class="s1">&#39;{&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>            <span class="k">continue</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>        <span class="c1"># 不能直接修改段落内容，否则会丢失样式</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>        <span class="c1"># 所以需要对段落中的元素进行遍历并进行查找替换</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>        <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>            <span class="k">if</span> <span class="s1">&#39;{&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>                <span class="k">continue</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>            <span class="c1"># 将占位符换成实际内容</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>            <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">),</span> <span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>            <span class="n">key</span><span class="p">,</span> <span class="n">place_holder</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">end</span><span class="p">],</span> <span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>            <span class="n">run</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">place_holder</span><span class="p">,</span> <span class="n">emp_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>    <span class="c1"># 每个人对应保存一个Word文档</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a>    <span class="n">doc</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">emp_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">离职证明.docx&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>执行上面的代码，会在当前路径下生成三个Word文档，如下图所示。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210820004825.png" alt="image-20210820004825183" width="50%"></p>
+<h3 id="powerpoint">生成PowerPoint</h3>
+<p>首先我们需要安装名为<code>python-pptx</code>的三方库，命令如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip install python-pptx
+</code></pre></div>
+<p>用Python操作PowerPoint的内容，因为实际应用场景不算很多，我不打算在这里进行赘述，有兴趣的读者可以自行阅读<code>python-pptx</code>的<a href="https://python-pptx.readthedocs.io/en/latest/">官方文档</a>，下面仅展示一段来自于官方文档的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># 创建幻灯片对象</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">pres</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># 选择母版添加一页</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">title_slide_layout</span> <span class="o">=</span> <span class="n">pres</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">slide</span> <span class="o">=</span> <span class="n">pres</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">title_slide_layout</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># 获取标题栏和副标题栏</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">title</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">title</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">subtitle</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c1"># 编辑标题和副标题</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Welcome to Python&quot;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Life is short, I use Python&quot;</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1"># 选择母版添加一页</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="n">bullet_slide_layout</span> <span class="o">=</span> <span class="n">pres</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">slide</span> <span class="o">=</span> <span class="n">pres</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">bullet_slide_layout</span><span class="p">)</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># 获取页面上所有形状</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="c1"># 获取标题和主体</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="n">title_shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">title</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="n">body_shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="c1"># 编辑标题</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="n">title_shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Introduction&#39;</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="c1"># 编辑主体内容</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="n">tf</span> <span class="o">=</span> <span class="n">body_shape</span><span class="o">.</span><span class="n">text_frame</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="n">tf</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;History of Python&#39;</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="c1"># 添加一个一级段落</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;X</span><span class="se">\&#39;</span><span class="s1">max 1989&#39;</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="n">p</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="c1"># 添加一个二级段落</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Guido began to write interpreter for Python.&#39;</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="n">p</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">2</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="c1"># 保存幻灯片</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="n">pres</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>运行上面的代码，生成的PowerPoint文件如下图所示。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210820010306.png" alt="image-20210820010306008" width="75%" /></p>
+<h3 id="_1">简单的总结</h3>
+<p>用Python程序解决办公自动化的问题真的非常酷，它可以将我们从繁琐乏味的劳动中解放出来。写这类代码就是去做一件一劳永逸的事情，写代码的过程即便不怎么愉快，使用这些代码的时候应该是非常开心的。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

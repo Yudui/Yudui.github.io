@@ -1,0 +1,628 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第18课：面向对象编程进阶 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#18" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第18课：面向对象编程进阶
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    第18课：面向对象编程进阶
+  </a>
+  
+    <nav class="md-nav" aria-label="第18课：面向对象编程进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    可见性和属性装饰器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    动态属性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    静态方法和类方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    继承和多态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第18课：面向对象编程进阶</h1>
+
+<h2 id="18">第18课：面向对象编程进阶</h2>
+<p>上一节课我们讲解了Python面向对象编程的基础知识，这一节课我们继续来讨论面向对象编程相关的内容。</p>
+<h3 id="_1">可见性和属性装饰器</h3>
+<p>在很多面向对象编程语言中，对象的属性通常会被设置为私有（private）或受保护（protected）的成员，简单的说就是不允许直接访问这些属性；对象的方法通常都是公开的（public），因为公开的方法是对象能够接受的消息，也是对象暴露给外界的调用接口，这就是所谓的访问可见性。在Python中，可以通过给对象属性名添加前缀下划线的方式来说明属性的访问可见性，例如，可以用<code>__name</code>表示一个私有属性，<code>_name</code>表示一个受保护属性，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__age</span> <span class="o">=</span> <span class="n">age</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">def</span> <span class="nf">study</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_name</span><span class="p">):</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="si">}</span><span class="s1">正在学习</span><span class="si">{</span><span class="n">course_name</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">stu</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">stu</span><span class="o">.</span><span class="n">study</span><span class="p">(</span><span class="s1">&#39;Python程序设计&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">stu</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span>
+</code></pre></div>
+<p>上面代码的最后一行会引发<code>AttributeError</code>（属性错误）异常，异常消息为：<code>'Student' object has no attribute '__name'</code>。由此可见，以<code>__</code>开头的属性<code>__name</code>是私有的，在类的外面无法直接访问，但是类里面的<code>study</code>方法中可以通过<code>self.__name</code>访问该属性。</p>
+<p>需要提醒大家的是，Python并没有从语法上严格保证私有属性的私密性，它只是给私有的属性和方法换了一个名字来阻挠对它们的访问，事实上如果你知道更换名字的规则仍然可以访问到它们，我们可以对上面的代码稍作修改就可以访问到私有的属性。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__age</span> <span class="o">=</span> <span class="n">age</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="k">def</span> <span class="nf">study</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_name</span><span class="p">):</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="si">}</span><span class="s1">正在学习</span><span class="si">{</span><span class="n">course_name</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">stu</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">stu</span><span class="o">.</span><span class="n">study</span><span class="p">(</span><span class="s1">&#39;Python程序设计&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">stu</span><span class="o">.</span><span class="n">_Student__name</span><span class="p">,</span> <span class="n">stu</span><span class="o">.</span><span class="n">_Student__age</span><span class="p">)</span>
+</code></pre></div>
+<p>Python中有一句名言：“<strong>We are all consenting adults here</strong>”（大家都是成年人）。Python语言的设计者认为程序员要为自己的行为负责，而不是由Python语言本身来严格限制访问可见性，而大多数的程序员都认为<strong>开放比封闭要好</strong>，把对象的属性私有化并不是编程语言必须的东西，所以Python并没有从语法上做出最严格的限定。</p>
+<p>Python中可以通过<code>property</code>装饰器为“私有”属性提供读取和修改的方法，之前我们提到过，装饰器通常会放在类、函数或方法的声明之前，通过一个<code>@</code>符号表示将装饰器应用于类、函数或方法。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__age</span> <span class="o">=</span> <span class="n">age</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="c1"># 属性访问器(getter方法) - 获取__name属性</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="nd">@property</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="c1"># 属性修改器(setter方法) - 修改__name属性</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        <span class="c1"># 如果name参数不为空就赋值给对象的__name属性</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="c1"># 否则将__name属性赋值为&#39;无名氏&#39;，有两种写法</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="c1"># self.__name = name if name else &#39;无名氏&#39;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;无名氏&#39;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="nd">@property</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__age</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="n">stu</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="nb">print</span><span class="p">(</span><span class="n">stu</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">stu</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>    <span class="c1"># 王大锤 20</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="n">stu</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="nb">print</span><span class="p">(</span><span class="n">stu</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>    <span class="c1"># 无名氏</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1"># stu.age = 30     # AttributeError: can&#39;t set attribute</span>
+</code></pre></div>
+<p>在实际项目开发中，我们并不经常使用私有属性，属性装饰器的使用也比较少，所以上面的知识点大家简单了解一下就可以了。</p>
+<h3 id="_2">动态属性</h3>
+<p>Python是一门动态语言，维基百科对动态语言的解释是：“在运行时可以改变其结构的语言，例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。动态语言非常灵活，目前流行的Python和JavaScript都是动态语言，除此之外如PHP、Ruby等也都属于动态语言，而C、C++等语言则不属于动态语言”。</p>
+<p>在Python中，我们可以动态为对象添加属性，这是Python作为动态类型语言的一项特权，代码如下所示。需要提醒大家的是，对象的方法其实本质上也是对象的属性，如果给对象发送一个无法接收的消息，引发的异常仍然是<code>AttributeError</code>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">stu</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># 为Student对象动态添加sex属性</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">stu</span><span class="o">.</span><span class="n">sex</span> <span class="o">=</span> <span class="s1">&#39;男&#39;</span>
+</code></pre></div>
+<p>如果不希望在使用对象时动态的为对象添加属性，可以使用Python的<code>__slots__</code>魔法。对于<code>Student</code>类来说，可以在类中指定<code>__slots__ = ('name', 'age')</code>，这样<code>Student</code>类的对象只能有<code>name</code>和<code>age</code>属性，如果想动态添加其他属性将会引发异常，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">stu</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;王大锤&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># AttributeError: &#39;Student&#39; object has no attribute &#39;sex&#39;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">stu</span><span class="o">.</span><span class="n">sex</span> <span class="o">=</span> <span class="s1">&#39;男&#39;</span>
+</code></pre></div>
+<h3 id="_3">静态方法和类方法</h3>
+<p>之前我们在类中定义的方法都是对象方法，换句话说这些方法都是对象可以接收的消息。除了对象方法之外，类中还可以有静态方法和类方法，这两类方法是发给类的消息，二者并没有实质性的区别。在面向对象的世界里，一切皆为对象，我们定义的每一个类其实也是一个对象，而静态方法和类方法就是发送给类对象的消息。那么，什么样的消息会直接发送给类对象呢？</p>
+<p>举一个例子，定义一个三角形类，通过传入三条边的长度来构造三角形，并提供计算周长和面积的方法。计算周长和面积肯定是三角形对象的方法，这一点毫无疑问。但是在创建三角形对象时，传入的三条边长未必能构造出三角形，为此我们可以先写一个方法来验证给定的三条边长是否可以构成三角形，这种方法很显然就不是对象方法，因为在调用这个方法时三角形对象还没有创建出来。我们可以把这类方法设计为静态方法或类方法，也就是说这类方法不是发送给三角形对象的消息，而是发送给三角形类的消息，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span> <span class="nc">Triangle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="sd">&quot;&quot;&quot;三角形类&quot;&quot;&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="sd">&quot;&quot;&quot;初始化方法&quot;&quot;&quot;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">c</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="nd">@staticmethod</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="sd">&quot;&quot;&quot;判断三条边长能否构成三角形(静态方法)&quot;&quot;&quot;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">c</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">b</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="c1"># @classmethod</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="c1"># def is_valid(cls, a, b, c):</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="c1">#     &quot;&quot;&quot;判断三条边长能否构成三角形(类方法)&quot;&quot;&quot;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="c1">#     return a + b &gt; c and b + c &gt; a and a + c &gt; b</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>        <span class="sd">&quot;&quot;&quot;计算周长&quot;&quot;&quot;</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>        <span class="sd">&quot;&quot;&quot;计算面积&quot;&quot;&quot;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perimeter</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>        <span class="k">return</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span>
+</code></pre></div>
+<p>上面的代码使用<code>staticmethod</code>装饰器声明了<code>is_valid</code>方法是<code>Triangle</code>类的静态方法，如果要声明类方法，可以使用<code>classmethod</code>装饰器。可以直接使用<code>类名.方法名</code>的方式来调用静态方法和类方法，二者的区别在于，类方法的第一个参数是类对象本身，而静态方法则没有这个参数。简单的总结一下，<strong>对象方法、类方法、静态方法都可以通过<code>类名.方法名</code>的方式来调用，区别在于方法的第一个参数到底是普通对象还是类对象，还是没有接受消息的对象</strong>。静态方法通常也可以直接写成一个独立的函数，因为它并没有跟特定的对象绑定。</p>
+<h3 id="_4">继承和多态</h3>
+<p>面向对象的编程语言支持在已有类的基础上创建新类，从而减少重复代码的编写。提供继承信息的类叫做父类（超类、基类），得到继承信息的类叫做子类（派生类、衍生类）。例如，我们定义一个学生类和一个老师类，我们会发现他们有大量的重复代码，而这些重复代码都是老师和学生作为人的公共属性和行为，所以在这种情况下，我们应该先定义人类，再通过继承，从人类派生出老师类和学生类，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="sd">&quot;&quot;&quot;人类&quot;&quot;&quot;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="k">def</span> <span class="nf">eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">正在吃饭.&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>    <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">正在睡觉.&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="sd">&quot;&quot;&quot;学生类&quot;&quot;&quot;</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>        <span class="c1"># super(Student, self).__init__(name, age)</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="k">def</span> <span class="nf">study</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_name</span><span class="p">):</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">正在学习</span><span class="si">{</span><span class="n">course_name</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="k">class</span> <span class="nc">Teacher</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>    <span class="sd">&quot;&quot;&quot;老师类&quot;&quot;&quot;</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>        <span class="c1"># super(Teacher, self).__init__(name, age)</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>    <span class="k">def</span> <span class="nf">teach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_name</span><span class="p">):</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s1">正在讲授</span><span class="si">{</span><span class="n">course_name</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="n">stu1</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;白元芳&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="n">stu2</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;狄仁杰&#39;</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="n">teacher</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="s1">&#39;武则天&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="s1">&#39;副教授&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a><span class="n">stu1</span><span class="o">.</span><span class="n">eat</span><span class="p">()</span>
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a><span class="n">stu2</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="n">teacher</span><span class="o">.</span><span class="n">teach</span><span class="p">(</span><span class="s1">&#39;Python程序设计&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="n">stu1</span><span class="o">.</span><span class="n">study</span><span class="p">(</span><span class="s1">&#39;Python程序设计&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>继承的语法是在定义类的时候，在类名后的圆括号中指定当前类的父类。如果定义一个类的时候没有指定它的父类是谁，那么默认的父类是<code>object</code>类。<code>object</code>类是Python中的顶级类，这也就意味着所有的类都是它的子类，要么直接继承它，要么间接继承它。Python语言允许多重继承，也就是说一个类可以有一个或多个父类，关于多重继承的问题我们在后面会有更为详细的讨论。在子类的初始化方法中，我们可以通过<code>super().__init__()</code>来调用父类初始化方法，<code>super</code>函数是Python内置函数中专门为获取当前对象的父类对象而设计的。从上面的代码可以看出，子类除了可以通过继承得到父类提供的属性和方法外，还可以定义自己特有的属性和方法，所以子类比父类拥有的更多的能力。在实际开发中，我们经常会用子类对象去替换掉一个父类对象，这是面向对象编程中一个常见的行为，也叫做“里氏替换原则”（Liskov Substitution Principle）。</p>
+<p>子类继承父类的方法后，还可以对方法进行重写（重新实现该方法），不同的子类可以对父类的同一个方法给出不同的实现版本，这样的方法在程序运行时就会表现出多态行为（调用相同的方法，做了不同的事情）。多态是面向对象编程中最精髓的部分，当然也是对初学者来说最难以理解和灵活运用的部分，我们会在下一节课中用专门的例子来讲解多态这个知识点。</p>
+<h3 id="_5">简单的总结</h3>
+<p>Python是动态语言，Python中的对象可以动态的添加属性。在面向对象的世界中，<strong>一切皆为对象</strong>，我们定义的类也是对象，所以<strong>类也可以接收消息</strong>，对应的方法是类方法或静态方法。通过继承，我们<strong>可以从已有的类创建新类</strong>，实现对已有类代码的复用。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

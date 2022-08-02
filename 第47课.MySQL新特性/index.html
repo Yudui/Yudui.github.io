@@ -1,0 +1,581 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第47课.MySQL新特性 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mysql" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第47课.MySQL新特性
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    MySQL 新特性
+  </a>
+  
+    <nav class="md-nav" aria-label="MySQL 新特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#json" class="md-nav__link">
+    JSON类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    窗口函数
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第47课.MySQL新特性</h1>
+
+<h2 id="mysql">MySQL 新特性</h2>
+<h4 id="json">JSON类型</h4>
+<p>很多开发者在使用关系型数据库做数据持久化的时候，常常感到结构化的存储缺乏灵活性，因为必须事先设计好所有的列以及对应的数据类型。在业务发展和变化的过程中，如果需要修改表结构，这绝对是比较麻烦和难受的事情。从 MySQL 5.7 版本开始，MySQL引入了对 JSON 数据类型的支持（MySQL 8.0 解决了 JSON 的日志性能瓶颈问题），用好 JSON 类型，其实就是打破了关系型数据库和非关系型数据库之间的界限，为数据持久化操作带来了更多的便捷。</p>
+<p>JSON 类型主要分为 JSON 对象和 JSON数组两种，如下所示。</p>
+<ol>
+<li>JSON 对象</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;骆昊&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;13122335566&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;QQ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;957658&quot;</span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<ol>
+<li>JSON 数组</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;骆昊&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;13122335566&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;王大锤&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;QQ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;123456&quot;</span><span class="p">}]</span><span class="w"></span>
+</code></pre></div>
+<p>哪些地方需要用到JSON类型呢？举一个简单的例子，现在很多产品的用户登录都支持多种方式，例如手机号、微信、QQ、新浪微博等，但是一般情况下我们又不会要求用户提供所有的这些信息，那么用传统的设计方式，就需要设计多个列来对应多种登录方式，可能还需要允许这些列存在空值，这显然不是很好的选择；另一方面，如果产品又增加了一种登录方式，那么就必然要修改之前的表结构，这就更让人痛苦了。但是，有了 JSON 类型，刚才的问题就迎刃而解了，我们可以做出如下所示的设计。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_test</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="n">unsigned</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="o">`</span><span class="n">login_info</span><span class="o">`</span><span class="w"> </span><span class="n">json</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_test</span><span class="o">`</span><span class="w"> </span><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;{&quot;tel&quot;: &quot;13122335566&quot;, &quot;QQ&quot;: &quot;654321&quot;, &quot;wechat&quot;: &quot;jackfrued&quot;}&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;{&quot;tel&quot;: &quot;13599876543&quot;, &quot;weibo&quot;: &quot;wangdachui123&quot;}&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>如果要查询用户的手机和微信号，可以用如下所示的 SQL 语句。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">select</span><span class="w"> </span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">json_unquote</span><span class="p">(</span><span class="n">json_extract</span><span class="p">(</span><span class="o">`</span><span class="n">login_info</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;$.tel&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">手机号</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">json_unquote</span><span class="p">(</span><span class="n">json_extract</span><span class="p">(</span><span class="o">`</span><span class="n">login_info</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;$.wechat&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">微信</span><span class="w"> </span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_test</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>+---------+-------------+-----------+
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>| user_id | 手机号      | 微信       |
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>+---------+-------------+-----------+
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>|       1 | 13122335566 | jackfrued |
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>|       2 | 13599876543 | NULL      |
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>+---------+-------------+-----------+
+</code></pre></div>
+<p>因为支持 JSON 类型，MySQL 也提供了配套的处理 JSON 数据的函数，就像上面用到的<code>json_extract</code>和<code>json_unquote</code>。当然，上面的 SQL 还有更为便捷的写法，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">select</span><span class="w"> </span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="o">`</span><span class="n">login_info</span><span class="o">`</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;$.tel&#39;</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">手机号</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="o">`</span><span class="n">login_info</span><span class="o">`</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;$.wechat&#39;</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">微信</span><span class="w"></span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_test</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>再举个例子，如果我们的产品要实现用户画像功能（给用户打标签），然后基于用户画像给用户推荐平台的服务或消费品之类的东西，我们也可以使用 JSON 类型来保存用户画像数据，示意代码如下所示。</p>
+<p>创建画像标签表。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_tags</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="o">`</span><span class="n">tag_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;标签ID&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="o">`</span><span class="n">tag_name</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;标签名&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">tag_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_tags</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">tag_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">tag_name</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="k">values</span><span class="w"></span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;70后&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;80后&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;90后&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;00后&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;爱运动&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;高学历&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;小资&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">    </span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;有房&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;有车&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;爱看电影&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;爱网购&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;常点外卖&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>为用户打标签。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_users_tags</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;用户ID&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="o">`</span><span class="n">user_tags</span><span class="o">`</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;用户标签&#39;</span><span class="w"></span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_users_tags</span><span class="o">`</span><span class="w"> </span><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;[2, 6, 8, 10]&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;[3, 10, 12]&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;[3, 8, 9, 11]&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>接下来，我们通过一组查询来了解 JSON 类型的巧妙之处。</p>
+<ol>
+<li>
+<p>查询爱看电影（有<code>10</code>这个标签）的用户ID。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">select</span><span class="w"> </span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_users_tags</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">member</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">user_tags</span><span class="o">`-&gt;</span><span class="s1">&#39;$&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>查询爱看电影（有<code>10</code>这个标签）的80后（有<code>2</code>这个标签）用户ID。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">select</span><span class="w"> </span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_users_tags</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">json_contains</span><span class="p">(</span><span class="o">`</span><span class="n">user_tags</span><span class="o">`-&gt;</span><span class="s1">&#39;$&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;[2, 10]&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>查询爱看电影或80后或90后的用户ID。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">select</span><span class="w"> </span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_users_tags</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">json_overlaps</span><span class="p">(</span><span class="n">user_tags</span><span class="o">-&gt;</span><span class="s1">&#39;$&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;[2, 3, 10]&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+</li>
+</ol>
+<blockquote>
+<p><strong>说明</strong>：上面的查询用到了<code>member of</code>谓词和两个 JSON 函数，<code>json_contains</code>可以检查 JSON 数组是否包含了指定的元素，而<code>json_overlaps</code>可以检查 JSON 数组是否与指定的数组有重叠部分。</p>
+</blockquote>
+<h4 id="_1">窗口函数</h4>
+<p>MySQL 从8.0开始支持窗口函数，大多数商业数据库和一些开源数据库早已提供了对窗口函数的支持，有的也将其称之为 OLAP（联机分析和处理）函数，听名字就知道跟统计和分析相关。为了帮助大家理解窗口函数，我们先说说窗口的概念。</p>
+<p>窗口可以理解为记录的集合，窗口函数也就是在满足某种条件的记录集合上执行的特殊函数，对于每条记录都要在此窗口内执行函数。窗口函数和我们上面讲到的聚合函数比较容易混淆，二者的区别主要在于聚合函数是将多条记录聚合为一条记录，窗口函数是每条记录都会执行，执行后记录条数不会变。窗口函数不仅仅是几个函数，它是一套完整的语法，函数只是该语法的一部分，基本语法如下所示：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="o">&lt;</span><span class="err">窗口函数</span><span class="o">&gt;</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">&lt;</span><span class="err">用于分组的列名</span><span class="o">&gt;</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">&lt;</span><span class="err">用户排序的列名</span><span class="o">&gt;</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+<p>上面语法中，窗口函数的位置可以放以下两种函数：</p>
+<ol>
+<li>专用窗口函数，包括：<code>lead</code>、<code>lag</code>、<code>first_value</code>、<code>last_value</code>、<code>rank</code>、<code>dense_rank</code>和<code>row_number</code>等。</li>
+<li>聚合函数，包括：<code>sum</code>、<code>avg</code>、<code>max</code>、<code>min</code>和<code>count</code>等。</li>
+</ol>
+<p>下面为大家举几个使用窗口函数的简单例子，我们直接使用上一课创建的 hrs 数据库。</p>
+<p>例子1：查询按月薪从高到低排在第4到第6名的员工的姓名和月薪。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">select</span><span class="w"> </span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">        </span><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">        </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="w"> </span><span class="k">desc</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_emp</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="p">)</span><span class="w"> </span><span class="o">`</span><span class="n">temp</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`</span><span class="w"> </span><span class="k">between</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：上面使用的函数<code>row_number()</code>可以为每条记录生成一个行号，在实际工作中可以根据需要将其替换为<code>rank()</code>或<code>dense_rank()</code>函数，三者的区别可以参考官方文档或阅读<a href="https://zhuanlan.zhihu.com/p/92654574">《通俗易懂的学会：SQL窗口函数》</a>进行了解。在MySQL 8以前的版本，我们可以通过下面的方式来完成类似的操作。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">select</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">       </span><span class="k">select</span><span class="w"> </span><span class="o">@</span><span class="n">a</span><span class="p">:</span><span class="o">=@</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">       </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_emp</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">@</span><span class="n">a</span><span class="p">:</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="w"> </span><span class="k">desc</span><span class="w"></span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">`</span><span class="n">temp</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`</span><span class="w"> </span><span class="k">between</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+</blockquote>
+<p>例子2：查询每个部门月薪最高的两名的员工的姓名和部门名称。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">select</span><span class="w"> </span><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">dname</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="k">select</span><span class="w"> </span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">        </span><span class="o">`</span><span class="n">ename</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span><span class="n">rank</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">`</span><span class="n">dno</span><span class="o">`</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">`</span><span class="n">sal</span><span class="o">`</span><span class="w"> </span><span class="k">desc</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_emp</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">`</span><span class="n">temp</span><span class="o">`</span><span class="w"> </span><span class="k">natural</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="o">`</span><span class="n">tb_dept</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">rank</span><span class="o">`&lt;=</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p>说明：在MySQL 8以前的版本，我们可以通过下面的方式来完成类似的操作。</p>
+<p><code>SQL
+select `ename`, `sal`, `dname` from `tb_emp` as `t1` 
+natural join `tb_dept` 
+where (
+        select count(*) from `tb_emp` as `t2` 
+        where `t1`.`dno`=`t2`.`dno` and `t2`.`sal`&gt;`t1`.`sal` 
+)&lt;2 order by `dno` asc, `sal` desc;</code></p>
+</blockquote>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

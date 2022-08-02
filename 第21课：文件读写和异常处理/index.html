@@ -1,0 +1,682 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第21课：文件读写和异常处理 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#21" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第21课：文件读写和异常处理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    第21课：文件读写和异常处理
+  </a>
+  
+    <nav class="md-nav" aria-label="第21课：文件读写和异常处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    打开和关闭文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    读写文本文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    异常处理机制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    上下文语法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    读写二进制文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第21课：文件读写和异常处理</h1>
+
+<h2 id="21">第21课：文件读写和异常处理</h2>
+<p>实际开发中常常会遇到对数据进行持久化的场景，所谓持久化是指将数据从无法长久保存数据的存储介质（通常是内存）转移到可以长久保存数据的存储介质（通常是硬盘）中。实现数据持久化最直接简单的方式就是通过<strong>文件系统</strong>将数据保存到<strong>文件</strong>中。</p>
+<p>计算机的<strong>文件系统</strong>是一种存储和组织计算机数据的方法，它使得对数据的访问和查找变得容易，文件系统使用<strong>文件</strong>和<strong>树形目录</strong>的抽象逻辑概念代替了硬盘、光盘、闪存等物理设备的数据块概念，用户使用文件系统来保存数据时，不必关心数据实际保存在硬盘的哪个数据块上，只需要记住这个文件的路径和文件名。在写入新数据之前，用户不必关心硬盘上的哪个数据块没有被使用，硬盘上的存储空间管理（分配和释放）功能由文件系统自动完成，用户只需要记住数据被写入到了哪个文件中。</p>
+<h3 id="_1">打开和关闭文件</h3>
+<p>有了文件系统，我们可以非常方便的通过文件来读写数据；在Python中要实现文件操作是非常简单的。我们可以使用Python内置的<code>open</code>函数来打开文件，在使用<code>open</code>函数时，我们可以通过函数的参数指定<strong>文件名</strong>、<strong>操作模式</strong>和<strong>字符编码</strong>等信息，接下来就可以对文件进行读写操作了。这里所说的操作模式是指要打开什么样的文件（字符文件或二进制文件）以及做什么样的操作（读、写或追加），具体如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>操作模式</th>
+<th>具体含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'r'</code></td>
+<td>读取 （默认）</td>
+</tr>
+<tr>
+<td><code>'w'</code></td>
+<td>写入（会先截断之前的内容）</td>
+</tr>
+<tr>
+<td><code>'x'</code></td>
+<td>写入，如果文件已经存在会产生异常</td>
+</tr>
+<tr>
+<td><code>'a'</code></td>
+<td>追加，将内容写入到已有文件的末尾</td>
+</tr>
+<tr>
+<td><code>'b'</code></td>
+<td>二进制模式</td>
+</tr>
+<tr>
+<td><code>'t'</code></td>
+<td>文本模式（默认）</td>
+</tr>
+<tr>
+<td><code>'+'</code></td>
+<td>更新（既可以读又可以写）</td>
+</tr>
+</tbody>
+</table>
+<p>下图展示了如何根据程序的需要来设置<code>open</code>函数的操作模式。</p>
+<p><img src="https://github.com/jackfrued/mypic/raw/master/20210803201644.png" width="75%"></p>
+<p>在使用<code>open</code>函数时，如果打开的文件是字符文件（文本文件），可以通过<code>encoding</code>参数来指定读写文件使用的字符编码。如果对字符编码和字符集这些概念不了解，可以看看<a href="https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html">《字符集和字符编码》</a>一文，此处不再进行赘述。</p>
+<p>使用<code>open</code>函数打开文件成功后会返回一个文件对象，通过这个对象，我们就可以实现对文件的读写操作；如果打开文件失败，<code>open</code>函数会引发异常，稍后会对此加以说明。如果要关闭打开的文件，可以使用文件对象的<code>close</code>方法，这样可以在结束文件操作时释放掉这个文件。</p>
+<h3 id="_2">读写文本文件</h3>
+<p>用<code>open</code>函数打开文本文件时，需要指定文件名并将文件的操作模式设置为<code>'r'</code>，如果不指定，默认值也是<code>'r'</code>；如果需要指定字符编码，可以传入<code>encoding</code>参数，如果不指定，默认值是None，那么在读取文件时使用的是操作系统默认的编码。需要提醒大家，如果不能保证保存文件时使用的编码方式与<code>encoding</code>参数指定的编码方式是一致的，那么就可能因无法解码字符而导致读取文件失败。</p>
+<p>下面的例子演示了如何读取一个纯文本文件（一般指只有字符原生编码构成的文件，与富文本相比，纯文本不包含字符样式的控制元素，能够被最简单的文本编辑器直接读取）。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;致橡树.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：<a href="http://www.china.org.cn/learning_english/2011-02/21/content_21967654.htm">《致橡树》</a>是舒婷老师在1977年3月创建的爱情诗，也是我最喜欢的现代诗之一。</p>
+</blockquote>
+<p>除了使用文件对象的<code>read</code>方法读取文件之外，还可以使用<code>for-in</code>循环逐行读取或者用<code>readlines</code>方法将文件按行读取到一个列表容器中，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;致橡树.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;致橡树.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<p>如果要向文件中写入内容，可以在打开文件时使用<code>w</code>或者<code>a</code>作为操作模式，前者会截断之前的文本内容写入新的内容，后者是在原来内容的尾部追加新的内容。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;致橡树.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">标题：《致橡树》&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">作者：舒婷&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">时间：1977年3月&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_3">异常处理机制</h3>
+<p>请注意上面的代码，如果<code>open</code>函数指定的文件并不存在或者无法打开，那么将引发异常状况导致程序崩溃。为了让代码具有健壮性和容错性，我们可以<strong>使用Python的异常机制对可能在运行时发生状况的代码进行适当的处理</strong>。Python中和异常相关的关键字有五个，分别是<code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code>和<code>raise</code>，我们先看看下面的代码，再来为大家介绍这些关键字的用法。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;致橡树.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;无法打开指定的文件!&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;指定了未知的编码!&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;读取文件时解码错误!&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="k">if</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<p>在Python中，我们可以将运行时会出现状况的代码放在<code>try</code>代码块中，在<code>try</code>后面可以跟上一个或多个<code>except</code>块来捕获异常并进行相应的处理。例如，在上面的代码中，文件找不到会引发<code>FileNotFoundError</code>，指定了未知的编码会引发<code>LookupError</code>，而如果读取文件时无法按指定编码方式解码文件会引发<code>UnicodeDecodeError</code>，所以我们在<code>try</code>后面跟上了三个<code>except</code>分别处理这三种不同的异常状况。在<code>except</code>后面，我们还可以加上<code>else</code>代码块，这是<code>try</code> 中的代码没有出现异常时会执行的代码，而且<code>else</code>中的代码不会再进行异常捕获，也就是说如果遇到异常状况，程序会因异常而终止并报告异常信息。最后我们使用<code>finally</code>代码块来关闭打开的文件，释放掉程序中获取的外部资源。由于<code>finally</code>块的代码不论程序正常还是异常都会执行，甚至是调用了<code>sys</code>模块的<code>exit</code>函数终止Python程序，<code>finally</code>块中的代码仍然会被执行（因为<code>exit</code>函数的本质是引发了<code>SystemExit</code>异常），因此我们把<code>finally</code>代码块称为“总是执行代码块”，它最适合用来做释放外部资源的操作。</p>
+<p>Python中内置了大量的异常类型，除了上面代码中用到的异常类型以及之前的课程中遇到过的异常类型外，还有许多的异常类型，其继承结构如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>BaseException
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a> +-- SystemExit
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a> +-- KeyboardInterrupt
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a> +-- GeneratorExit
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a> +-- Exception
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>      +-- StopIteration
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>      +-- StopAsyncIteration
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>      +-- ArithmeticError
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>      |    +-- FloatingPointError
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>      |    +-- OverflowError
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>      |    +-- ZeroDivisionError
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>      +-- AssertionError
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>      +-- AttributeError
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>      +-- BufferError
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>      +-- EOFError
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>      +-- ImportError
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>      |    +-- ModuleNotFoundError
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>      +-- LookupError
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>      |    +-- IndexError
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>      |    +-- KeyError
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>      +-- MemoryError
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>      +-- NameError
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>      |    +-- UnboundLocalError
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>      +-- OSError
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>      |    +-- BlockingIOError
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>      |    +-- ChildProcessError
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>      |    +-- ConnectionError
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>      |    |    +-- BrokenPipeError
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>      |    |    +-- ConnectionAbortedError
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>      |    |    +-- ConnectionRefusedError
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>      |    |    +-- ConnectionResetError
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>      |    +-- FileExistsError
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>      |    +-- FileNotFoundError
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>      |    +-- InterruptedError
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>      |    +-- IsADirectoryError
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>      |    +-- NotADirectoryError
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>      |    +-- PermissionError
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>      |    +-- ProcessLookupError
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>      |    +-- TimeoutError
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>      +-- ReferenceError
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>      +-- RuntimeError
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>      |    +-- NotImplementedError
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>      |    +-- RecursionError
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>      +-- SyntaxError
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>      |    +-- IndentationError
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>      |         +-- TabError
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>      +-- SystemError
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>      +-- TypeError
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>      +-- ValueError
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>      |    +-- UnicodeError
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>      |         +-- UnicodeDecodeError
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a>      |         +-- UnicodeEncodeError
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>      |         +-- UnicodeTranslateError
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>      +-- Warning
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>           +-- DeprecationWarning
+<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a>           +-- PendingDeprecationWarning
+<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>           +-- RuntimeWarning
+<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a>           +-- SyntaxWarning
+<a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a>           +-- UserWarning
+<a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a>           +-- FutureWarning
+<a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a>           +-- ImportWarning
+<a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a>           +-- UnicodeWarning
+<a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>           +-- BytesWarning
+<a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a>           +-- ResourceWarning
+</code></pre></div>
+<p>从上面的继承结构可以看出，Python中所有的异常都是<code>BaseException</code>的子类型，它有四个直接的子类，分别是：<code>SystemExit</code>、<code>KeyboardInterrupt</code>、<code>GeneratorExit</code>和<code>Exception</code>。其中，<code>SystemExit</code>表示解释器请求退出，<code>KeyboardInterrupt</code>是用户中断程序执行（按下<code>Ctrl+c</code>），<code>GeneratorExit</code>表示生成器发生异常通知退出，不理解这些异常没有关系，继续学习就好了。值得一提的是<code>Exception</code>类，它是常规异常类型的父类型，很多的异常都是直接或间接的继承自<code>Exception</code>类。如果Python内置的异常类型不能满足应用程序的需要，我们可以自定义异常类型，而自定义的异常类型也应该直接或间接继承自<code>Exception</code>类，当然还可以根据需要重写或添加方法。</p>
+<p>在Python中，可以使用<code>raise</code>关键字来引发异常（抛出异常对象），而调用者可以通过<code>try...except...</code>结构来捕获并处理异常。例如在函数中，当函数的执行条件不满足时，可以使用抛出异常的方式来告知调用者问题的所在，而调用者可以通过捕获处理异常来使得代码从异常中恢复，定义异常和抛出异常的代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span> <span class="nc">InputError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="sd">&quot;&quot;&quot;自定义异常类型&quot;&quot;&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="k">pass</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">def</span> <span class="nf">fac</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="sd">&quot;&quot;&quot;求阶乘&quot;&quot;&quot;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="k">raise</span> <span class="n">InputError</span><span class="p">(</span><span class="s1">&#39;只能计算非负整数的阶乘&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">if</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="k">return</span> <span class="mi">1</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="k">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>调用求阶乘的函数<code>fac</code>，通过<code>try...except...</code>结构捕获输入错误的异常并打印异常对象（显示异常信息），如果输入正确就计算阶乘并结束程序。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">while</span> <span class="n">flag</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;n = &#39;</span><span class="p">))</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s1">! = </span><span class="si">{</span><span class="n">fac</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="n">flag</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="k">except</span> <span class="n">InputError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_4">上下文语法</h3>
+<p>对于<code>open</code>函数返回的文件对象，还可以使用<code>with</code>上下文语法在文件操作完成后自动执行文件对象的<code>close</code>方法，这样可以让代码变得更加简单优雅，因为不需要再写<code>finally</code>代码块来执行关闭文件释放资源的操作。需要提醒大家的是，并不是所有的对象都可以放在<code>with</code>上下文语法中，只有符合<strong>上下文管理器协议</strong>（有<code>__enter__</code>和<code>__exit__</code>魔术方法）的对象才能使用这种语法，Python标准库中的<code>contextlib</code>模块也提供了对<code>with</code>上下文语法的支持，后面再为大家进行讲解。</p>
+<p>用<code>with</code>上下文语法改写后的代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;致橡树.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;无法打开指定的文件!&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;指定了未知的编码!&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;读取文件时解码错误!&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_5">读写二进制文件</h3>
+<p>读写二进制文件跟读写文本文件的操作类似，但是需要注意，在使用<code>open</code>函数打开文件时，如果要进行读操作，操作模式是<code>'rb'</code>，如果要进行写操作，操作模式是<code>'wb'</code>。还有一点，读写文本文件时，<code>read</code>方法的返回值以及<code>write</code>方法的参数是<code>str</code>对象（字符串），而读写二进制文件时，<code>read</code>方法的返回值以及<code>write</code>方法的参数是<code>bytes-like</code>对象（字节串）。下面的代码实现了将当前路径下名为<code>guido.jpg</code>的图片文件复制到<code>吉多.jpg</code>文件中的操作。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;guido.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file1</span><span class="p">:</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">file1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;吉多.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file2</span><span class="p">:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        <span class="n">file2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;指定的文件无法打开.&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;读写文件时出现错误.&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;程序执行结束.&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>如果要复制的图片文件很大，一次将文件内容直接读入内存中可能会造成非常大的内存开销，为了减少对内存的占用，可以为<code>read</code>方法传入<code>size</code>参数来指定每次读取的字节数，通过循环读取和写入的方式来完成上面的操作，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;guido.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file1</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;吉多.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file2</span><span class="p">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">file1</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        <span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>            <span class="n">file2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">file1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;指定的文件无法打开.&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;读写文件时出现错误.&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;程序执行结束.&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_6">简单的总结</h3>
+<p>通过读写文件的操作，我们可以实现数据持久化。在Python中可以通过<code>open</code>函数来获得文件对象，可以通过文件对象的<code>read</code>和<code>write</code>方法实现文件读写操作。程序在运行时可能遭遇无法预料的异常状况，可以使用Python的异常机制来处理这些状况。Python的异常机制主要包括<code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code>和<code>raise</code>这五个核心关键字。<code>try</code>后面的<code>except</code>语句不是必须的，<code>finally</code>语句也不是必须的，但是二者必须要有一个；<code>except</code>语句可以有一个或多个，多个<code>except</code>会按照书写的顺序依次匹配指定的异常，如果异常已经处理就不会再进入后续的<code>except</code>语句；<code>except</code>语句中还可以通过元组同时指定多个异常类型进行捕获；<code>except</code>语句后面如果不指定异常类型，则默认捕获所有异常；捕获异常后可以使用<code>raise</code>要再次抛出，但是不建议捕获并抛出同一个异常；不建议在不清楚逻辑的情况下捕获所有异常，这可能会掩盖程序中严重的问题。最后强调一点，<strong>不要使用异常机制来处理正常业务逻辑或控制程序流程</strong>，简单的说就是不要滥用异常机制，这是初学者常犯的错误。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

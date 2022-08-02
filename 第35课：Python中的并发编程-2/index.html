@@ -1,0 +1,661 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第35课：Python中的并发编程 2 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#35python-2" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第35课：Python中的并发编程 2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#35python-2" class="md-nav__link">
+    第35课：Python中的并发编程-2
+  </a>
+  
+    <nav class="md-nav" aria-label="第35课：Python中的并发编程-2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    创建进程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    多进程和多线程的比较
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    进程间通信
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第35课：Python中的并发编程 2</h1>
+
+<h2 id="35python-2">第35课：Python中的并发编程-2</h2>
+<p>在上一课中我们说过，由于 GIL 的存在，CPython 中的多线程并不能发挥 CPU 的多核优势，如果希望突破 GIL 的限制，可以考虑使用多进程。对于多进程的程序，每个进程都有一个属于自己的 GIL，所以多进程不会受到 GIL 的影响。那么，我们应该如何在 Python 程序中创建和使用多进程呢？</p>
+<h3 id="_1">创建进程</h3>
+<p>在 Python 中可以基于<code>Process</code>类来创建进程，虽然进程和线程有着本质的差别，但是<code>Process</code>类和<code>Thread</code>类的用法却非常类似。在使用<code>Process</code>类的构造器创建对象时，也是通过<code>target</code>参数传入一个函数来指定进程要执行的代码，而<code>args</code>和<code>kwargs</code>参数可以指定该函数使用的参数值。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">current_process</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span> <span class="nf">sub_task</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="c1"># 通过current_process函数获取当前进程对象</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="c1"># 通过进程对象的pid和name属性获取进程的ID号和名字</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PID: </span><span class="si">{</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">pid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Name: </span><span class="si">{</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="c1"># 通过下面的输出不难发现，每个进程都有自己的nums列表，进程之间本就不共享内存</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="c1"># 在创建子进程时复制了父进程的数据结构，三个进程从列表中pop(0)得到的值都是20</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">counter</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">nums</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loop count: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="c1"># 创建并启动进程来执行指定的函数</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sub_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Ping&#39;</span><span class="p">,</span> <span class="n">nums</span><span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sub_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Pong&#39;</span><span class="p">,</span> <span class="n">nums</span><span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="c1"># 在主进程中执行sub_task函数</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">sub_task</span><span class="p">(</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：上面的代码通过<code>current_process</code>函数获取当前进程对象，再通过进程对象的<code>pid</code>属性获取进程ID。在 Python 中，使用<code>os</code>模块的<code>getpid</code>函数也可以达到同样的效果。</p>
+</blockquote>
+<p>如果愿意，也可以使用<code>os</code>模块的<code>fork</code>函数来创建进程，调用该函数时，操作系统自动把当前进程（父进程）复制一份（子进程），父进程的<code>fork</code>函数会返回子进程的ID，而子进程中的<code>fork</code>函数会返回<code>0</code>，也就是说这个函数调用一次会在父进程和子进程中得到两个不同的返回值。需要注意的是，Windows 系统并不支持<code>fork</code>函数，如果你使用的是 Linux 或 macOS 系统，可以试试下面的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PID: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;子进程 - PID: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Todo: 在子进程中执行的代码&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;父进程 - PID: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Todo: 在父进程中执行的代码&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>简而言之，我们还是推荐大家通过直接使用<code>Process</code>类、继承<code>Process</code>类和使用进程池（<code>ProcessPoolExecutor</code>）这三种方式来创建和使用多进程，这三种方式不同于上面的<code>fork</code>函数，能够保证代码的兼容性和可移植性。具体的做法跟之前讲过的创建和使用多线程的方式比较接近，此处不再进行赘述。</p>
+<h3 id="_2">多进程和多线程的比较</h3>
+<p>对于爬虫这类 I/O 密集型任务来说，使用多进程并没有什么优势；但是对于计算密集型任务来说，多进程相比多线程，在效率上会有显著的提升，我们可以通过下面的代码来加以证明。下面的代码会通过多线程和多进程两种方式来判断一组大整数是不是质数，很显然这是一个计算密集型任务，我们将任务分别放到多个线程和多个进程中来加速代码的执行，让我们看看多线程和多进程的代码具体表现有何不同。</p>
+<p>我们先实现一个多线程的版本，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">PRIMES</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="mi">1116281</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="mi">1297337</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="mi">104395303</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="mi">472882027</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="mi">533000389</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="mi">817504243</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="mi">982451653</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="mi">112272535095293</span><span class="p">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="mi">112582705942171</span><span class="p">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="mi">112272535095293</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="mi">115280095190773</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="mi">115797848077099</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="mi">1099726899285419</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="sd">&quot;&quot;&quot;判断素数&quot;&quot;&quot;</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>            <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    <span class="k">return</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    <span class="sd">&quot;&quot;&quot;主函数&quot;&quot;&quot;</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>        <span class="k">for</span> <span class="n">number</span><span class="p">,</span> <span class="n">prime</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">PRIMES</span><span class="p">,</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">is_prime</span><span class="p">,</span> <span class="n">PRIMES</span><span class="p">)):</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> is prime: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">prime</span><span class="p">))</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>假设上面的代码保存在名为<code>example.py</code>的文件中，在 Linux 或 macOS 系统上，可以使用<code>time python example.py</code>命令执行程序并获得操作系统关于执行时间的统计，在我的 macOS 上，某次的运行结果的最后一行输出如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python example09.py  38.69s user 1.01s system 101% cpu 39.213 total
+</code></pre></div>
+<p>从运行结果可以看出，多线程的代码只能让 CPU 利用率达到100%，这其实已经证明了多线程的代码无法利用 CPU 多核特性来加速代码的执行，我们再看看多进程的版本，我们将上面代码中的线程池（<code>ThreadPoolExecutor</code>）更换为进程池（<code>ProcessPoolExecutor</code>）。</p>
+<p>多进程的版本。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">PRIMES</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="mi">1116281</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="mi">1297337</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="mi">104395303</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="mi">472882027</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="mi">533000389</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="mi">817504243</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="mi">982451653</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="mi">112272535095293</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="mi">112582705942171</span><span class="p">,</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="mi">112272535095293</span><span class="p">,</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="mi">115280095190773</span><span class="p">,</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="mi">115797848077099</span><span class="p">,</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="mi">1099726899285419</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="sd">&quot;&quot;&quot;判断素数&quot;&quot;&quot;</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>            <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="k">return</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="sd">&quot;&quot;&quot;主函数&quot;&quot;&quot;</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>    <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>        <span class="k">for</span> <span class="n">number</span><span class="p">,</span> <span class="n">prime</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">PRIMES</span><span class="p">,</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">is_prime</span><span class="p">,</span> <span class="n">PRIMES</span><span class="p">)):</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> is prime: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">prime</span><span class="p">))</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：运行上面的代码时，可以通过操作系统的任务管理器（资源监视器）来查看是否启动了多个 Python  解释器进程。</p>
+</blockquote>
+<p>我们仍然通过<code>time python example.py</code>的方式来执行上述代码，运行结果的最后一行如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python example09.py 106.63s user 0.57s system 389% cpu 27.497 total
+</code></pre></div>
+<p>可以看出，多进程的版本在我使用的这台电脑上，让 CPU 的利用率达到了将近400%，而运行代码时用户态耗费的 CPU 的时间（106.63秒）几乎是代码运行总时间（27.497秒）的4倍，从这两点都可以看出，我的电脑使用了一款4核的 CPU。当然，要知道自己的电脑有几个 CPU 或几个核，可以直接使用下面的代码。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span>
+</code></pre></div>
+<p>综上所述，多进程可以突破 GIL 的限制，充分利用 CPU 多核特性，对于计算密集型任务，这一点是相当重要的。常见的计算密集型任务包括科学计算、图像处理、音视频编解码等，如果这些计算密集型任务本身是可以并行的，那么使用多进程应该是更好的选择。</p>
+<h3 id="_3">进程间通信</h3>
+<p>在讲解进程间通信之前，先给大家一个任务：启动两个进程，一个输出“Ping”，一个输出“Pong”，两个进程输出的“Ping”和“Pong”加起来一共有50个时，就结束程序。听起来是不是非常简单，但是实际编写代码时，由于多个进程之间不能够像多个线程之间直接通过共享内存的方式交换数据，所以下面的代码是达不到我们想要的结果的。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="k">def</span> <span class="nf">sub_task</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="k">global</span> <span class="n">counter</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sub_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Ping&#39;</span><span class="p">,</span> <span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sub_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Pong&#39;</span><span class="p">,</span> <span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>上面的代码看起来没毛病，但是最后的结果是“Ping”和“Pong”各输出了50个。再次提醒大家，当我们在程序中创建进程的时候，子进程会复制父进程及其所有的数据结构，每个子进程有自己独立的内存空间，这也就意味着两个子进程中各有一个<code>counter</code>变量，它们都会从<code>0</code>加到<code>50</code>，所以结果就可想而知了。要解决这个问题比较简单的办法是使用<code>multiprocessing</code>模块中的<code>Queue</code>类，它是可以被多个进程共享的队列，底层是通过操作系统底层的管道和信号量（semaphore）机制来实现的，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span> <span class="nn">time</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">Queue</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">def</span> <span class="nf">sub_task</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="n">counter</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>        <span class="n">counter</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="n">p1</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sub_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Ping&#39;</span><span class="p">,</span> <span class="n">queue</span><span class="p">))</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>    <span class="n">p1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    <span class="n">p2</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sub_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Pong&#39;</span><span class="p">,</span> <span class="n">queue</span><span class="p">))</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>    <span class="n">p2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>    <span class="k">while</span> <span class="n">p1</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span> <span class="ow">and</span> <span class="n">p2</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>        <span class="k">pass</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：<code>multiprocessing.Queue</code>对象的<code>get</code>方法默认在队列为空时是会阻塞的，直到获取到数据才会返回。如果不希望该方法阻塞以及需要指定阻塞的超时时间，可以通过指定<code>block</code>和<code>timeout</code>参数进行设定。</p>
+</blockquote>
+<p>上面的代码通过<code>Queue</code>类的<code>get</code>和<code>put</code>方法让三个进程（<code>p1</code>、<code>p2</code>和主进程）实现了数据的共享，这就是所谓的进程间的通信，通过这种方式，当<code>Queue</code>中取出的值已经大于等于<code>50</code>时，<code>p1</code>和<code>p2</code>就会跳出<code>while</code>循环，从而终止进程的执行。代码第22行的循环是为了等待<code>p1</code>和<code>p2</code>两个进程中的一个结束，这时候主进程还需要向<code>Queue</code>中放置一个大于等于<code>50</code>的值，这样另一个尚未结束的进程也会因为读到这个大于等于<code>50</code>的值而终止。</p>
+<p>进程间通信的方式还有很多，比如使用套接字也可以实现两个进程的通信，甚至于这两个进程并不在同一台主机上，有兴趣的读者可以自行了解。</p>
+<h3 id="_4">简单的总结</h3>
+<p>在 Python 中，我们还可以通过<code>subprocess</code>模块的<code>call</code>函数执行其他的命令来创建子进程，相当于就是在我们的程序中调用其他程序，这里我们暂不探讨这些知识，有兴趣的读者可以自行研究。</p>
+<p>对于Python开发者来说，以下情况需要考虑使用多线程：</p>
+<ol>
+<li>程序需要维护许多共享的状态（尤其是可变状态），Python 中的列表、字典、集合都是线程安全的（多个线程同时操作同一个列表、字典或集合，不会引发错误和数据问题），所以使用线程而不是进程维护共享状态的代价相对较小。</li>
+<li>程序会花费大量时间在 I/O 操作上，没有太多并行计算的需求且不需占用太多的内存。</li>
+</ol>
+<p>那么在遇到下列情况时，应该考虑使用多进程：</p>
+<ol>
+<li>程序执行计算密集型任务（如：音视频编解码、数据压缩、科学计算等）。</li>
+<li>程序的输入可以并行的分成块，并且可以将运算结果合并。</li>
+<li>程序在内存使用方面没有任何限制且不强依赖于 I/O 操作（如读写文件、套接字等）。</li>
+</ol>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

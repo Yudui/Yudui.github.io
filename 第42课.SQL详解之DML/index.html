@@ -1,0 +1,562 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第42课.SQL详解之DML - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sqldml" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第42课.SQL详解之DML
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sqldml" class="md-nav__link">
+    SQL详解之DML
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL详解之DML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insert" class="md-nav__link">
+    insert操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    delete 操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    update 操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    完整的数据
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第42课.SQL详解之DML</h1>
+
+<h2 id="sqldml">SQL详解之DML</h2>
+<p>我们接着上一课中创建的学校选课系统数据库，为大家讲解 DML 的使用。DML 可以帮助将数据插入到二维表（<code>insert</code>操作）、从二维表删除数据（<code>delete</code>操作）以及更新二维表的数据（<code>update</code>操作）。在执行 DML 之前，我们先通过下面的<code>use</code>命令切换到<code>school</code>数据库。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">use</span><span class="w"> </span><span class="o">`</span><span class="n">school</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h3 id="insert">insert操作</h3>
+<p>顾名思义，<code>insert</code>是用来插入行到二维表中的，插入的方式包括：插入完整的行、插入行的一部分、插入多行、插入查询的结果。我们通过如下所示的 SQL 向学院表中添加一个学院。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="k">default</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;计算机学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;学习计算机科学与技术的地方&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>其中，由于学院表的主键是一个自增字段，因此上面的 SQL 中用<code>default</code>表示该列使用默认值，我们也可以使用下面的方式完成同样的操作。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">col_intro</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;计算机学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;学习计算机科学与技术的地方&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>我们推荐大家使用下面这种做法，指定为哪些字段赋值，这样做可以不按照建表时设定的字段顺序赋值，可以按照<code>values</code>前面的元组中给定的字段顺序为字段赋值，但是需要注意，除了允许为<code>null</code>和有默认值的字段外，其他的字段都必须要一一列出并在<code>values</code>后面的元组中为其赋值。如果希望一次性插入多条记录，我们可以在<code>values</code>后面跟上多个元组来实现批量插入，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">col_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">col_intro</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">(</span><span class="s1">&#39;外国语学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;学习歪果仁的语言的学院&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p">(</span><span class="s1">&#39;经济管理学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;经世济民，治理国家；管理科学，兴国之道&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="p">(</span><span class="s1">&#39;体育学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;发展体育运动，增强人民体质&#39;</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>在插入数据时，要注意主键是不能重复的，如果插入的数据与表中已有记录主键相同，那么<code>insert</code>操作将会产生 Duplicated Entry 的报错信息。再次提醒大家，如果<code>insert</code>操作省略了某些列，那么这些列要么有默认值，要么允许为<code>null</code>，否则也将产生错误。在业务系统中，为了让<code>insert</code>操作不影响其他操作（主要是后面要讲的<code>select</code>操作）的性能，可以在<code>insert</code>和<code>into</code>之间加一个<code>low_priority</code>来降低<code>insert</code>操作的优先级，这个做法也适用于下面要讲的<code>delete</code>和<code>update</code>操作。</p>
+<p>假如有一张名为<code>tb_temp</code>的表中有<code>a</code>和<code>b</code>两个列，分别保存了学院的名称和学院的介绍，我们也可以通过查询操作获得<code>tb_temp</code>表的数据并插入到学院表中，如下所示，其中的<code>select</code>就是我们之前提到的 DQL，在下一课中会详细讲解。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">col_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">col_intro</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">select</span><span class="w"> </span><span class="o">`</span><span class="n">a</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">b</span><span class="o">`</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_temp</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<h3 id="delete">delete 操作</h3>
+<p>如果需要从表中删除数据，可以使用<code>delete</code>操作，它可以帮助我们删除指定行或所有行，例如我们要删除编号为<code>1</code>的学院，就可以使用如下所示的 SQL。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">delete</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">col_id</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>注意，上面的<code>delete</code>操作中的<code>where</code>子句是用来指定条件的，只有满足条件的行会被删除。如果我们不小心写出了下面的 SQL，就会删除学院表中所有的记录，这是相当危险的，在实际工作中通常也不会这么做。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">delete</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>需要说明的是，即便删除了所有的数据，<code>delete</code>操作不会删除表本身，也不会让 AUTO_INCREMENT 字段的值回到初始值。如果需要删除所有的数据而且让 AUTO_INCREMENT 字段回到初始值，可以使用<code>truncate table</code>执行截断表操作，<code>truncate</code>的本质是删除原来的表并重新创建一个表，它的速度其实更快，因为不需要逐行删除数据。但是请大家记住一点，用<code>truncate table</code>删除数据是非常危险的，因为它会删除所有的数据，而且由于原来的表已经被删除了，要想恢复误删除的数据也会变得极为困难。</p>
+<h3 id="update">update 操作</h3>
+<p>如果要修改表中的数据，可以使用<code>update</code>操作，它可以用来删除指定的行或所有的行。例如，我们将学生表中的“杨过”修改为“杨逍”，这里我们假设“杨过”的学号为<code>1001</code>，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">update</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="o">`</span><span class="n">stu_name</span><span class="o">`=</span><span class="s1">&#39;杨逍&#39;</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">stu_id</span><span class="o">`=</span><span class="mi">1001</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>注意上面 SQL 中的<code>where</code>子句，我们使用学号作为条件筛选出对应的学生，然后通过前面的赋值操作将其姓名修改为“杨逍”。这里为什么不直接使用姓名作为筛选条件，那是因为学生表中可能有多个名为“杨过”的学生，如果使用 stu_name 作为筛选条件，那么我们的<code>update</code>操作有可能会一次更新多条数据，这显然不是我们想要看到的。还有一个需要注意的地方是<code>update</code>操作中的<code>set</code>关键字，因为 SQL 中的<code>=</code>并不表示赋值，而是判断相等的运算符，只有出现在<code>set</code> 关键字后面的<code>=</code>，才具备赋值的能力。</p>
+<p>如果要同时修改学生的姓名和生日，我们可以对上面的<code>update</code>语句稍作修改，如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">update</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="o">`</span><span class="n">stu_name</span><span class="o">`=</span><span class="s1">&#39;杨逍&#39;</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">stu_birth</span><span class="o">`=</span><span class="s1">&#39;1975-12-29&#39;</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">stu_id</span><span class="o">`=</span><span class="mi">1001</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p><code>update</code>语句中也可以使用查询的方式获得数据并以此来更新指定的表数据，有兴趣的读者可以自行研究。在书写<code>update</code>语句时，通常都会有<code>where</code>子句，因为实际工作中几乎不太会用到更新全表的操作，这一点大家一定要注意。</p>
+<h3 id="_1">完整的数据</h3>
+<p>下面我们给出完整的向 school 数据库的五张表中插入数据的 SQL。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">use</span><span class="w"> </span><span class="o">`</span><span class="n">school</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1">-- 插入学院数据</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">col_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">col_intro</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="p">(</span><span class="s1">&#39;计算机学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;计算机学院1958年设立计算机专业，1981年建立计算机科学系，1998年设立计算机学院，2005年5月，为了进一步整合教学和科研资源，学校决定，计算机学院和软件学院行政班子合并统一运作、实行教学和学生管理独立运行的模式。 学院下设三个系：计算机科学与技术系、物联网工程系、计算金融系；两个研究所：图象图形研究所、网络空间安全研究院（2015年成立）；三个教学实验中心：计算机基础教学实验中心、IBM技术中心和计算机专业实验中心。&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="p">(</span><span class="s1">&#39;外国语学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;外国语学院设有7个教学单位，6个文理兼收的本科专业；拥有1个一级学科博士授予点，3个二级学科博士授予点，5个一级学科硕士学位授权点，5个二级学科硕士学位授权点，5个硕士专业授权领域，同时还有2个硕士专业学位（MTI）专业；有教职员工210余人，其中教授、副教授80余人，教师中获得中国国内外名校博士学位和正在职攻读博士学位的教师比例占专任教师的60%以上。&#39;</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="p">(</span><span class="s1">&#39;经济管理学院&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;经济学院前身是创办于1905年的经济科；已故经济学家彭迪先、张与九、蒋学模、胡寄窗、陶大镛、胡代光，以及当代学者刘诗白等曾先后在此任教或学习。&#39;</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1">-- 插入学生数据</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">stu_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">stu_sex</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">stu_birth</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">stu_addr</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="k">values</span><span class="w"></span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;杨过&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1990-3-4&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;湖南长沙&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;任我行&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1992-2-2&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;湖南长沙&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="p">(</span><span class="mi">1033</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;王语嫣&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1989-12-3&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;四川成都&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="p">(</span><span class="mi">1572</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;岳不群&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1993-7-19&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;陕西咸阳&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="p">(</span><span class="mi">1378</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;纪嫣然&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1995-8-12&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;四川绵阳&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="p">(</span><span class="mi">1954</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;林平之&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1994-9-20&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;福建莆田&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="p">(</span><span class="mi">2035</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;东方不败&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1988-6-30&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="p">(</span><span class="mi">3011</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;林震南&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1985-12-12&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;福建莆田&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="p">(</span><span class="mi">3755</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;项少龙&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1993-1-25&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;四川成都&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">    </span><span class="p">(</span><span class="mi">3923</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;杨不悔&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;1985-4-17&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;四川成都&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="c1">-- 插入老师数据</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_teacher</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">tea_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">tea_title</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">    </span><span class="p">(</span><span class="mi">1122</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;张三丰&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;教授&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="w">    </span><span class="p">(</span><span class="mi">1133</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;宋远桥&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;副教授&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="w">    </span><span class="p">(</span><span class="mi">1144</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;杨逍&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;副教授&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">    </span><span class="p">(</span><span class="mi">2255</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;范遥&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;副教授&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="w">    </span><span class="p">(</span><span class="mi">3366</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;韦一笑&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">default</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="c1">-- 插入课程数据</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_course</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">cou_name</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">cou_credit</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">    </span><span class="p">(</span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Python程序设计&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1122</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">    </span><span class="p">(</span><span class="mi">2222</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Web前端开发&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1122</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="w">    </span><span class="p">(</span><span class="mi">3333</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;操作系统&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1122</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="w">    </span><span class="p">(</span><span class="mi">4444</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;计算机网络&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1133</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="w">    </span><span class="p">(</span><span class="mi">5555</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;编译原理&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1144</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="w">    </span><span class="p">(</span><span class="mi">6666</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;算法和数据结构&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1144</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a><span class="w">    </span><span class="p">(</span><span class="mi">7777</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;经贸法语&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2255</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a><span class="w">    </span><span class="p">(</span><span class="mi">8888</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;成本会计&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3366</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a><span class="w">    </span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;审计学&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3366</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>
+<a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a><span class="c1">-- 插入选课数据</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="o">`</span><span class="n">tb_record</span><span class="o">`</span><span class="w"> </span>
+<a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a><span class="w">    </span><span class="p">(</span><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">sel_date</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">score</span><span class="o">`</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a><span class="k">values</span><span class="w"> </span>
+<a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a><span class="w">    </span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">95</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a><span class="w">    </span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">2222</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">.</span><span class="mi">5</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a><span class="w">    </span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">3333</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a><span class="w">    </span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">4444</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a><span class="w">    </span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">6666</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a><span class="w">    </span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-03&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">65</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a><span class="w">    </span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">5555</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a><span class="w">    </span><span class="p">(</span><span class="mi">1033</span><span class="p">,</span><span class="w"> </span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-03&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">92</span><span class="p">.</span><span class="mi">5</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a><span class="w">    </span><span class="p">(</span><span class="mi">1033</span><span class="p">,</span><span class="w"> </span><span class="mi">4444</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">78</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a><span class="w">    </span><span class="p">(</span><span class="mi">1033</span><span class="p">,</span><span class="w"> </span><span class="mi">5555</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">82</span><span class="p">.</span><span class="mi">5</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a><span class="w">    </span><span class="p">(</span><span class="mi">1572</span><span class="p">,</span><span class="w"> </span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">78</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a><span class="w">    </span><span class="p">(</span><span class="mi">1378</span><span class="p">,</span><span class="w"> </span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-05&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">82</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-66" name="__codelineno-9-66" href="#__codelineno-9-66"></a><span class="w">    </span><span class="p">(</span><span class="mi">1378</span><span class="p">,</span><span class="w"> </span><span class="mi">7777</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">65</span><span class="p">.</span><span class="mi">5</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-67" name="__codelineno-9-67" href="#__codelineno-9-67"></a><span class="w">    </span><span class="p">(</span><span class="mi">2035</span><span class="p">,</span><span class="w"> </span><span class="mi">7777</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-68" name="__codelineno-9-68" href="#__codelineno-9-68"></a><span class="w">    </span><span class="p">(</span><span class="mi">2035</span><span class="p">,</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2019-09-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-69" name="__codelineno-9-69" href="#__codelineno-9-69"></a><span class="w">    </span><span class="p">(</span><span class="mi">3755</span><span class="p">,</span><span class="w"> </span><span class="mi">1111</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2019-09-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-70" name="__codelineno-9-70" href="#__codelineno-9-70"></a><span class="w">    </span><span class="p">(</span><span class="mi">3755</span><span class="p">,</span><span class="w"> </span><span class="mi">8888</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2019-09-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-9-71" name="__codelineno-9-71" href="#__codelineno-9-71"></a><span class="w">    </span><span class="p">(</span><span class="mi">3755</span><span class="p">,</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">92</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>注意</strong>：上面的<code>insert</code>语句使用了批处理的方式来插入数据，这种做法插入数据的效率比较高。</p>
+</blockquote>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,681 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第48课.Python程序接入MySQL数据库 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pythonmysql" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第48课.Python程序接入MySQL数据库
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pythonmysql" class="md-nav__link">
+    Python程序接入MySQL数据库
+  </a>
+  
+    <nav class="md-nav" aria-label="Python程序接入MySQL数据库">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    接入MySQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    代码实操
+  </a>
+  
+    <nav class="md-nav" aria-label="代码实操">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    插入数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    删除数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    更新数据
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    查询数据
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    案例讲解
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第48课.Python程序接入MySQL数据库</h1>
+
+<h2 id="pythonmysql">Python程序接入MySQL数据库</h2>
+<p>在 Python3 中，我们可以使用<code>mysqlclient</code>或者<code>pymysql</code>三方库来接入 MySQL 数据库并实现数据持久化操作。二者的用法完全相同，只是导入的模块名不一样。我们推荐大家使用纯 Python 的三方库<code>pymysql</code>，因为它更容易安装成功。下面我们仍然以之前创建的名为<code>hrs</code>的数据库为例，为大家演示如何通过 Python 程序操作 MySQL 数据库实现数据持久化操作。</p>
+<h3 id="mysql">接入MySQL</h3>
+<p>首先，我们可以在命令行或者 PyCharm 的终端中通过下面的命令安装<code>pymysql</code>，如果需要接入 MySQL 8，还需要安装一个名为<code>cryptography</code>的三方库来支持 MySQL 8 的密码认证方式。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip install pymysql cryptography
+</code></pre></div>
+<p>使用<code>pymysql</code>操作 MySQL 的步骤如下所示：</p>
+<ol>
+<li>创建连接。MySQL 服务器启动后，提供了基于 TCP （传输控制协议）的网络服务。我们可以通过<code>pymysql</code>模块的<code>connect</code>函数连接 MySQL 服务器。在调用<code>connect</code>函数时，需要指定主机（<code>host</code>）、端口（<code>port</code>）、用户名（<code>user</code>）、口令（<code>password</code>）、数据库（<code>database</code>）、字符集（<code>charset</code>）等参数，该函数会返回一个<code>Connection</code>对象。</li>
+<li>获取游标。连接 MySQL 服务器成功后，接下来要做的就是向数据库服务器发送 SQL 语句，MySQL 会执行接收到的 SQL 并将执行结果通过网络返回。要实现这项操作，需要先通过连接对象的<code>cursor</code>方法获取游标（<code>Cursor</code>）对象。</li>
+<li>发出 SQL。通过游标对象的<code>execute</code>方法，我们可以向数据库发出 SQL 语句。</li>
+<li>如果执行<code>insert</code>、<code>delete</code>或<code>update</code>操作，需要根据实际情况提交或回滚事务。因为创建连接时，默认开启了事务环境，在操作完成后，需要使用连接对象的<code>commit</code>或<code>rollback</code>方法，实现事务的提交或回滚，<code>rollback</code>方法通常会放在异常捕获代码块<code>except</code>中。如果执行<code>select</code>操作，需要通过游标对象抓取查询的结果，对应的方法有三个，分别是：<code>fetchone</code>、<code>fetchmany</code>和<code>fetchall</code>。其中<code>fetchone</code>方法会抓取到一条记录，并以元组或字典的方式返回；<code>fetchmany</code>和<code>fetchall</code>方法会抓取到多条记录，以嵌套元组或列表装字典的方式返回。</li>
+<li>关闭连接。在完成持久化操作后，请不要忘记关闭连接，释放外部资源。我们通常会在<code>finally</code>代码块中使用连接对象的<code>close</code>方法来关闭连接。</li>
+</ol>
+<h3 id="_1">代码实操</h3>
+<p>下面，我们通过代码实操的方式为大家演示上面说的五个步骤。</p>
+<h4 id="_2">插入数据</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">pymysql</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">no</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门编号: &#39;</span><span class="p">))</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门名称: &#39;</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">location</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门所在地: &#39;</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 1. 创建连接（Connection）</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>                       <span class="n">user</span><span class="o">=</span><span class="s1">&#39;guest&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Guest.618&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>                       <span class="n">database</span><span class="o">=</span><span class="s1">&#39;hrs&#39;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;utf8mb4&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="c1"># 2. 获取游标对象（Cursor）</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="c1"># 3. 通过游标对象向数据库服务器发出SQL语句</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="n">affected_rows</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>            <span class="s1">&#39;insert into `tb_dept` values (</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">)&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>            <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="p">)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="k">if</span> <span class="n">affected_rows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;新增部门成功!!!&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="c1"># 4. 提交事务（transaction）</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="k">except</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">MySQLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>    <span class="c1"># 4. 回滚事务</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="c1"># 5. 关闭连接释放资源</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：上面的<code>127.0.0.1</code>称为回环地址，它代表的是本机。下面的<code>guest</code>是我提前创建好的用户，该用户拥有对<code>hrs</code>数据库的<code>insert</code>、<code>delete</code>、<code>update</code>和<code>select</code>权限。我们不建议大家在项目中直接使用<code>root</code>超级管理员账号访问数据库，这样做实在是太危险了。我们可以使用下面的命令创建名为<code>guest</code>的用户并为其授权。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">create</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="s1">&#39;guest&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">identified</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="s1">&#39;Guest.618&#39;</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">grant</span><span class="w"> </span><span class="k">insert</span><span class="p">,</span><span class="w"> </span><span class="k">delete</span><span class="p">,</span><span class="w"> </span><span class="k">update</span><span class="p">,</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">`</span><span class="n">hrs</span><span class="o">`</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="s1">&#39;guest&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+</blockquote>
+<p>如果要插入大量数据，建议使用游标对象的<code>executemany</code>方法做批处理（一个<code>insert</code>操作后面跟上多组数据），大家可以尝试向一张表插入10000条记录，然后看看不使用批处理一条条的插入和使用批处理有什么差别。游标对象的<code>executemany</code>方法第一个参数仍然是 SQL 语句，第二个参数可以是包含多组数据的列表或元组。</p>
+<h4 id="_3">删除数据</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">pymysql</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">no</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门编号: &#39;</span><span class="p">))</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># 1. 创建连接（Connection）</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>                       <span class="n">user</span><span class="o">=</span><span class="s1">&#39;guest&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Guest.618&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                       <span class="n">database</span><span class="o">=</span><span class="s1">&#39;hrs&#39;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                       <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="c1"># 2. 获取游标对象（Cursor）</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="c1"># 3. 通过游标对象向数据库服务器发出SQL语句</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        <span class="n">affected_rows</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>            <span class="s1">&#39;delete from `tb_dept` where `dno`=</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>            <span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="p">)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>        <span class="p">)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        <span class="k">if</span> <span class="n">affected_rows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;删除部门成功!!!&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    <span class="c1"># 5. 关闭连接释放资源</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：如果不希望每次 SQL 操作之后手动提交或回滚事务，可以<code>connect</code>函数中加一个名为<code>autocommit</code>的参数并将它的值设置为<code>True</code>，表示每次执行 SQL 成功后自动提交。但是我们建议大家手动提交或回滚，这样可以根据实际业务需要来构造事务环境。如果不愿意捕获异常并进行处理，可以在<code>try</code>代码块后直接跟<code>finally</code>块，省略<code>except</code>意味着发生异常时，代码会直接崩溃并将异常栈显示在终端中。</p>
+</blockquote>
+<h4 id="_4">更新数据</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">pymysql</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">no</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门编号: &#39;</span><span class="p">))</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门名称: &#39;</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">location</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;部门所在地: &#39;</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># 1. 创建连接（Connection）</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>                       <span class="n">user</span><span class="o">=</span><span class="s1">&#39;guest&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Guest.618&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>                       <span class="n">database</span><span class="o">=</span><span class="s1">&#39;hrs&#39;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;utf8mb4&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="c1"># 2. 获取游标对象（Cursor）</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="c1"># 3. 通过游标对象向数据库服务器发出SQL语句</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="n">affected_rows</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>            <span class="s1">&#39;update `tb_dept` set `dname`=</span><span class="si">%s</span><span class="s1">, `dloc`=</span><span class="si">%s</span><span class="s1"> where `dno`=</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">no</span><span class="p">)</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="p">)</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="k">if</span> <span class="n">affected_rows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;更新部门信息成功!!!&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="c1"># 4. 提交事务</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="k">except</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">MySQLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="c1"># 4. 回滚事务</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>    <span class="c1"># 5. 关闭连接释放资源</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="_5">查询数据</h4>
+<ol>
+<li>查询部门表的数据。</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">pymysql</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># 1. 创建连接（Connection）</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>                       <span class="n">user</span><span class="o">=</span><span class="s1">&#39;guest&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Guest.618&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>                       <span class="n">database</span><span class="o">=</span><span class="s1">&#39;hrs&#39;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;utf8mb4&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="c1"># 2. 获取游标对象（Cursor）</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="c1"># 3. 通过游标对象向数据库服务器发出SQL语句</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select `dno`, `dname`, `dloc` from `tb_dept`&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="c1"># 4. 通过游标对象抓取数据</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="k">while</span> <span class="n">row</span><span class="p">:</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>            <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="k">except</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">MySQLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="c1"># 5. 关闭连接释放资源</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：上面的代码中，我们通过构造一个<code>while</code>循环实现了逐行抓取查询结果的操作。这种方式特别适合查询结果有非常多行的场景。因为如果使用<code>fetchall</code>一次性将所有记录抓取到一个嵌套元组中，会造成非常大的内存开销，这在很多场景下并不是一个好主意。如果不愿意使用<code>while</code>循环，还可以考虑使用<code>iter</code>函数构造一个迭代器来逐行抓取数据，有兴趣的读者可以自行研究。</p>
+</blockquote>
+<ol>
+<li>分页查询员工表的数据。</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">pymysql</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;页码: &#39;</span><span class="p">))</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;大小: &#39;</span><span class="p">))</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># 1. 创建连接（Connection）</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">con</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>                      <span class="n">user</span><span class="o">=</span><span class="s1">&#39;guest&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Guest.618&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>                      <span class="n">database</span><span class="o">=</span><span class="s1">&#39;hrs&#39;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>    <span class="c1"># 2. 获取游标对象（Cursor）</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="k">with</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">pymysql</span><span class="o">.</span><span class="n">cursors</span><span class="o">.</span><span class="n">DictCursor</span><span class="p">)</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>        <span class="c1"># 3. 通过游标对象向数据库服务器发出SQL语句</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>            <span class="s1">&#39;select `eno`, `ename`, `job`, `sal` from `tb_emp` order by `sal` desc limit </span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>            <span class="p">((</span><span class="n">page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>        <span class="p">)</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>        <span class="c1"># 4. 通过游标对象抓取数据</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>        <span class="k">for</span> <span class="n">emp_dict</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">emp_dict</span><span class="p">)</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="c1"># 5. 关闭连接释放资源</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>    <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_6">案例讲解</h3>
+<p>下面我们为大家讲解一个将数据库表数据导出到 Excel 文件的例子，我们需要先安装<code>openpyxl</code>三方库，命令如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip install openpyxl
+</code></pre></div>
+<p>接下来，我们通过下面的代码实现了将数据库<code>hrs</code>中所有员工的编号、姓名、职位、月薪、补贴和部门名称导出到一个 Excel 文件中。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span> <span class="nn">openpyxl</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span> <span class="nn">pymysql</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># 创建工作簿对象</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">workbook</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">Workbook</span><span class="p">()</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># 获得默认的工作表</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">sheet</span> <span class="o">=</span> <span class="n">workbook</span><span class="o">.</span><span class="n">active</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1"># 修改工作表的标题</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">sheet</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;员工基本信息&#39;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># 给工作表添加表头</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">sheet</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;工号&#39;</span><span class="p">,</span> <span class="s1">&#39;姓名&#39;</span><span class="p">,</span> <span class="s1">&#39;职位&#39;</span><span class="p">,</span> <span class="s1">&#39;月薪&#39;</span><span class="p">,</span> <span class="s1">&#39;补贴&#39;</span><span class="p">,</span> <span class="s1">&#39;部门&#39;</span><span class="p">))</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1"># 创建连接（Connection）</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>                       <span class="n">user</span><span class="o">=</span><span class="s1">&#39;guest&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Guest.618&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>                       <span class="n">database</span><span class="o">=</span><span class="s1">&#39;hrs&#39;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s1">&#39;utf8mb4&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="c1"># 获取游标对象（Cursor）</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>        <span class="c1"># 通过游标对象执行SQL语句</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>            <span class="s1">&#39;select `eno`, `ename`, `job`, `sal`, coalesce(`comm`, 0), `dname` &#39;</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>            <span class="s1">&#39;from `tb_emp` natural join `tb_dept`&#39;</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>        <span class="p">)</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>        <span class="c1"># 通过游标抓取数据</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>        <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>        <span class="k">while</span> <span class="n">row</span><span class="p">:</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>            <span class="c1"># 将数据逐行写入工作表中</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>            <span class="n">sheet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>            <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>    <span class="c1"># 保存工作簿</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>    <span class="n">workbook</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;hrs.xlsx&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="k">except</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">MySQLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a>    <span class="c1"># 关闭连接释放资源</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<p>大家可以参考上面的例子，试一试把 Excel 文件的数据导入到指定数据库的指定表中，看看是否可以成功。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

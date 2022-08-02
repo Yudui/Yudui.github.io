@@ -1,0 +1,892 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第41课.SQL详解之DDL - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sqlddl" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第41课.SQL详解之DDL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sqlddl" class="md-nav__link">
+    SQL详解之DDL
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL详解之DDL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    建库建表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    删除表和修改表
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第41课.SQL详解之DDL</h1>
+
+<h2 id="sqlddl">SQL详解之DDL</h2>
+<p>我们通常可以将 SQL 分为四类，分别是 DDL（数据定义语言）、DML（数据操作语言）、DQL（数据查询语言）和 DCL（数据控制语言）。DDL 主要用于创建、删除、修改数据库中的对象，比如创建、删除和修改二维表，核心的关键字包括<code>create</code>、<code>drop</code>和<code>alter</code>；DML 主要负责数据的插入、删除和更新，关键词包括<code>insert</code>、<code>delete</code>和<code>update</code>；DQL 负责数据查询，最重要的一个关键词是<code>select</code>；DCL 通常用于授予和召回权限，核心关键词是<code>grant</code>和<code>revoke</code>。</p>
+<blockquote>
+<p><strong>说明</strong>：SQL 是不区分大小写的语言，有人会建议将关键字大写，其他部分小写。为了书写和识别方便，下面的 SQL 我都是使用小写字母进行书写的。 如果公司的 SQL 编程规范有强制规定，那么就按照公司的要求来，个人的喜好不应该凌驾于公司的编程规范之上，这一点对职业人来说应该是常识。</p>
+</blockquote>
+<h3 id="_1">建库建表</h3>
+<p>下面我们来实现一个非常简单的学校选课系统的数据库。我们将数据库命名为<code>school</code>，四个关键的实体分别是学院、老师、学生和课程，其中，学生跟学院是从属关系，这个关系从数量上来讲是多对一关系，因为一个学院可以有多名学生，而一个学生通常只属于一个学院；同理，老师跟学院的从属关系也是多对一关系。一名老师可以讲授多门课程，一门课程如果只有一个授课老师的话，那么课程跟老师也是多对一关系；如果允许多个老师合作讲授一门课程，那么课程和老师就是多对多关系。简单起见，我们将课程和老师设计为多对一关系。学生和课程是典型的多对多关系，因为一个学生可以选择多门课程，一门课程也可以被多个学生选择，而关系型数据库需要借助中间表才能维持维持两个实体的多对多关系。最终，我们的学校选课系统一共有五张表，分别是学院表（<code>tb_college</code>）、学生表（<code>tb_student</code>）、教师表（<code>tb_teacher</code>）、课程表（<code>tb_course</code>）和选课记录表（<code>tb_record</code>），其中选课记录表就是维持学生跟课程多对多关系的中间表。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- 如果存在名为school的数据库就删除它</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">drop</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="o">`</span><span class="n">school</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- 创建名为school的数据库并设置默认的字符集和排序方式</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">create</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="o">`</span><span class="n">school</span><span class="o">`</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nb">character</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">utf8mb4</span><span class="w"> </span><span class="k">collate</span><span class="w"> </span><span class="n">utf8mb4_general_ci</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- 切换到school数据库上下文环境</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">use</span><span class="w"> </span><span class="o">`</span><span class="n">school</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">-- 创建学院表</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="n">auto_increment</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="o">`</span><span class="n">col_name</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;名称&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="o">`</span><span class="n">col_intro</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;介绍&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="w"> </span><span class="n">auto_increment</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;学院表&#39;</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">-- 创建学生表</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;学号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="o">`</span><span class="n">stu_name</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;姓名&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="o">`</span><span class="n">stu_sex</span><span class="o">`</span><span class="w"> </span><span class="nb">boolean</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;性别&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="o">`</span><span class="n">stu_birth</span><span class="o">`</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;出生日期&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="o">`</span><span class="n">stu_addr</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;籍贯&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;所属学院&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_student_col_id</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;学生表&#39;</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="c1">-- 创建教师表</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_teacher</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;工号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="o">`</span><span class="n">tea_name</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;姓名&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="o">`</span><span class="n">tea_title</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s1">&#39;助教&#39;</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;职称&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;所属学院&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_teacher_col_id</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;老师表&#39;</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="c1">-- 创建课程表</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_course</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="o">`</span><span class="n">cou_name</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;名称&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="o">`</span><span class="n">cou_credit</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;学分&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;授课老师&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_course_tea_id</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_teacher</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">tea_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;课程表&#39;</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="c1">-- 创建选课记录表</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_record</span><span class="o">`</span><span class="w"></span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="o">`</span><span class="n">rec_id</span><span class="o">`</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="n">auto_increment</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;选课记录号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;学号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="n">unsigned</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;课程编号&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="o">`</span><span class="n">sel_date</span><span class="o">`</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;选课日期&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="o">`</span><span class="n">score</span><span class="o">`</span><span class="w"> </span><span class="nb">decimal</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;考试成绩&#39;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">rec_id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_record_stu_id</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_record_cou_id</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_course</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">uk_record_stu_cou</span><span class="o">`</span><span class="w"> </span><span class="k">unique</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">stu_id</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="o">`</span><span class="n">cou_id</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="p">)</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;选课记录表&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>上面的DDL有几个地方需要强调一下：</p>
+<ul>
+<li>
+<p>首先，上面 SQL 中的数据库名、表名、字段名都被反引号（`）包裹起来，反引号并不是必须的，但是却可以解决表名、字段名等跟 SQL 关键字（SQL 中有特殊含义的单词）冲突的问题。</p>
+</li>
+<li>
+<p>创建数据库时，我们通过<code>default character set utf8mb4</code>指定了数据库默认使用的字符集为<code>utf8mb4</code>（最大<code>4</code>字节的<code>utf-8</code>编码），我们推荐使用该字符集，它也是 MySQL 8.x 默认使用的字符集，因为它能够支持国际化编码，还可以存储 Emoji 字符。可以通过下面的命令查看 MySQL 支持的字符集以及默认的排序规则。</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">show</span><span class="w"> </span><span class="nb">character</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>+----------+---------------------------------+---------------------+--------+
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>| Charset  | Description                     | Default collation   | Maxlen |
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>+----------+---------------------------------+---------------------+--------+
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>| big5     | Big5 Traditional Chinese        | big5_chinese_ci     |      2 |
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>| dec8     | DEC West European               | dec8_swedish_ci     |      1 |
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>| cp850    | DOS West European               | cp850_general_ci    |      1 |
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>| hp8      | HP West European                | hp8_english_ci      |      1 |
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>| koi8r    | KOI8-R Relcom Russian           | koi8r_general_ci    |      1 |
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>| latin1   | cp1252 West European            | latin1_swedish_ci   |      1 |
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>| latin2   | ISO 8859-2 Central European     | latin2_general_ci   |      1 |
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>| swe7     | 7bit Swedish                    | swe7_swedish_ci     |      1 |
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>| ascii    | US ASCII                        | ascii_general_ci    |      1 |
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>| ujis     | EUC-JP Japanese                 | ujis_japanese_ci    |      3 |
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>| sjis     | Shift-JIS Japanese              | sjis_japanese_ci    |      2 |
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>| hebrew   | ISO 8859-8 Hebrew               | hebrew_general_ci   |      1 |
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>| tis620   | TIS620 Thai                     | tis620_thai_ci      |      1 |
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>| euckr    | EUC-KR Korean                   | euckr_korean_ci     |      2 |
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>| koi8u    | KOI8-U Ukrainian                | koi8u_general_ci    |      1 |
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>| gb2312   | GB2312 Simplified Chinese       | gb2312_chinese_ci   |      2 |
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>| greek    | ISO 8859-7 Greek                | greek_general_ci    |      1 |
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>| cp1250   | Windows Central European        | cp1250_general_ci   |      1 |
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>| gbk      | GBK Simplified Chinese          | gbk_chinese_ci      |      2 |
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>| latin5   | ISO 8859-9 Turkish              | latin5_turkish_ci   |      1 |
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>| armscii8 | ARMSCII-8 Armenian              | armscii8_general_ci |      1 |
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>| utf8     | UTF-8 Unicode                   | utf8_general_ci     |      3 |
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>| ucs2     | UCS-2 Unicode                   | ucs2_general_ci     |      2 |
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>| cp866    | DOS Russian                     | cp866_general_ci    |      1 |
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>| keybcs2  | DOS Kamenicky Czech-Slovak      | keybcs2_general_ci  |      1 |
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>| macce    | Mac Central European            | macce_general_ci    |      1 |
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>| macroman | Mac West European               | macroman_general_ci |      1 |
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>| cp852    | DOS Central European            | cp852_general_ci    |      1 |
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>| latin7   | ISO 8859-13 Baltic              | latin7_general_ci   |      1 |
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>| utf8mb4  | UTF-8 Unicode                   | utf8mb4_general_ci  |      4 |
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>| cp1251   | Windows Cyrillic                | cp1251_general_ci   |      1 |
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>| utf16    | UTF-16 Unicode                  | utf16_general_ci    |      4 |
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>| utf16le  | UTF-16LE Unicode                | utf16le_general_ci  |      4 |
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>| cp1256   | Windows Arabic                  | cp1256_general_ci   |      1 |
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>| cp1257   | Windows Baltic                  | cp1257_general_ci   |      1 |
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>| utf32    | UTF-32 Unicode                  | utf32_general_ci    |      4 |
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>| binary   | Binary pseudo charset           | binary              |      1 |
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>| geostd8  | GEOSTD8 Georgian                | geostd8_general_ci  |      1 |
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>| cp932    | SJIS for Windows Japanese       | cp932_japanese_ci   |      2 |
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>| eucjpms  | UJIS for Windows Japanese       | eucjpms_japanese_ci |      3 |
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>| gb18030  | China National Standard GB18030 | gb18030_chinese_ci  |      4 |
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>+----------+---------------------------------+---------------------+--------+
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>41 rows in set (0.00 sec)
+</code></pre></div>
+<p>如果要设置 MySQL 服务启动时默认使用的字符集，可以修改MySQL的配置并添加以下内容。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[mysqld]</span><span class="w"></span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">character-set-server</span><span class="o">=</span><span class="s">utf8</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：如果不清楚如何修改 MySQL 的配置文件就先不要管它。</p>
+</blockquote>
+<ul>
+<li>
+<p>创建和删除数据库时，关键字<code>database</code>也可以替换为<code>schema</code>，二者作用相同。</p>
+</li>
+<li>
+<p>建表语句中的<code>not null</code>是非空约束，它限定了字段不能为空；<code>default</code>用于为字段指定默认值，我们称之为默认值约束；<code>primary key</code>是主键约束，它设定了能够唯一确定一条记录的列，也确保了每条记录都是独一无二的，因为主键不允许重复；<code>foreign key</code>是外键约束，它维持了两张表的参照完整性，举个例子，由于学生表中为 col_id 字段添加了外键约束，限定其必须引用（<code>references</code>）学院表中的 col_id，因此学生表中的学院编号必须来自于学院表中的学院编号，不能够随意为该字段赋值。如果需要给主键约束、外键约束等起名字，可以使用<code>constriant</code>关键字并在后面跟上约束的名字。</p>
+</li>
+<li>
+<p>建表语句中的<code>comment</code> 关键字用来给列和表添加注释，增强代码的可读性和可维护性。</p>
+</li>
+<li>
+<p>在创建表的时候，可以自行选择底层的存储引擎。MySQL 支持多种存储引擎，可以通过<code>show engines</code>命令进行查看。MySQL 5.5 以后的版本默认使用的存储引擎是 InnoDB，它是我们推荐大家使用的存储引擎（因为更适合当下互联网应用对高并发、性能以及事务支持等方面的需求），为了 SQL 语句的向下兼容性，我们可以在建表语句结束处右圆括号的后面通过<code>engine=innodb</code>来指定使用 InnoDB 存储引擎。</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">show</span><span class="w"> </span><span class="n">engines</span><span class="err">\</span><span class="k">G</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：上面的 \G 是为了换一种输出方式，在命令行客户端中，如果表的字段很多一行显示不完，就会导致输出的内容看起来非常不舒服，使用 \G 可以将记录的每个列以独占整行的的方式输出，这种输出方式在命令行客户端中看起来会舒服很多。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>*************************** 1. row ***************************
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>      Engine: InnoDB
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>     Support: DEFAULT
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>     Comment: Supports transactions, row-level locking, and foreign keys
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Transactions: YES
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>          XA: YES
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  Savepoints: YES
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>*************************** 2. row ***************************
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>      Engine: MRG_MYISAM
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>     Support: YES
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>     Comment: Collection of identical MyISAM tables
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>Transactions: NO
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>          XA: NO
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>  Savepoints: NO
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>*************************** 3. row ***************************
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>      Engine: MEMORY
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>     Support: YES
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>     Comment: Hash based, stored in memory, useful for temporary tables
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>Transactions: NO
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>          XA: NO
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>  Savepoints: NO
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>*************************** 4. row ***************************
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>      Engine: BLACKHOLE
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>     Support: YES
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>     Comment: /dev/null storage engine (anything you write to it disappears)
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>Transactions: NO
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>          XA: NO
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>  Savepoints: NO
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>*************************** 5. row ***************************
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>      Engine: MyISAM
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>     Support: YES
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>     Comment: MyISAM storage engine
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>Transactions: NO
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>          XA: NO
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>  Savepoints: NO
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>*************************** 6. row ***************************
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>      Engine: CSV
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>     Support: YES
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>     Comment: CSV storage engine
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>Transactions: NO
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>          XA: NO
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>  Savepoints: NO
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>*************************** 7. row ***************************
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>      Engine: ARCHIVE
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>     Support: YES
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>     Comment: Archive storage engine
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>Transactions: NO
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>          XA: NO
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>  Savepoints: NO
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>*************************** 8. row ***************************
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>      Engine: PERFORMANCE_SCHEMA
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>     Support: YES
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a>     Comment: Performance Schema
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a>Transactions: NO
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a>          XA: NO
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a>  Savepoints: NO
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a>*************************** 9. row ***************************
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a>      Engine: FEDERATED
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a>     Support: NO
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>     Comment: Federated MySQL storage engine
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a>Transactions: NULL
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a>          XA: NULL
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a>  Savepoints: NULL
+<a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a>9 rows in set (0.00 sec)
+</code></pre></div>
+<p>下面的表格对MySQL几种常用的数据引擎进行了简单的对比。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>InnoDB</th>
+<th>MRG_MYISAM</th>
+<th>MEMORY</th>
+<th>MyISAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储限制</td>
+<td>有</td>
+<td>没有</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>事务</td>
+<td>支持</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>锁机制</td>
+<td>行锁</td>
+<td>表锁</td>
+<td>表锁</td>
+<td>表锁</td>
+</tr>
+<tr>
+<td>B树索引</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>哈希索引</td>
+<td></td>
+<td></td>
+<td>支持</td>
+<td></td>
+</tr>
+<tr>
+<td>全文检索</td>
+<td>支持（5.6+）</td>
+<td></td>
+<td></td>
+<td>支持</td>
+</tr>
+<tr>
+<td>集群索引</td>
+<td>支持</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>数据缓存</td>
+<td>支持</td>
+<td></td>
+<td>支持</td>
+<td></td>
+</tr>
+<tr>
+<td>索引缓存</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>数据可压缩</td>
+<td></td>
+<td></td>
+<td></td>
+<td>支持</td>
+</tr>
+<tr>
+<td>内存使用</td>
+<td>高</td>
+<td>低</td>
+<td>中</td>
+<td>低</td>
+</tr>
+<tr>
+<td>存储空间使用</td>
+<td>高</td>
+<td>低</td>
+<td></td>
+<td>低</td>
+</tr>
+<tr>
+<td>批量插入性能</td>
+<td>低</td>
+<td>高</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>是否支持外键</td>
+<td>支持</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>通过上面的比较我们可以了解到，InnoDB 是唯一能够支持外键、事务以及行锁的存储引擎，所以我们之前说它更适合互联网应用，而且在较新版本的 MySQL 中，它也是默认使用的存储引擎。</p>
+<ul>
+<li>在定义表结构为每个字段选择数据类型时，如果不清楚哪个数据类型更合适，可以通过 MySQL 的帮助系统来了解每种数据类型的特性、数据的长度和精度等相关信息。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="o">?</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">types</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：在 MySQLWorkbench 中，不能使用<code>?</code>获取帮助，要使用对应的命令<code>help</code>。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>You asked for help about help category: &quot;Data Types&quot;
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>For more information, type &#39;help &lt;item&gt;&#39;, where &lt;item&gt; is one of the following
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>topics:
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>   AUTO_INCREMENT
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   BIGINT
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>   BINARY
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>   BIT
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   BLOB
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>   BLOB DATA TYPE
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>   BOOLEAN
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>   CHAR
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>   CHAR BYTE
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>   DATE
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>   DATETIME
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>   DEC
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>   DECIMAL
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>   DOUBLE
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>   DOUBLE PRECISION
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>   ENUM
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>   FLOAT
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>   INT
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>   INTEGER
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>   LONGBLOB
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>   LONGTEXT
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>   MEDIUMBLOB
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>   MEDIUMINT
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>   MEDIUMTEXT
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>   SET DATA TYPE
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>   SMALLINT
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>   TEXT
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>   TIME
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>   TIMESTAMP
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>   TINYBLOB
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>   TINYINT
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>   TINYTEXT
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>   VARBINARY
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>   VARCHAR
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>   YEAR DATA TYPE
+</code></pre></div>
+<p>获取 varchar 类型的帮助：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="o">?</span><span class="w"> </span><span class="nb">varchar</span><span class="w"></span>
+</code></pre></div>
+<p>执行结果：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Name: &#39;VARCHAR&#39;
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Description:
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>[NATIONAL] VARCHAR(M) [CHARACTER SET charset_name] [COLLATE
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>collation_name]
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>A variable-length string. M represents the maximum column length in
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>characters. The range of M is 0 to 65,535. The effective maximum length
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>of a VARCHAR is subject to the maximum row size (65,535 bytes, which is
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>shared among all columns) and the character set used. For example, utf8
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>characters can require up to three bytes per character, so a VARCHAR
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>column that uses the utf8 character set can be declared to be a maximum
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>of 21,844 characters. See
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>http://dev.mysql.com/doc/refman/5.7/en/column-count-limit.html.
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>MySQL stores VARCHAR values as a 1-byte or 2-byte length prefix plus
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>data. The length prefix indicates the number of bytes in the value. A
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>VARCHAR column uses one length byte if values require no more than 255
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>bytes, two length bytes if values may require more than 255 bytes.
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>*Note*:
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>MySQL follows the standard SQL specification, and does not remove
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>trailing spaces from VARCHAR values.
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>VARCHAR is shorthand for CHARACTER VARYING. NATIONAL VARCHAR is the
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>standard SQL way to define that a VARCHAR column should use some
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>predefined character set. MySQL uses utf8 as this predefined character
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>set. http://dev.mysql.com/doc/refman/5.7/en/charset-national.html.
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>NVARCHAR is shorthand for NATIONAL VARCHAR.
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>URL: http://dev.mysql.com/doc/refman/5.7/en/string-type-overview.html
+</code></pre></div>
+<p>在数据类型的选择上，保存字符串数据通常都使用 VARCHAR 和 CHAR 两种类型，前者通常称为变长字符串，而后者通常称为定长字符串；对于 InnoDB 存储引擎，行存储格式没有区分固定长度和可变长度列，因此 VARCHAR 类型和 CHAR 类型没有本质区别，后者不一定比前者性能更好。如果要保存的很大字符串，可以使用 TEXT 类型；如果要保存很大的字节串，可以使用 BLOB（二进制大对象）类型。在 MySQL 中，TEXT 和 BLOB又分别包括 TEXT、MEDIUMTEXT、LONGTEXT 和 BLOB、MEDIUMBLOB、LONGBLOB 三种不同的类型，它们主要的区别在于存储数据的最大大小不同。保存浮点数可以用 FLOAT 或 DOUBLE 类型，FLOAT 已经不推荐使用了，而且在 MySQL 后续的版本中可能会被移除掉。而保存定点数应该使用 DECIMAL 类型，它可以指定小数点前后有效数字的位数。如果要保存时间日期，DATETIME 类型优于 TIMESTAMP 类型，因为前者能表示的时间日期范围更大，后者底层其实就是一个整数，记录了指定的日期时间和 1970-01-01 00:00:00 相差多少个毫秒，该类型在 2038-01-19 03:14:07 之后就会溢出。</p>
+<p>对于自增字段 AUTO_INCREMENT，如果使用 MySQL 5.x 版本要注意自增字段的回溯问题，当然这个问题在 MySQL 8.x 中已经得到了很好的解决，当然，MySQL 8.x 还有很多其他的好处，不管是功能还是性能上都有很多的优化和调整，因此强烈推荐大家使用 MySQL 8.x 版本。对于高并发访问数据库的场景，AUTO_INCREMENT 不仅存在性能上的问题，还可能在多机结构上产生重复的 ID 值，在这种场景下，使用分布式 ID 生成算法（SnowFlake、TinyID等）才是最好的选择，有兴趣的读者可以自行研究。</p>
+<h3 id="_2">删除表和修改表</h3>
+<p>下面以学生表为例，为大家说明如何删除表和修改表。删除表可以使用<code>drop table</code>，代码如下所示。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">drop</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>或</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">drop</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>需要注意的是，如果学生表已经录入了数据而且该数据被其他表引用了，那么就不能删除学生表，否则上面的操作会报错。在下一课中，我们会讲解如何向表中插入数据，到时候大家可以试一试，能否顺利删除学生表。</p>
+<p>如果要修改学生表，可以使用<code>alter table</code>，具体可以分为以下几种情况：</p>
+<p>修改表，添加一个新列，例如给学生表添加一个联系电话的列。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="o">`</span><span class="n">stu_tel</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;联系电话&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>注意</strong>：如果新增列的时候指定了非空约束（<code>not null</code>），那么学生表不能够有数据，否则原来的数据增加了 stu_tel 列之后是没有数据的，这就违反了非空约束的要求；当然，我们在添加列的时候也可以使用默认值约束来解决这个问题。</p>
+</blockquote>
+<p>修改表，删除指定的列，例如将上面添加的联系电话列删除掉。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">drop</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="o">`</span><span class="n">stu_tel</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>修改表，修改列的数据类型，例如将学生表的 stu_sex 修改为字符。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">modify</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="o">`</span><span class="n">stu_sex</span><span class="o">`</span><span class="w"> </span><span class="nb">char</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s1">&#39;M&#39;</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;性别&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>修改表，修改列的命名，例如将学生表的 stu_sex 修改为 stu_gender。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="n">change</span><span class="w"> </span><span class="k">column</span><span class="w"> </span><span class="o">`</span><span class="n">stu_sex</span><span class="o">`</span><span class="w"> </span><span class="o">`</span><span class="n">stu_gender</span><span class="o">`</span><span class="w"> </span><span class="nb">boolean</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">comment</span><span class="w"> </span><span class="s1">&#39;性别&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>修改表，删除约束条件，例如删除学生表的 col_id 列的外键约束。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">drop</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="o">`</span><span class="n">fk_student_col_id</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>修改表，添加约束条件，例如给学生表的 col_id 列加上外键约束。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>或</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">constraint</span><span class="w"> </span><span class="o">`</span><span class="n">fk_student_col_id</span><span class="o">`</span><span class="w"> </span><span class="k">foreign</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">)</span><span class="w"> </span><span class="k">references</span><span class="w"> </span><span class="o">`</span><span class="n">tb_college</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">col_id</span><span class="o">`</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明</strong>：在添加外键约束时，还可以通过<code>on update</code>和<code>on delete</code>来指定在被引用的表发生删除和更新操作时，应该进行何种处理，二者的默认值都是<code>restrict</code>，表示如果存在外键约束，则不允许更新和删除被引用的数据。除了<code>restrict</code>之外，这里可能的取值还有<code>cascade</code>（级联操作）和<code>set null</code>（设置为空），有兴趣的读者可以自行研究。</p>
+</blockquote>
+<p>修改表的名字，例如将学生表的名字修改为 tb_stu_info。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">`</span><span class="n">tb_student</span><span class="o">`</span><span class="w"> </span><span class="k">rename</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">`</span><span class="n">tb_stu_info</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p><strong>提示</strong>：一般情况下，请不要轻易修改数据库或表的名字。</p>
+</blockquote>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

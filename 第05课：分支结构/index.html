@@ -1,0 +1,596 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>第05课：分支结构 - Python learning notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#05" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python learning notes" class="md-header__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python learning notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第05课：分支结构
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python learning notes" class="md-nav__button md-logo" aria-label="Python learning notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python learning notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第一阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第一阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-your-docs.md" class="md-nav__link">
+        Writing your docs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../styling-your-docs.md" class="md-nav__link">
+        Styling your docs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第二阶段
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二阶段" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第二阶段
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.md" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes.md" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    第05课：分支结构
+  </a>
+  
+    <nav class="md-nav" aria-label="第05课：分支结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    应用场景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if" class="md-nav__link">
+    if语句的使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    一些例子
+  </a>
+  
+    <nav class="md-nav" aria-label="一些例子">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例子1：英制单位英寸与公制单位厘米互换。
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例子2：百分制成绩转换为等级制成绩。
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    例子3：输入三条边长，如果能构成三角形就计算周长和面积。
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    简单的总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>第05课：分支结构</h1>
+
+<h2 id="05">第05课：分支结构</h2>
+<h3 id="_1">应用场景</h3>
+<p>迄今为止，我们写的Python代码都是一条一条语句顺序执行，这种代码结构通常称之为顺序结构。然而仅有顺序结构并不能解决所有的问题，比如我们设计一个游戏，游戏第一关的通关条件是玩家获得1000分，那么在完成本局游戏后，我们要根据玩家得到分数来决定究竟是进入第二关，还是告诉玩家“Game Over”，这里就会产生两个分支，而且这两个分支只有一个会被执行。类似的场景还有很多，我们将这种结构称之为“分支结构”或“选择结构”。给大家一分钟的时间，你应该可以想到至少5个以上这样的例子，赶紧试一试。</p>
+<h3 id="if">if语句的使用</h3>
+<p>在Python中，要构造分支结构可以使用<code>if</code>、<code>elif</code>和<code>else</code>关键字。所谓<strong>关键字</strong>就是有特殊含义的单词，像<code>if</code>和<code>else</code>就是专门用于构造分支结构的关键字，很显然你不能够使用它作为变量名。下面的例子中演示了如何构造一个分支结构。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="sd">用户身份验证</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">username</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;请输入用户名: &#39;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;请输入口令: &#39;</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># 用户名是admin且密码是123456则身份验证成功否则身份验证失败</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;admin&#39;</span> <span class="ow">and</span> <span class="n">password</span> <span class="o">==</span> <span class="s1">&#39;123456&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;身份验证成功!&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;身份验证失败!&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>需要说明的是，不同于C++、Java等编程语言，Python中没有用花括号来构造代码块而是<strong>使用了缩进的方式来表示代码的层次结构</strong>，如果<code>if</code>条件成立的情况下需要执行多条语句，只要保持多条语句具有相同的缩进就可以了。换句话说<strong>连续的代码如果又保持了相同的缩进那么它们属于同一个代码块</strong>，相当于是一个执行的整体。<strong>缩进</strong>可以使用任意数量的空格，但<strong>通常使用4个空格</strong>，强烈建议大家<strong>不要使用制表键来缩进代码</strong>，如果你已经习惯了这么做，可以<strong>设置代码编辑工具将1个制表键自动变成4个空格</strong>，很多的代码编辑工具都支持这项功能。</p>
+<blockquote>
+<p><strong>提示</strong>：<code>if</code>和<code>else</code> 的最后面有一个<code>:</code>，它是用英文输入法输入的冒号；程序中输入的<code>'</code>、<code>"</code>、<code>=</code>、<code>(</code>、<code>)</code>等特殊字符，都是在英文输入法状态下输入的。有很多初学者经常不注意这一点，结果运行代码的时候就会遇到很多莫名其妙的错误提示。<strong>强烈建议</strong>大家在写代码的时候都<strong>打开英文输入法</strong>（注意是英文输入法而不是中文输入法的英文输入模式），这样可以避免很多不必要的麻烦。</p>
+</blockquote>
+<p>如果要构造出更多的分支，可以使用<code>if...elif...else...</code>结构或者嵌套的<code>if...else...</code>结构，下面的代码演示了如何利用多分支结构实现分段函数求值。</p>
+<p>$$
+f(x) = \begin{cases} 3x - 5, &amp; (x \gt 1) \ x + 2, &amp; (-1 \le x \le 1) \ 5x + 3, &amp; (x \lt -1) \end{cases}
+$$</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="sd">分段函数求值</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;x = &#39;</span><span class="p">))</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">5</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;f(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">) = </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>当然根据实际开发的需要，分支结构是可以嵌套的，例如判断是否通关以后还要根据你获得的宝物或者道具的数量对你的表现给出等级（比如点亮两颗或三颗星星），那么我们就需要在<code>if</code>的内部构造出一个新的分支结构，同理<code>elif</code>和<code>else</code>中也可以再构造新的分支，我们称之为嵌套的分支结构，也就是说上面的代码也可以写成下面的样子。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="sd">分段函数求值</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;x = &#39;</span><span class="p">))</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">5</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>        <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;f(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">) = </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明：</strong> 大家可以自己感受和评判一下这两种写法到底是哪一种更好。在<a href="https://zhuanlan.zhihu.com/p/111843067"><strong>Python之禅</strong></a>中有这么一句话：“<strong>Flat is better than nested</strong>”，之所以提倡代码“扁平化”，是因为代码嵌套的层次如果很多，会严重的影响代码的可读性，所以使用更为扁平化的结构在很多场景下都是较好的选择。</p>
+</blockquote>
+<h3 id="_2">一些例子</h3>
+<h4 id="1">例子1：英制单位英寸与公制单位厘米互换。</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="sd">英制单位英寸和公制单位厘米互换</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;请输入长度: &#39;</span><span class="p">))</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">unit</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;请输入单位: &#39;</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;in&#39;</span> <span class="ow">or</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;英寸&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">英寸 = </span><span class="si">%f</span><span class="s1">厘米&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span> <span class="o">*</span> <span class="mf">2.54</span><span class="p">))</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;cm&#39;</span> <span class="ow">or</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;厘米&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">厘米 = </span><span class="si">%f</span><span class="s1">英寸&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;请输入有效的单位&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="2">例子2：百分制成绩转换为等级制成绩。</h4>
+<blockquote>
+<p><strong>要求</strong>：如果输入的成绩在90分以上（含90分）输出A；80分-90分（不含90分）输出B；70分-80分（不含80分）输出C；60分-70分（不含70分）输出D；60分以下输出E。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="sd">百分制成绩转换为等级制成绩</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;请输入成绩: &#39;</span><span class="p">))</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">90</span><span class="p">:</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">grade</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">grade</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">70</span><span class="p">:</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">grade</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="n">grade</span> <span class="o">=</span> <span class="s1">&#39;D&#39;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="n">grade</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;对应的等级是:&#39;</span><span class="p">,</span> <span class="n">grade</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="3">例子3：输入三条边长，如果能构成三角形就计算周长和面积。</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="sd">判断输入的边长能否构成三角形，如果能则计算出三角形的周长和面积</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="sd">Version: 0.1</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="sd">Author: 骆昊</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;a = &#39;</span><span class="p">))</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;b = &#39;</span><span class="p">))</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;c = &#39;</span><span class="p">))</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">if</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">c</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">:</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">peri</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;周长: </span><span class="si">{</span><span class="n">peri</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">half</span> <span class="o">=</span> <span class="n">peri</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">half</span> <span class="o">*</span> <span class="p">(</span><span class="n">half</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">half</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">half</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.5</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;面积: </span><span class="si">{</span><span class="n">area</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;不能构成三角形&#39;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>说明：</strong> 上面通过边长计算三角形面积的公式叫做<a href="https://zh.wikipedia.org/zh-hans/海伦公式">海伦公式</a>。</p>
+</blockquote>
+<h3 id="_3">简单的总结</h3>
+<p>学会了Python中的分支结构和循环结构，我们就可以用Python程序来解决很多实际的问题了。这一节课相信已经帮助大家记住了<code>if</code>、<code>elif</code>、<code>else</code>这几个关键字以及如何使用它们来构造分支结构，下一节课我们为大家介绍循环结构，学完这两次课你一定会发现，你能写出很多很多非常有意思的代码。继续加油！</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
